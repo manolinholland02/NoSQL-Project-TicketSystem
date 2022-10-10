@@ -35,8 +35,7 @@ namespace UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new Dashboard().ShowDialog();
-            Close();
+            new NoDeskUI().Show();
         }
     }
 }
