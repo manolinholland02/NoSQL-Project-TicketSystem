@@ -1,5 +1,6 @@
 ﻿using DAL;
 using Model;
+using MongoDB.Driver;
 using System.Collections.Generic;
 
 namespace Logic
@@ -12,9 +13,18 @@ namespace Logic
             dao = new DAO();
         }
 
-        public List<Databases_Model> Get_All_Databases()
+        public IMongoDatabase GetDatabase()
         {
-            return dao.GetDatabases();
+            return dao.GetMongoDatabase();
         }
+        public List<Ticket_Model> GetCollection()
+        {
+            return dao.GetMongoCollection();
+        }
+
+        //public List<Databases_Model> Get_All_Databases()
+        //{
+        //    return dao.GetDatabases();
+        //}
     }
 }
