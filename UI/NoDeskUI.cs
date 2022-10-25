@@ -9,13 +9,13 @@ namespace UI
 {
     public partial class NoDeskUI : Form
     {
-        Databases databases;
+        TicketService databases;
 
         public NoDeskUI()
         {
            
             InitializeComponent();
-            databases=new Databases(); 
+            databases=new TicketService(); 
             DisplayTickets();
             HideAllPanel();
         }

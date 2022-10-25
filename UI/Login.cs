@@ -16,11 +16,11 @@ namespace UI
 {
     public partial class Login : Form
     {
-        private Databases databases;
+        private TicketService databases;
         public Login()
         {
             InitializeComponent();
-            databases = new Databases();
+            databases = new TicketService();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

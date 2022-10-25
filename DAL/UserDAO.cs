@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    internal class UserDAO
+    public class UserDAO
     {
         private MongoClient client;
         IMongoDatabase db;
