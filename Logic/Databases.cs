@@ -18,25 +18,11 @@ namespace Logic
         {
             return dao.GetMongoDatabase();
         }
-        //public List<Ticket_Model> GetCollection()
-        //{
-        //    return dao.GetMongoCollection();
-        //}
 
-<<<<<<< Updated upstream
-        public List<BsonDocument> GetMongoFields()
-        {
-            return dao.GetMongoFields();
-=======
         public void GetMongoFields()
         {
-           dao.GetMongoFields();
->>>>>>> Stashed changes
+            dao.GetMongoFields();
         }
 
-        //public List<Databases_Model> Get_All_Databases()
-        //{
-        //    return dao.GetDatabases();
-        //}
     }
 }
