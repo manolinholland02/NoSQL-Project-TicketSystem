@@ -25,6 +25,7 @@ namespace DAL
         ////{
         ////    return collection.Find(new BsonDocument()).ToList();
         ////}
+<<<<<<< Updated upstream
         public List<BsonDocument> GetMongoFields()
         {
             collection = db.GetCollection<Ticket_Model>("tickets");
@@ -32,6 +33,14 @@ namespace DAL
             var projection = Builders<Ticket_Model>.Projection.Include("subject").Include("user").Exclude("_id");     
             List<BsonDocument> result =collection.Find<Ticket_Model>(filter).Project(projection).ToList();
             return result;
+=======
+        public void GetMongoFields()
+        {
+            collection = db.GetCollection<Ticket_Model>("tickets");
+            var filter = Builders<Ticket_Model>.Filter.Empty;
+            var projection = Builders<Ticket_Model>.Projection.Exclude("_id");     
+            var result =collection.Find<Ticket_Model>(filter).Project(projection).ToList();
+>>>>>>> Stashed changes
         }
 
         //public List<Databases_Model> GetDatabases()
