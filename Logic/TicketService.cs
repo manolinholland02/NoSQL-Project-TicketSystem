@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 namespace Logic
 {
-    public class Databases
+    public class TicketService
     {
         private TicketDAO dao;
-        public Databases()
+        public TicketService()
         {
             dao = new TicketDAO();
         }
