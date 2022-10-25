@@ -52,8 +52,8 @@ namespace UI
 
         private void DisplayTickets()
         {
-            var collection = databases.GetMongoFields();
-            dGVTicketOverview.DataSource= collection;
+            //var collection = databases.GetMongoFields();
+            //dGVTicketOverview.DataSource= collection;
 
 
         }

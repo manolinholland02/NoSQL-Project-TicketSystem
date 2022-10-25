@@ -8,10 +8,10 @@ namespace Logic
 {
     public class Databases
     {
-        private DAO dao;
+        private TicketDAO dao;
         public Databases()
         {
-            dao = new DAO();
+            dao = new TicketDAO();
         }
 
         public IMongoDatabase GetDatabase()
