@@ -35,21 +35,21 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnDashboard = new System.Windows.Forms.Button();
             this.pnlDashboard = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.pnlIncidentManagemnt = new System.Windows.Forms.Panel();
             this.pnlUserManagement = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pnlIncidentManagemnt = new System.Windows.Forms.Panel();
+            this.btnDeleteTicket = new System.Windows.Forms.Button();
+            this.btnUpdateTicket = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnCreateIncident = new System.Windows.Forms.Button();
             this.dGVTicketOverview = new System.Windows.Forms.DataGridView();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btnUpdateTicket = new System.Windows.Forms.Button();
-            this.btnDeleteTicket = new System.Windows.Forms.Button();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.pnlMenuCOntainer.SuspendLayout();
             this.pnlDashboard.SuspendLayout();
-            this.pnlIncidentManagemnt.SuspendLayout();
             this.pnlUserManagement.SuspendLayout();
+            this.pnlIncidentManagemnt.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGVTicketOverview)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,6 +131,24 @@
             this.pnlDashboard.Size = new System.Drawing.Size(1075, 493);
             this.pnlDashboard.TabIndex = 1;
             // 
+            // pnlUserManagement
+            // 
+            this.pnlUserManagement.Controls.Add(this.label5);
+            this.pnlUserManagement.Location = new System.Drawing.Point(0, 13);
+            this.pnlUserManagement.Name = "pnlUserManagement";
+            this.pnlUserManagement.Size = new System.Drawing.Size(990, 392);
+            this.pnlUserManagement.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(19, 13);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(225, 29);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "User Management";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -155,23 +173,33 @@
             this.pnlIncidentManagemnt.TabIndex = 0;
             this.pnlIncidentManagemnt.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlIncidentManagemnt_Paint);
             // 
-            // pnlUserManagement
+            // btnDeleteTicket
             // 
-            this.pnlUserManagement.Controls.Add(this.label5);
-            this.pnlUserManagement.Location = new System.Drawing.Point(0, 13);
-            this.pnlUserManagement.Name = "pnlUserManagement";
-            this.pnlUserManagement.Size = new System.Drawing.Size(990, 392);
-            this.pnlUserManagement.TabIndex = 1;
+            this.btnDeleteTicket.Location = new System.Drawing.Point(148, 418);
+            this.btnDeleteTicket.Name = "btnDeleteTicket";
+            this.btnDeleteTicket.Size = new System.Drawing.Size(72, 34);
+            this.btnDeleteTicket.TabIndex = 10;
+            this.btnDeleteTicket.Text = "Delete";
+            this.btnDeleteTicket.UseVisualStyleBackColor = true;
             // 
-            // label5
+            // btnUpdateTicket
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(19, 13);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(225, 29);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "User Management";
+            this.btnUpdateTicket.Location = new System.Drawing.Point(35, 417);
+            this.btnUpdateTicket.Name = "btnUpdateTicket";
+            this.btnUpdateTicket.Size = new System.Drawing.Size(88, 35);
+            this.btnUpdateTicket.TabIndex = 10;
+            this.btnUpdateTicket.Text = "Update";
+            this.btnUpdateTicket.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(28, 17);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(162, 25);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Ticket overview";
             // 
             // txtSearch
             // 
@@ -189,6 +217,7 @@
             this.btnCreateIncident.TabIndex = 7;
             this.btnCreateIncident.Text = "Create Incident";
             this.btnCreateIncident.UseVisualStyleBackColor = true;
+            this.btnCreateIncident.Click += new System.EventHandler(this.btnCreateIncident_Click);
             // 
             // dGVTicketOverview
             // 
@@ -200,34 +229,6 @@
             this.dGVTicketOverview.Size = new System.Drawing.Size(804, 275);
             this.dGVTicketOverview.TabIndex = 6;
             this.dGVTicketOverview.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGVTicketOverview_CellContentClick);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(28, 17);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(162, 25);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Ticket overview";
-            // 
-            // btnUpdateTicket
-            // 
-            this.btnUpdateTicket.Location = new System.Drawing.Point(35, 417);
-            this.btnUpdateTicket.Name = "btnUpdateTicket";
-            this.btnUpdateTicket.Size = new System.Drawing.Size(88, 35);
-            this.btnUpdateTicket.TabIndex = 10;
-            this.btnUpdateTicket.Text = "Update";
-            this.btnUpdateTicket.UseVisualStyleBackColor = true;
-            // 
-            // btnDeleteTicket
-            // 
-            this.btnDeleteTicket.Location = new System.Drawing.Point(148, 418);
-            this.btnDeleteTicket.Name = "btnDeleteTicket";
-            this.btnDeleteTicket.Size = new System.Drawing.Size(72, 34);
-            this.btnDeleteTicket.TabIndex = 10;
-            this.btnDeleteTicket.Text = "Delete";
-            this.btnDeleteTicket.UseVisualStyleBackColor = true;
             // 
             // NoDeskUI
             // 
@@ -244,10 +245,10 @@
             this.pnlMenuCOntainer.PerformLayout();
             this.pnlDashboard.ResumeLayout(false);
             this.pnlDashboard.PerformLayout();
-            this.pnlIncidentManagemnt.ResumeLayout(false);
-            this.pnlIncidentManagemnt.PerformLayout();
             this.pnlUserManagement.ResumeLayout(false);
             this.pnlUserManagement.PerformLayout();
+            this.pnlIncidentManagemnt.ResumeLayout(false);
+            this.pnlIncidentManagemnt.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGVTicketOverview)).EndInit();
             this.ResumeLayout(false);
 

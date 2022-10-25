@@ -15,16 +15,23 @@ namespace DAL
         {
             client = new MongoClient("mongodb+srv://GG-Group4:a4oj6VRsNB1T1q3t@gardengroup.nxaaurt.mongodb.net/test"); 
             db = client.GetDatabase("gardengroupdb");
-            collection = db.GetCollection<Ticket_Model>("tickets");
         }
 
         public IMongoDatabase GetMongoDatabase()
         {
             return db;
         }
-        public List<Ticket_Model> GetMongoCollection()
+        ////public List<Ticket_Model> GetMongoCollection()
+        ////{
+        ////    return collection.Find(new BsonDocument()).ToList();
+        ////}
+        public List<BsonDocument> GetMongoFields()
         {
-            return collection.Find(new BsonDocument()).ToList();
+            collection = db.GetCollection<Ticket_Model>("tickets");
+            var filter = Builders<Ticket_Model>.Filter.Empty;
+            var projection = Builders<Ticket_Model>.Projection.Include("subject").Include("user").Exclude("_id");     
+            List<BsonDocument> result =collection.Find<Ticket_Model>(filter).Project(projection).ToList();
+            return result;
         }
 
         //public List<Databases_Model> GetDatabases()

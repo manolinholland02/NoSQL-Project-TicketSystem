@@ -10,14 +10,12 @@ namespace UI
     public partial class NoDeskUI : Form
     {
         Databases databases;
-        List<Ticket_Model> collection;
 
         public NoDeskUI()
         {
            
             InitializeComponent();
             databases=new Databases(); 
-            collection = databases.GetCollection();
             DisplayTickets();
             HideAllPanel();
         }
@@ -54,9 +52,8 @@ namespace UI
 
         private void DisplayTickets()
         {
-
+            var collection = databases.GetMongoFields();
             dGVTicketOverview.DataSource= collection;
-         
 
         }
 
@@ -68,6 +65,12 @@ namespace UI
         private void dGVTicketOverview_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnCreateIncident_Click(object sender, EventArgs e)
+        {
+            CreateTicket createTicket=new CreateTicket();
+            createTicket.Show();
         }
     }
 }

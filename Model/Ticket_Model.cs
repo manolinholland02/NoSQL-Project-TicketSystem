@@ -3,6 +3,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Model
 {
+    public enum Priority { normal,medium,high}
+    public enum Deadline { five=5,ten=10,fifteen=15};
     public class Ticket_Model
     {
         [BsonId]
@@ -30,6 +32,12 @@ namespace Model
 
         [BsonElement("ticket number")]
         public int ticketNumber { get; set; }
+
+        [BsonElement("deadline")]
+        public Deadline deadline { get; set; }
+        [BsonElement("priority")]
+        public Priority priority { get; set; }
+
 
 
     }
