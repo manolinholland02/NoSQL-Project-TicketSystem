@@ -9,13 +9,13 @@ namespace UI
 {
     public partial class NoDeskUI : Form
     {
-        Databases databases;
+        TicketService databases;
 
         public NoDeskUI()
         {
            
             InitializeComponent();
-            databases=new Databases(); 
+            databases=new TicketService(); 
             DisplayTickets();
             HideAllPanel();
         }
@@ -52,8 +52,9 @@ namespace UI
 
         private void DisplayTickets()
         {
-            var collection = databases.GetMongoFields();
-            dGVTicketOverview.DataSource= collection;
+            //var collection = databases.GetMongoFields();
+            //dGVTicketOverview.DataSource= collection;
+
 
         }
 
