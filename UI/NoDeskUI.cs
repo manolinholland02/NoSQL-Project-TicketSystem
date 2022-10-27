@@ -10,10 +10,10 @@ namespace UI
     public partial class NoDeskUI : Form
     {
         TicketService databases;
+        const int IdColumn = 0;
 
         public NoDeskUI()
         {
-           
             InitializeComponent();
             databases=new TicketService(); 
             DisplayTickets();
@@ -52,10 +52,8 @@ namespace UI
 
         private void DisplayTickets()
         {
-            //var collection = databases.GetMongoFields();
-            //dGVTicketOverview.DataSource= collection;
-
-
+            dGVTicketOverview.DataSource = databases.GetAllTickets();
+            dGVTicketOverview.Columns[IdColumn].Visible = false;
         }
 
         private void pnlIncidentManagemnt_Paint(object sender, PaintEventArgs e)

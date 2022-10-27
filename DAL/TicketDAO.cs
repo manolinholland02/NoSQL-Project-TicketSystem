@@ -8,8 +8,8 @@ namespace DAL
     public class TicketDAO
     {
         private MongoClient client;
-        IMongoDatabase db;
-        IMongoCollection<Ticket_Model> collection;
+        private IMongoDatabase db;
+        private IMongoCollection<Ticket_Model> collection;
 
         public TicketDAO()
         {
@@ -22,12 +22,10 @@ namespace DAL
             return db;
         }
 
-        public void GetMongoFields()
+        public List<Ticket_Model> GetAllTickets()
         {
             collection = db.GetCollection<Ticket_Model>("tickets");
-            var filter = Builders<Ticket_Model>.Filter.Empty;
-            var projection = Builders<Ticket_Model>.Projection.Exclude("_id");
-            var result = collection.Find<Ticket_Model>(filter).Project(projection).ToList();
+            return collection.AsQueryable().ToList<Ticket_Model>();
         }
 
     }

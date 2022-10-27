@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Model
@@ -8,37 +9,31 @@ namespace Model
     public class Ticket_Model
     {
         [BsonId]
-        public ObjectId Id { get; set; }
-
-        [BsonElement("id")]
-        public int id { get; set; }
-
-
+        public ObjectId Id { get; }
         [BsonElement("user")]
-        public string user { get; set; }
-
-
+        public String User { get; set; }
         [BsonElement("subject")]
-        public string subject { get; set; }
-
-
+        public string Subject { get; set; }
         [BsonElement("date")]
-        public BsonDateTime date { get; set; }
-
-
+        public String Date { get; set; }
         [BsonElement("status")]
-        public string status { get; set; }
-
-
-        [BsonElement("ticket number")]
-        public int ticketNumber { get; set; }
-
+        public String Status { get; set; }
+        [BsonElement("ticketNumber")]
+        public int TicketNumber { get; set; }
         [BsonElement("deadline")]
-        public Deadline deadline { get; set; }
+        public Deadline Deadline { get; set; }
         [BsonElement("priority")]
-        public Priority priority { get; set; }
+        public Priority Priority { get; set; }
 
-
-
+        public Ticket_Model(int fakeId, string user, string subject, string date, string status, int ticketNumber, Deadline deadline, Priority priority)
+        {
+            User = user;
+            Subject = subject;
+            Date = date;
+            Status = status;
+            TicketNumber = ticketNumber;
+            Deadline = deadline;
+            Priority = priority;
+        }
     }
 }

@@ -19,9 +19,9 @@ namespace Logic
             return dao.GetMongoDatabase();
         }
 
-        public void GetMongoFields()
+        public List<Ticket_Model> GetAllTickets()
         {
-            dao.GetMongoFields();
+            return dao.GetAllTickets();
         }
 
     }
