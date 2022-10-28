@@ -23,6 +23,10 @@ namespace Logic
         {
             return dao.GetAllTickets();
         }
+        public IMongoCollection<Ticket_Model> GetTicketCollection()
+        {
+            return dao.GetTicketCollection();
+        }
 
     }
 }
