@@ -1,6 +1,5 @@
 ﻿using DAL;
 using Model;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 
@@ -9,14 +8,19 @@ namespace Logic
     public class TicketService
     {
         private TicketDAO dao;
-        public TicketService()
+        //Singleton for TicketService
+        private static TicketService instance;
+        private TicketService()
         {
-            dao = new TicketDAO();
+            dao = TicketDAO.GetInstance();
         }
 
-        public IMongoDatabase GetDatabase()
+        public static TicketService GetInstance()
         {
-            return dao.GetMongoDatabase();
+            if (instance == null)
+                instance = new TicketService();
+
+            return instance;
         }
 
         public List<Ticket_Model> GetAllTickets()

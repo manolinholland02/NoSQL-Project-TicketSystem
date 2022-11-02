@@ -16,16 +16,16 @@ namespace UI
 {
     public partial class Login : Form
     {
-        private TicketService databases;
         public Login()
         {
             InitializeComponent();
-            databases = new TicketService();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            this.Hide();
             NoDeskUI noDeskUI = new NoDeskUI();
+            noDeskUI.Closed += (ss, ee) => this.Close();
             noDeskUI.Show();
         }
     }

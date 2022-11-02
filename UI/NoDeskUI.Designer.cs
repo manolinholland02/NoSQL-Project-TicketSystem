@@ -36,9 +36,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnDashboard = new System.Windows.Forms.Button();
             this.pnlDashboard = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.pnlUserManagement = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.pnlIncidentManagemnt = new System.Windows.Forms.Panel();
             this.txtTicketNr = new System.Windows.Forms.TextBox();
             this.btnSearchOr = new System.Windows.Forms.Button();
@@ -148,6 +148,15 @@
             this.pnlDashboard.Size = new System.Drawing.Size(1075, 493);
             this.pnlDashboard.TabIndex = 1;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(392, 237);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(280, 16);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "This is DashBoard. You can do your part here ";
+            // 
             // pnlUserManagement
             // 
             this.pnlUserManagement.Controls.Add(this.label5);
@@ -165,15 +174,6 @@
             this.label5.Size = new System.Drawing.Size(225, 29);
             this.label5.TabIndex = 2;
             this.label5.Text = "User Management";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(392, 237);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(280, 16);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "This is DashBoard. You can do your part here ";
             // 
             // pnlIncidentManagemnt
             // 

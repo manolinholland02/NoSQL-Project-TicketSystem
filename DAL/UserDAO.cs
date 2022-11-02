@@ -1,28 +1,35 @@
 ﻿using Model;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class UserDAO
+    public class UserDAO : BaseDAO
     {
-        private MongoClient client;
-        IMongoDatabase db;
-        IMongoCollection<User_Model> collection;
+        private IMongoCollection<User_Model> collection;
+        private const string CollectionName = "users";
+        //Singleton for UserDAO
+        private static UserDAO instance;
 
-        public UserDAO()
+        private UserDAO()
         {
-            client = new MongoClient("mongodb+srv://GG-Group4:a4oj6VRsNB1T1q3t@gardengroup.nxaaurt.mongodb.net/test");
-            db = client.GetDatabase("gardengroupdb");
+            try
+            {
+                collection = db.GetCollection<User_Model>(CollectionName);
+            }
+            catch(Exception)
+            {
+                throw new Exception(CollectionFailureMessage);
+            }
         }
 
-        public IMongoDatabase GetMongoDatabase()
+        public static UserDAO GetInstance()
         {
-            return db;
+            if (instance == null)
+                instance = new UserDAO();
+
+            return instance;
         }
 
         public void GetMongoFields()
