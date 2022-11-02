@@ -1,39 +1,45 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using System.Collections.Generic;
 using Model;
+using System;
 
 namespace DAL
 {
-    public class TicketDAO
+    public class TicketDAO : BaseDAO
     {
-        private MongoClient client;
-        private IMongoDatabase db;
         private IMongoCollection<Ticket_Model> collection;
+        private const string CollectionName = "tickets";
+        //Singleton for TicketDAO
+        private static TicketDAO instance;
 
-        public TicketDAO()
+        private TicketDAO()
         {
-            client = new MongoClient("mongodb+srv://GG-Group4:a4oj6VRsNB1T1q3t@gardengroup.nxaaurt.mongodb.net/test");
-            db = client.GetDatabase("gardengroupdb");
-            collection = db.GetCollection<Ticket_Model>("tickets");
-
+            try
+            {
+                collection = db.GetCollection<Ticket_Model>(CollectionName);
+            }
+            catch (Exception)
+            {
+                throw new Exception(CollectionFailureMessage);
+            }
         }
 
-        public IMongoDatabase GetMongoDatabase()
+        public static TicketDAO GetInstance()
         {
-            return db;
+            if (instance == null)
+                instance = new TicketDAO();
+
+            return instance;
         }
 
         public List<Ticket_Model> GetAllTickets()
         {
             return collection.AsQueryable().ToList<Ticket_Model>();
         }
+
         public IMongoCollection<Ticket_Model> GetTicketCollection()
         {
             return collection;
         }
-
     }
-
-
 }

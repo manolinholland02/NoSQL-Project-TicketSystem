@@ -1,26 +1,24 @@
-﻿using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL;
+﻿using DAL;
 
 namespace Logic
 {
     public class UserService
     {
-#pragma warning disable CS0122 // 'UserDAO' is inaccessible due to its protection level
         private UserDAO dao;
-#pragma warning restore CS0122 // 'UserDAO' is inaccessible due to its protection level
-        public UserService()
+        //Singleton for UserService
+        private static UserService instance;
+
+        private UserService()
         {
-            dao = new UserDAO();
+            dao = UserDAO.GetInstance();
         }
 
-        public IMongoDatabase GetDatabase()
+        public static UserService GetInstance()
         {
-            return dao.GetMongoDatabase();
+            if (instance == null)
+                instance = new UserService();
+
+            return instance;
         }
 
         public void GetMongoFields()

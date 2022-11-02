@@ -4,23 +4,22 @@ using System.Linq;
 using System.Windows.Forms;
 using Logic;
 using Model;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace UI
 {
     public partial class NoDeskUI : Form
     {
-        TicketService databases;
+        TicketService ticketService;
         const int IdColumn = 0;
         List<Ticket_Model> getAllTickets;
 
         public NoDeskUI()
         {
             InitializeComponent();
-            databases=new TicketService();
+            ticketService = TicketService.GetInstance();
             DisplayAllEnumValues();
-            getAllTickets=databases.GetAllTickets();
+            getAllTickets=ticketService.GetAllTickets();
             DisplayTickets(getAllTickets);
             HideAllPanel();
             txtTicketNr.Visible = false;
@@ -122,11 +121,11 @@ namespace UI
             var ticketFilter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, int.Parse(txtTicketNr.Text)); 
             var updateTicket = Builders<Ticket_Model>.Update
                 .Set(s => s.Subject, txtSubject.Text)
-                .Set(z => z.Priority, cbPriority.Text)
+                .Set(z => z.Priority, (Priority)Enum.Parse(typeof(Priority), cbPriority.Text))
                 .Set(v => v.Deadline, (Deadline)Enum.Parse(typeof(Deadline), cbDeadline.Text))
                 .Set(d => d.Date, dateTimePickerTicket.Text.ToString());
-            var update=databases.GetTicketCollection().UpdateOne(ticketFilter, updateTicket);
-            var  listOfUpdateResult= databases.GetAllTickets();
+            var update=ticketService.GetTicketCollection().UpdateOne(ticketFilter, updateTicket);
+            var  listOfUpdateResult= ticketService.GetAllTickets();
             return listOfUpdateResult;
 
         }
@@ -139,7 +138,7 @@ namespace UI
         {
             string searchText = txtSearch.Text;
             var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Subject, searchText);
-            var result = databases.GetTicketCollection().Find(filter).ToList();
+            var result = ticketService.GetTicketCollection().Find(filter).ToList();
             return result;
 
         }
@@ -153,9 +152,9 @@ namespace UI
         {
             string status = comboBoxStatusAnd.Text;
             string priority = comboBoxPriorityAnd.Text;
-            var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Status, status)&
-                Builders<Ticket_Model>.Filter.Eq(p=>p.Priority,priority);
-            var result = databases.GetTicketCollection().Find(filter).ToList();
+            var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Status, (Status)Enum.Parse(typeof(Status), status)) &
+                Builders<Ticket_Model>.Filter.Eq(p=>p.Priority, (Priority)Enum.Parse(typeof(Priority), priority));
+            var result = ticketService.GetTicketCollection().Find(filter).ToList();
             return result;
         }
 
@@ -170,9 +169,9 @@ namespace UI
         {
             string status = comboBoxStatusOr.Text;
             string priority = comboBoxPriorityOr.Text;
-            var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Status, status)|
-                Builders<Ticket_Model>.Filter.Eq(p => p.Priority, priority);
-            var result = databases.GetTicketCollection().Find(filter).ToList();
+            var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Status, (Status)Enum.Parse(typeof(Status), status)) |
+                Builders<Ticket_Model>.Filter.Eq(p => p.Priority, (Priority)Enum.Parse(typeof(Priority), priority));
+            var result = ticketService.GetTicketCollection().Find(filter).ToList();
             return result;
         }
 
@@ -185,7 +184,7 @@ namespace UI
         {
             int ticketNr = int.Parse(textBoxTicketSearch.Text);
             var filter=Builders<Ticket_Model>.Filter.Eq(t=>t.TicketNumber,ticketNr);
-            var listOfTickets = databases.GetTicketCollection().Find(filter).ToList();
+            var listOfTickets = ticketService.GetTicketCollection().Find(filter).ToList();
             return listOfTickets;
         }
 
@@ -198,8 +197,8 @@ namespace UI
         {
             int ticketNr = int.Parse(txtTicketNr.Text);
             var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
-            var result = databases.GetTicketCollection().DeleteOne(filter);
-            var listOfTickets = databases.GetAllTickets();
+            var result = ticketService.GetTicketCollection().DeleteOne(filter);
+            var listOfTickets = ticketService.GetAllTickets();
             return listOfTickets;
 
         }

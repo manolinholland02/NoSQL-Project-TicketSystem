@@ -129,6 +129,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDAO.cs" />
+    <Compile Include="IDataOperation.cs" />
     <Compile Include="TicketDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserDAO.cs" />

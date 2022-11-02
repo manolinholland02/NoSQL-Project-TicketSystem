@@ -1,42 +1,43 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model
 {
-    public enum Role { Employee, ServiceDeskEmployee}
     public class User_Model
     {
         [BsonId]
         public ObjectId Id { get; set; }
 
-        [BsonElement("id")]
-        public int id { get; set; }
-
-
         [BsonElement("firstName")]
-        public string firstName { get; set; }
+        public string FirstName { get; set; }
 
         [BsonElement("lastName")]
-        public string lastName { get; set; }
+        public string LastName { get; set; }
 
         [BsonElement("email")]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [BsonElement("password")]
-        public string password { get; set; }
+        public string Password { get; set; }
 
         [BsonElement("role")]
-        public Role role { get; set; }
+        public Role Role { get; set; }
 
         [BsonElement("location")]
-        public string location { get; set; }
+        public string Location { get; set; }
 
         [BsonElement("phoneNumber")]
-        public string phoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
+
+        public User_Model(string firstName, string lastName, string email, string password, Role role, string location, string phoneNumber)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Password = password;
+            Role = role;
+            Location = location;
+            PhoneNumber = phoneNumber;
+        }
     }
 }
