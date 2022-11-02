@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Model;
 
 namespace Logic
 {
@@ -24,6 +25,10 @@ namespace Logic
         public void GetMongoFields()
         {
             dao.GetMongoFields();
+        }
+        public void AddUser(User_Model user)
+        {
+            dao.AddUser(user);
         }
     }
 }

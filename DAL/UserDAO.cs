@@ -39,5 +39,10 @@ namespace DAL
             var projection = Builders<User_Model>.Projection.Exclude("_id");
             var result = collection.Find<User_Model>(filter).Project(projection).ToList();
         }
+
+        public void AddUser(User_Model user)
+        {
+            collection.InsertOne(user);
+        }
     }
 }

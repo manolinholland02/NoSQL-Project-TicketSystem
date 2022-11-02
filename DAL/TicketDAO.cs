@@ -34,7 +34,9 @@ namespace DAL
 
         public List<Ticket_Model> GetAllTickets()
         {
-            return collection.AsQueryable().ToList<Ticket_Model>();
+            //return collection.AsQueryable().ToList<Ticket_Model>();
+            List<Ticket_Model> list;
+            return list = new List<Ticket_Model>();
         }
 
         public IMongoCollection<Ticket_Model> GetTicketCollection()

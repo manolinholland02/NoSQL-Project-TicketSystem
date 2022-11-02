@@ -23,6 +23,7 @@ namespace UI
             DisplayTickets(getAllTickets);
             HideAllPanel();
             txtTicketNr.Visible = false;
+            CheckUser();
 ;        }
         private void HideAllPanel()
         {
@@ -205,5 +206,25 @@ namespace UI
 
         //------------------------//
         /*end incident management*/
+
+
+        //------------------------//
+        /*start user management*/
+        private void btnAddEmployee_Click(object sender, EventArgs e)
+        {
+            AddUser addUser = new AddUser();
+            addUser.Show();
+        }
+
+        private void CheckUser()
+        {
+            //Check if the logged in user is employee or servicedeskemployee, disabling
+            //buttons if only employee. To-Do after login is finished
+            
+        }
+
+
+        //------------------------//
+        /*end user management*/
     }
 }
