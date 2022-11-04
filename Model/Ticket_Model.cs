@@ -31,7 +31,13 @@ namespace Model
         [BsonElement("priority")]
         public Priority Priority { get; set; }
 
-        public Ticket_Model(string user, string subject, string date, Status status, int ticketNumber, Deadline deadline, Priority priority)
+        [BsonElement("description")]
+        public string Description { get; set; }
+
+        [BsonElement("type")]
+        public string Type { get; set; }
+
+        public Ticket_Model(string user, string subject, string date, Status status, int ticketNumber, Deadline deadline, Priority priority, string description, string type)
         {
             User = user;
             Subject = subject;
@@ -40,6 +46,8 @@ namespace Model
             TicketNumber = ticketNumber;
             Deadline = deadline;
             Priority = priority;
+            Description = description;
+            Type = type;
         }
     }
 }

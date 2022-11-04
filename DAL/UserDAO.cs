@@ -41,6 +41,11 @@ namespace DAL
             var result = collection.Find<User_Model>(filter).Project(projection).ToList();
         }
 
+        public void AddUser(User_Model user)
+        {
+            collection.InsertOne(user);
+        }
+
         public List<User_Model> GetAllUsers()
         {
             return collection.AsQueryable().ToList<User_Model>();
