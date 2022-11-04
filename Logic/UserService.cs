@@ -1,4 +1,6 @@
 ﻿using DAL;
+using Model;
+using MongoDB.Driver;
 
 namespace Logic
 {
@@ -24,6 +26,16 @@ namespace Logic
         public void GetMongoFields()
         {
             dao.GetMongoFields();
+        }
+
+        public void AddUser(User_Model user)
+        {
+            dao.AddUser(user);
+        }
+
+        public IMongoCollection<User_Model> GetUserCollection()
+        {
+            return dao.GetUserCollection();
         }
     }
 }

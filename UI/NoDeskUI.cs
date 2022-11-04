@@ -23,6 +23,7 @@ namespace UI
             DisplayTickets(getAllTickets);
             HideAllPanel();
             txtTicketNr.Visible = false;
+            CheckUser();
 ;        }
         private void HideAllPanel()
         {
@@ -36,6 +37,30 @@ namespace UI
             pnlIncidentManagemnt.Hide();
             pnlUserManagement.Hide();
             pnlDashboard.Show();
+            progressBarUnresolvedIncidents.Minimum = 0;
+            progressBarUnresolvedIncidents.Maximum = 15;
+            progressBarIncidentsPastDeadline.Minimum = 0;
+            progressBarIncidentsPastDeadline.Maximum = 4;
+            int unfinishedTickets = 0;
+            foreach (Ticket_Model ticket in getAllTickets)
+            {
+                if (ticket.Status == Status.unfinished)
+                {
+                    progressBarUnresolvedIncidents.Value++;
+                    unfinishedTickets++;
+                }
+            }
+            progressBarUnresolvedIncidents.Text = $"{unfinishedTickets}/15";
+            progressBarIncidentsPastDeadline.Value = 0;
+            foreach(Ticket_Model ticket in getAllTickets)
+            {
+                if (ticket.Deadline == Deadline.fifteen)
+                {
+                    progressBarIncidentsPastDeadline.Value++;
+                    progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
+                }
+            }
+
         }
 
         private void btnIncidentManagement_Click(object sender, EventArgs e)
@@ -205,5 +230,33 @@ namespace UI
 
         //------------------------//
         /*end incident management*/
+
+
+        //------------------------//
+        /*start user management*/
+        private void btnAddEmployee_Click(object sender, EventArgs e)
+        {
+            AddUser addUser = new AddUser();
+            addUser.ShowDialog();
+        }
+
+        private void CheckUser()
+        {
+            //Check if the logged in user is employee or servicedeskemployee, disabling
+            //buttons if only employee. To-Do after login is finished
+            
+        }
+
+        private void btnShowList_Click(object sender, EventArgs e)
+        {
+            pnlDashboard.Hide();
+            pnlIncidentManagemnt.Show();
+        }
+
+
+
+
+        //------------------------//
+        /*end user management*/
     }
 }
