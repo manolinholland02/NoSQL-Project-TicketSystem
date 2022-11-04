@@ -37,6 +37,20 @@ namespace UI
             pnlIncidentManagemnt.Hide();
             pnlUserManagement.Hide();
             pnlDashboard.Show();
+            progressBarUnresolvedIncidents.Minimum = 0;
+            progressBarUnresolvedIncidents.Value = getAllTickets.Count();
+            progressBarUnresolvedIncidents.Maximum = 15;
+            progressBarUnresolvedIncidents.Text = $"{getAllTickets.Count()}/15";
+            progressBarIncidentsPastDeadline.Value = 0;
+            foreach(Ticket_Model ticket in getAllTickets)
+            {
+                if (ticket.Deadline == Deadline.fifteen)
+                {
+                    progressBarIncidentsPastDeadline.Value++;
+                    progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
+                }
+            }
+
         }
 
         private void btnIncidentManagement_Click(object sender, EventArgs e)
@@ -222,6 +236,14 @@ namespace UI
             //buttons if only employee. To-Do after login is finished
             
         }
+
+        private void btnShowList_Click(object sender, EventArgs e)
+        {
+            pnlDashboard.Hide();
+            pnlIncidentManagemnt.Show();
+        }
+
+
 
 
         //------------------------//
