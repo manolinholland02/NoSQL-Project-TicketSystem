@@ -33,10 +33,9 @@ namespace UI
             }
 
             if (GetUserByUsernameAndPassword())
-            {
-                this.Close();
+            {           
                 NoDeskUI noDeskUI = new NoDeskUI();
-                //noDeskUI.Closed += (ss, ee) => this.Close();
+                this.Hide();
                 noDeskUI.Show();
             }
         }
