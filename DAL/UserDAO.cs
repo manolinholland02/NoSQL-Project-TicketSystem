@@ -1,6 +1,7 @@
 ﻿using Model;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DAL
@@ -43,6 +44,16 @@ namespace DAL
         public void AddUser(User_Model user)
         {
             collection.InsertOne(user);
+        }
+
+        public List<User_Model> GetAllUsers()
+        {
+            return collection.AsQueryable().ToList<User_Model>();
+        }
+
+        public IMongoCollection<User_Model> GetUserCollection()
+        {
+            return collection;
         }
     }
 }

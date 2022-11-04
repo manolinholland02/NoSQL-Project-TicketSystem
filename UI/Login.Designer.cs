@@ -34,6 +34,7 @@
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.lblLoginError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnLogin
@@ -83,6 +84,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(190, 30);
             this.txtPassword.TabIndex = 5;
+            this.txtPassword.UseSystemPasswordChar = true;
             // 
             // label3
             // 
@@ -90,15 +92,26 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(135, 57);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(231, 39);
+            this.label3.Size = new System.Drawing.Size(226, 38);
             this.label3.TabIndex = 6;
             this.label3.Text = "NoDesk TGG";
+            // 
+            // lblLoginError
+            // 
+            this.lblLoginError.AutoSize = true;
+            this.lblLoginError.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLoginError.Location = new System.Drawing.Point(150, 418);
+            this.lblLoginError.Name = "lblLoginError";
+            this.lblLoginError.Size = new System.Drawing.Size(107, 25);
+            this.lblLoginError.TabIndex = 7;
+            this.lblLoginError.Text = "Error Label";
             // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(482, 653);
+            this.Controls.Add(this.lblLoginError);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
@@ -121,5 +134,6 @@
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblLoginError;
     }
 }
