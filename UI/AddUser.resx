@@ -279,13 +279,13 @@
     <value>13, 205</value>
   </data>
   <data name="lblNumber.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 16</value>
+    <value>97, 16</value>
   </data>
   <data name="lblNumber.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
   <data name="lblNumber.Text" xml:space="preserve">
-    <value>Phone number</value>
+    <value>Phone number:</value>
   </data>
   <data name="&gt;&gt;lblNumber.Name" xml:space="preserve">
     <value>lblNumber</value>

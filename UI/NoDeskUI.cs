@@ -213,7 +213,7 @@ namespace UI
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
             AddUser addUser = new AddUser();
-            addUser.Show();
+            addUser.ShowDialog();
         }
 
         private void CheckUser()
