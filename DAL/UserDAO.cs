@@ -1,6 +1,7 @@
 ﻿using Model;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DAL
@@ -38,6 +39,16 @@ namespace DAL
             var filter = Builders<User_Model>.Filter.Empty;
             var projection = Builders<User_Model>.Projection.Exclude("_id");
             var result = collection.Find<User_Model>(filter).Project(projection).ToList();
+        }
+
+        public List<User_Model> GetAllUsers()
+        {
+            return collection.AsQueryable().ToList<User_Model>();
+        }
+
+        public IMongoCollection<User_Model> GetUserCollection()
+        {
+            return collection;
         }
     }
 }
