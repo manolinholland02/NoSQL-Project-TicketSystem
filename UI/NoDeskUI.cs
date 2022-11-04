@@ -38,9 +38,19 @@ namespace UI
             pnlUserManagement.Hide();
             pnlDashboard.Show();
             progressBarUnresolvedIncidents.Minimum = 0;
-            progressBarUnresolvedIncidents.Value = getAllTickets.Count();
             progressBarUnresolvedIncidents.Maximum = 15;
-            progressBarUnresolvedIncidents.Text = $"{getAllTickets.Count()}/15";
+            progressBarIncidentsPastDeadline.Minimum = 0;
+            progressBarIncidentsPastDeadline.Maximum = 4;
+            int unfinishedTickets = 0;
+            foreach (Ticket_Model ticket in getAllTickets)
+            {
+                if (ticket.Status == Status.unfinished)
+                {
+                    progressBarUnresolvedIncidents.Value++;
+                    unfinishedTickets++;
+                }
+            }
+            progressBarUnresolvedIncidents.Text = $"{unfinishedTickets}/15";
             progressBarIncidentsPastDeadline.Value = 0;
             foreach(Ticket_Model ticket in getAllTickets)
             {
