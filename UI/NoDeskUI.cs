@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Logic;
 using Model;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace UI
@@ -11,16 +14,22 @@ namespace UI
     public partial class NoDeskUI : Form
     {
         TicketService ticketService;
+        UserService userService;
         const int IdColumn = 0;
         List<Ticket_Model> getAllTickets;
+        List<User_Model> getAllUsers;
 
         public NoDeskUI()
         {
             InitializeComponent();
             ticketService = TicketService.GetInstance();
+            userService = UserService.GetInstance();
             DisplayAllEnumValues();
             getAllTickets=ticketService.GetAllTickets();
+            getAllUsers = userService.GetAllUsers();
+
             DisplayTickets(getAllTickets);
+            DisplayUsers(getAllUsers);     
             HideAllPanel();
             txtTicketNr.Visible = false;
             CheckUser();
@@ -41,25 +50,39 @@ namespace UI
             progressBarUnresolvedIncidents.Maximum = 15;
             progressBarIncidentsPastDeadline.Minimum = 0;
             progressBarIncidentsPastDeadline.Maximum = 4;
-            int unfinishedTickets = 0;
+            int countUnfinishedTickets = 0;
+            int countPastDeadlineTickets = 0;
             foreach (Ticket_Model ticket in getAllTickets)
             {
                 if (ticket.Status == Status.unfinished)
                 {
-                    progressBarUnresolvedIncidents.Value++;
-                    unfinishedTickets++;
+                    countUnfinishedTickets++;
+                    progressBarUnresolvedIncidents.Value= countUnfinishedTickets;
+                    //unfinishedTickets++;
                 }
+                //if(ticket.Status == Status.finished)
+                //{
+                //    countPastDeadlineTickets++;
+                //}
             }
-            progressBarUnresolvedIncidents.Text = $"{unfinishedTickets}/15";
-            progressBarIncidentsPastDeadline.Value = 0;
-            foreach(Ticket_Model ticket in getAllTickets)
+            progressBarUnresolvedIncidents.Text = $"{countUnfinishedTickets}/15";
+            //progressBarIncidentsPastDeadline.Text = $"{4}";
+            //progressBarIncidentsPastDeadline.Value = 0;
+            foreach (Ticket_Model ticket in getAllTickets)
             {
-                if (ticket.Deadline == Deadline.fifteen)
+                DateTime now = DateTime.Now;
+                DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
+                int deadline = (int)ticket.Deadline;
+                int period = int.Parse(((now.Date - ticketMadeDate.Date).TotalDays).ToString());
+                if (period>deadline)
                 {
-                    progressBarIncidentsPastDeadline.Value++;
-                    progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
+                    countPastDeadlineTickets++;
+                    progressBarIncidentsPastDeadline.Value=countPastDeadlineTickets;
+                    //progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
                 }
             }
+            progressBarIncidentsPastDeadline.Text = $"{countPastDeadlineTickets}";
+
 
         }
 
@@ -126,18 +149,25 @@ namespace UI
         // update ticket information when you click the update button
         private void btnUpdateTicket_Click(object sender, EventArgs e)
         {
-            if(dataGVTicketOverview.SelectedRows.Count== 0)
+            try
             {
-                MessageBox.Show("Please select a row to update");
+                if (dataGVTicketOverview.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select a row to update");
+                }
+                else if (dataGVTicketOverview.SelectedRows.Count > 0)
+                {
+                    DisplayTickets(GetUpdatedTickets());
+                    MessageBox.Show("Your information is updated");
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong");
+                }
             }
-            else if (dataGVTicketOverview.SelectedRows.Count > 0)
+            catch(Exception exception)
             {
-                DisplayTickets(GetUpdatedTickets());
-                MessageBox.Show("Your information is updated");
-            }
-            else
-            {
-                MessageBox.Show("Something went wrong");
+                MessageBox.Show("Error: " +exception.Message);
             }
             
         }
@@ -157,7 +187,14 @@ namespace UI
         // search by subject
         private void btnSearchBySubject_Click(object sender, EventArgs e)
         {
-            DisplayTickets(GetFilteredTicketBySubject());
+            try
+            {
+                DisplayTickets(GetFilteredTicketBySubject());
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show("Error: " + exception.Message);
+            }
         }
         private List<Ticket_Model> GetFilteredTicketBySubject()
         {
@@ -171,14 +208,21 @@ namespace UI
         // search by status and priority when both match display the tickets 
         private void btnAndSearch_Click(object sender, EventArgs e)
         {
-            DisplayTickets(GetFilteredTicketByStatusAndPriority());
+            try
+            {
+                DisplayTickets(GetFilteredTicketByStatusAndPriority());
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show("Error: "+exception.Message);
+            }
         }
         private List<Ticket_Model> GetFilteredTicketByStatusAndPriority()
         {
             string status = comboBoxStatusAnd.Text;
             string priority = comboBoxPriorityAnd.Text;
-            var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Status, (Status)Enum.Parse(typeof(Status), status)) &
-                Builders<Ticket_Model>.Filter.Eq(p=>p.Priority, (Priority)Enum.Parse(typeof(Priority), priority));
+            var filter = Builders<Ticket_Model>.Filter.Regex(s => s.Status, BsonRegularExpression.Create(status)) &
+                Builders<Ticket_Model>.Filter.Regex(p => p.Priority, BsonRegularExpression.Create(priority));
             var result = ticketService.GetTicketCollection().Find(filter).ToList();
             return result;
         }
@@ -187,23 +231,38 @@ namespace UI
         // search by status or priority when any of these two match
         private void btnSearchOr_Click(object sender, EventArgs e)
         {
-            DisplayTickets(GetFilteredTicketByStatusOrPriority());
+            try
+            {
+                DisplayTickets(GetFilteredTicketByStatusOrPriority());
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show("Error: "+exception.Message);
+            }
 
         }
         private List<Ticket_Model> GetFilteredTicketByStatusOrPriority()
         {
             string status = comboBoxStatusOr.Text;
             string priority = comboBoxPriorityOr.Text;
-            var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Status, (Status)Enum.Parse(typeof(Status), status)) |
-                Builders<Ticket_Model>.Filter.Eq(p => p.Priority, (Priority)Enum.Parse(typeof(Priority), priority));
+            var filter = Builders<Ticket_Model>.Filter.Regex(s => s.Status, BsonRegularExpression.Create(status)) |
+               Builders<Ticket_Model>.Filter.Regex(p => p.Priority, BsonRegularExpression.Create(priority));
             var result = ticketService.GetTicketCollection().Find(filter).ToList();
+            
             return result;
         }
 
         // search by ticket
         private void buttonSearchByTicket_Click(object sender, EventArgs e)
         {
-            DisplayTickets(GetFilteredTicketByTicketNr());
+            try
+            {
+                DisplayTickets(GetFilteredTicketByTicketNr());
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show("Error: " + exception.Message);
+            }
         }
         private List<Ticket_Model> GetFilteredTicketByTicketNr()
         {
@@ -216,7 +275,14 @@ namespace UI
         // delete a ticket item
         private void btnDeleteTicket_Click(object sender, EventArgs e)
         {
-            DisplayTickets(GetTicketListAfterDelete());
+            try
+            {
+                DisplayTickets(GetTicketListAfterDelete());
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show("Error: "+exception.Message);
+            }
         }
         private List<Ticket_Model> GetTicketListAfterDelete()
         {
@@ -226,6 +292,27 @@ namespace UI
             var listOfTickets = ticketService.GetAllTickets();
             return listOfTickets;
 
+        }
+        private async Task GetRecentTicketsAsync()
+        {
+            var query = ticketService.GetTicketCollection().Aggregate()
+                        .Sort(new BsonDocument { { "date", -1 }});
+            var results = await query.ToListAsync();
+            dataGVTicketOverview.DataSource = results;
+
+        }
+
+ 
+        private void btnRecentTicket_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GetRecentTicketsAsync();
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show("Error: " + exception.Message);
+            }
         }
 
         //------------------------//
@@ -253,8 +340,16 @@ namespace UI
             pnlIncidentManagemnt.Show();
         }
 
+        // displaying all the user in the data gridview
 
+        private void DisplayUsers(List<User_Model> users)
+        {
+            const int PasswordColumn = 4;
+            dataGVUser.DataSource = users;
+            dataGVUser.Columns[IdColumn].Visible = false;
+            dataGVUser.Columns[PasswordColumn].Visible = false;
 
+        }
 
         //------------------------//
         /*end user management*/
