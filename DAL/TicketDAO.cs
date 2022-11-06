@@ -32,6 +32,12 @@ namespace DAL
             return instance;
         }
 
+        public void AddTicket(Ticket_Model ticket)
+        {
+            collection.InsertOne(ticket);
+        }
+
+
         public List<Ticket_Model> GetAllTickets()
         {
             return collection.AsQueryable().ToList<Ticket_Model>();
