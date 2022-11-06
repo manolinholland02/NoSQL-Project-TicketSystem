@@ -18,8 +18,9 @@ namespace UI
         const int IdColumn = 0;
         List<Ticket_Model> getAllTickets;
         List<User_Model> getAllUsers;
+        User_Model user;
 
-        public NoDeskUI()
+        public NoDeskUI(User_Model user)
         {
             InitializeComponent();
             ticketService = TicketService.GetInstance();
@@ -33,6 +34,7 @@ namespace UI
             HideAllPanel();
             txtTicketNr.Visible = false;
             CheckUser();
+            this.user = user
 ;        }
         private void HideAllPanel()
         {
