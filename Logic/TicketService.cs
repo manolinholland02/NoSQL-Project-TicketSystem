@@ -2,6 +2,7 @@
 using Model;
 using MongoDB.Driver;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Logic
 {
@@ -21,6 +22,11 @@ namespace Logic
                 instance = new TicketService();
 
             return instance;
+        }
+
+        public void AddTicket(Ticket_Model ticket)
+        {
+            dao.AddTicket(ticket);
         }
 
         public List<Ticket_Model> GetAllTickets()

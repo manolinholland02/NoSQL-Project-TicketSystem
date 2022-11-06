@@ -136,6 +136,7 @@
     <Compile Include="Role.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="Ticket_Model.cs" />
+    <Compile Include="Type.cs" />
     <Compile Include="User_Model.cs" />
   </ItemGroup>
   <ItemGroup>

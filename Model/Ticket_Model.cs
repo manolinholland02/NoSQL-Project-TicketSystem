@@ -4,11 +4,10 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Model
 {
-    
     public class Ticket_Model
     {
         [BsonId]
-        public ObjectId Id { get; }
+        public ObjectId Id { get; set; }
 
         [BsonElement("user")]
         public String User { get; set; }
@@ -31,7 +30,13 @@ namespace Model
         [BsonElement("priority")]
         public Priority Priority { get; set; }
 
-        public Ticket_Model(string user, string subject, string date, Status status, int ticketNumber, Deadline deadline, Priority priority)
+        [BsonElement("type")]
+        public Type Type { get; set; }
+
+        [BsonElement("description")]
+        public string Description { get; set; }
+
+        public Ticket_Model(string user, string subject, string date, Status status, int ticketNumber, Deadline deadline, Priority priority, Type type, string description)
         {
             User = user;
             Subject = subject;
@@ -40,6 +45,8 @@ namespace Model
             TicketNumber = ticketNumber;
             Deadline = deadline;
             Priority = priority;
+            Type = type;
+            Description = description;
         }
     }
 }
