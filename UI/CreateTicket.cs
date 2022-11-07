@@ -23,6 +23,7 @@ namespace UI
             FormatComboBoxes(cbTypeOfIncident, "type", new Type());
             FormatComboBoxes(cbPriority, "priority", new Priority());
             FormatComboBoxes(cbDeadline, "deadline", new Deadline());
+            dtPickerIncident.MaxDate = DateTime.Today;
             dtPickerIncident.Value = DateTime.Now.Date;
             cbReportedUser.Text = loggedUser.FullName;
         }
