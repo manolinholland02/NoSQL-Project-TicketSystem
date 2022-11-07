@@ -108,10 +108,13 @@
             // 
             // dtPickerIncident
             // 
+            this.dtPickerIncident.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtPickerIncident.Location = new System.Drawing.Point(216, 37);
+            this.dtPickerIncident.Margin = new System.Windows.Forms.Padding(0);
             this.dtPickerIncident.Name = "dtPickerIncident";
-            this.dtPickerIncident.Size = new System.Drawing.Size(200, 22);
+            this.dtPickerIncident.Size = new System.Drawing.Size(199, 22);
             this.dtPickerIncident.TabIndex = 1;
+            this.dtPickerIncident.Value = new System.DateTime(2022, 11, 7, 0, 39, 2, 0);
             // 
             // txtSubOfIncident
             // 

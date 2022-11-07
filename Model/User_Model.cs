@@ -35,6 +35,15 @@ namespace Model
         [BsonElement("phoneNumber")]
         public string PhoneNumber { get; set; }
 
+        //Calculated property for projecting an user's full name 
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
+
         public User_Model(string firstName, string lastName, string email, string password, Role role, Location location, string phoneNumber)
         {
             FirstName = firstName;

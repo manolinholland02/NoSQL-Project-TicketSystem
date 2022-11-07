@@ -29,6 +29,11 @@ namespace Logic
             dao.AddTicket(ticket);
         }
 
+        public int GetTicketCount()
+        {
+            return dao.GetTicketCount();
+        }
+
         public List<Ticket_Model> GetAllTickets()
         {
             return dao.GetAllTickets();

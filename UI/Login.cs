@@ -17,6 +17,7 @@ namespace UI
     public partial class Login : Form
     {
         private UserService userService;
+        private User_Model loggedUser;
 
         public Login()
         {
@@ -34,7 +35,7 @@ namespace UI
 
             if (GetUserByUsernameAndPassword())
             {           
-                NoDeskUI noDeskUI = new NoDeskUI();
+                NoDeskUI noDeskUI = new NoDeskUI(loggedUser);
                 this.Hide();
                 noDeskUI.Show();
             }
@@ -43,9 +44,9 @@ namespace UI
         private bool GetUserByUsernameAndPassword()
         {    
             var filter = Builders<User_Model>.Filter.Eq(s => s.Email, txtUsername.Text) & Builders<User_Model>.Filter.Eq(s => s.Password, txtPassword.Text);
-            var user = userService.GetUserCollection().Find(filter).FirstOrDefault();
+            loggedUser = userService.GetUserCollection().Find(filter).FirstOrDefault();
             
-            if(user == null)
+            if(loggedUser == null)
             {
                 lblLoginError.Text = "incorrect login credentials";
                 return false;

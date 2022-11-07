@@ -1,4 +1,4 @@
 ﻿namespace Model
 {
-    public enum Deadline { five = 5, ten = 10, fifteen = 15 };
+    public enum Deadline { Five = 5, Ten = 10, Fifteen = 15 };
 }

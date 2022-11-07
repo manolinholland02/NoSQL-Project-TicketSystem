@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Data;
-using System.Linq;
 using System.Windows.Forms;
 using Model;
 using Logic;
 using Type = Model.Type;
+using System.Data;
 
 namespace UI
 {
@@ -12,17 +11,42 @@ namespace UI
     {
         TicketService ticketService;
 
-        public CreateTicket()
+        public CreateTicket(User_Model loggedUser)
         {
             InitializeComponent();
             ticketService = TicketService.GetInstance();
-            cbTypeOfIncident.DataSource = Enum.GetValues(typeof(Type));
-            cbPriority.DataSource = Enum.GetValues(typeof(Priority));
-            cbDeadline.DataSource = Enum.GetValues(typeof(Deadline));
-
+            LoadData(loggedUser);
         }
 
-        private void ClearTextBoxes()
+        private void LoadData(User_Model loggedUser)
+        {
+            FormatComboBoxes(cbTypeOfIncident, "type", new Type());
+            FormatComboBoxes(cbPriority, "priority", new Priority());
+            FormatComboBoxes(cbDeadline, "deadline", new Deadline());
+            dtPickerIncident.Value = DateTime.Now.Date;
+            cbReportedUser.Text = loggedUser.FullName;
+        }
+
+        private void FormatComboBoxes(System.Windows.Forms.ComboBox cb, string message, Enum e)
+        {
+            var enumValues = Enum.GetValues(e.GetType());
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Value", typeof(string));
+
+            DataRow dr = dt.NewRow();
+            dr["Value"] = $"Select {message}...";
+            dt.Rows.InsertAt(dr, 0);
+
+            foreach (var name in enumValues)
+            {
+                dt.Rows.Add(name);
+            }
+
+            cb.DataSource = dt;
+            cb.DisplayMember = "Value";
+        }
+
+        private void ClearInputs()
         {
             txtSubOfIncident.Clear();
             txtDescription.Clear();
@@ -31,25 +55,82 @@ namespace UI
             cbDeadline.SelectedIndex = 0;
         }
 
-        /*public void FillComboboxWithData(ComboBox comboBox, Enum e)
+        private int GenerateTicketNumber()
         {
-            var values = Enum.GetNames(e.GetType());
-
-            foreach (var value in values)
+            bool isValidNumberCreated = true;
+            Random rdn = new Random();
+            int[] tickeNumber = new int[5];
+            int combinedOutput = 0;
+            do
             {
-                comboBox.Items.Add(value.ToString());
+                for (int i = 0; i < tickeNumber.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        tickeNumber[i] = rdn.Next(1, 10);
+                        combinedOutput = tickeNumber[i];
+                    }
+                    else
+                    {
+                        tickeNumber[i] = rdn.Next(0, 10);
+                        combinedOutput = (combinedOutput * 10) + tickeNumber[i];
+                    }
+                }
+
+                foreach (Ticket_Model ticket in ticketService.GetAllTickets())
+                {
+                    if (ticket.TicketNumber == combinedOutput) isValidNumberCreated = false;
+                }
             }
-        }*/
+            while (!isValidNumberCreated);
+            
+            return combinedOutput;
+        }
+
+        public void CheckInputs()
+        {
+            if(string.IsNullOrEmpty(txtSubOfIncident.Text))
+                throw new Exception("Subject field can't be blank!");
+            else if(dtPickerIncident.Value > DateTime.Today)
+                throw new Exception("Cannot enter a future date on incident");
+            else if(cbTypeOfIncident.SelectedIndex == 0)
+                throw new Exception("Please select a type for the incident.");
+            else if (cbPriority.SelectedIndex == 0)
+                throw new Exception("Please select a priority for the incident.");
+            else if (cbDeadline.SelectedIndex == 0)
+                throw new Exception("Please select a deadline for the incident.");
+        }
+
+        private string CastSelectedItemToDataRowView(System.Windows.Forms.ComboBox cb)
+        {
+            DataRowView dataRowView = cb.SelectedItem as DataRowView;
+            string selectedValue = "";
+
+            if (dataRowView != null)
+                selectedValue = dataRowView.Row["Value"] as string;
+
+            return selectedValue;
+        }
 
         private void btnSubmitIncident_Click(object sender, EventArgs e)
         {
             try
             {
-                Ticket_Model ticket = new Ticket_Model("Gosho", txtSubOfIncident.Text, dtPickerIncident.Text, Status.unfinished, 5, (Deadline)cbDeadline.SelectedValue, (Priority)cbPriority.SelectedValue, (Type)cbTypeOfIncident.SelectedValue, txtDescription.Text);
+                CheckInputs();
+                Ticket_Model ticket = new Ticket_Model(
+                    cbReportedUser.Text,
+                    txtSubOfIncident.Text,
+                    dtPickerIncident.Text,
+                    Model.Status.unfinished,
+                    GenerateTicketNumber(),
+                    (Deadline)Enum.Parse(typeof(Deadline), CastSelectedItemToDataRowView(cbDeadline)),
+                    (Priority)Enum.Parse(typeof(Priority), CastSelectedItemToDataRowView(cbPriority)),
+                    (Type)Enum.Parse(typeof(Type), CastSelectedItemToDataRowView(cbTypeOfIncident)),
+                    txtDescription.Text);
 
                 ticketService.AddTicket(ticket);
+                ClearInputs();
                 MessageBox.Show($"Ticket has been succesfully added!");
-                ClearTextBoxes();
             }
             catch (Exception error)
             {
