@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Model;
 using Logic;
@@ -13,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace UI
 {
-    public partial class AddUser : Form
+    public partial class AddUser : Form, ICreateEnity
     {
         UserService userService;
         public AddUser()
@@ -22,6 +15,7 @@ namespace UI
             userService = UserService.GetInstance();
             cbLocation.DataSource = Enum.GetValues(typeof(Location));
             cbUser.DataSource = Enum.GetValues(typeof(Role));
+            this.ShowDialog();
         }
         private string GeneratePassword()
         { 
@@ -37,7 +31,7 @@ namespace UI
 
             return password;
         }
-        private void ClearInputs()
+        public void ClearInputs()
         {
             txtFirstName.Clear();
             txtLastName.Clear();
@@ -51,7 +45,7 @@ namespace UI
         {
             this.Close();
         }
-        private void CheckInputs()
+        public void ValidateInputs()
         {
             //Check if all fields are filled
             if (string.IsNullOrEmpty(txtFirstName.Text) || string.IsNullOrEmpty(txtLastName.Text) || string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtNumber.Text))
@@ -87,7 +81,7 @@ namespace UI
 
             try
             {
-                CheckInputs();
+                ValidateInputs();
                 User_Model user = new User_Model(txtFirstName.Text, txtLastName.Text, txtEmail.Text, password, (Role)cbUser.SelectedValue, (Location)cbLocation.SelectedValue, txtNumber.Text);
 
                 userService.AddUser(user);

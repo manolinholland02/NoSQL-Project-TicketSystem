@@ -35,24 +35,9 @@ namespace UI
             HideAllPanel();
             txtTicketNr.Visible = false;
             CheckUser();
-            SetEmployeeAccess(loggedUser);
-        }
+            /*userService.GetUserNames();*/
 
-        private void SetEmployeeAccess(User_Model user)
-        {
-            if (user.Role == Role.Employee)
-            {
-                btnDeleteTicket.Visible = false;
-                btnUserManagement.Visible = false;
-                btnUpdateTicket.Visible = false;
-                txtTicketNr.Visible = false;
-                cbDeadline.Visible = false;
-                cbPriority.Visible = false;
-                dateTimePickerTicket.Visible = false;
-                txtSubject.Visible = false;
-            }
         }
-
         private void HideAllPanel()
         {
             pnlDashboard.Hide();
@@ -62,7 +47,6 @@ namespace UI
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
-            getAllTickets = ticketService.GetAllTickets();
             pnlIncidentManagemnt.Hide();
             pnlUserManagement.Hide();
             pnlDashboard.Show();
@@ -91,13 +75,13 @@ namespace UI
                     progressBarUnresolvedIncidents.PerformStep();
                     progressBarIncidentsPastDeadline.Maximum++;
                 }
-                //DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
-                //int deadline = (int)ticket.Deadline;
-                //int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).TotalDays).ToString());
-                //if (period > deadline)
-                //{
-                //    progressBarIncidentsPastDeadline.PerformStep();
-                //}
+                DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
+                int deadline = (int)ticket.Deadline;
+                int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).TotalDays).ToString());
+                if (period > deadline)
+                {
+                    progressBarIncidentsPastDeadline.PerformStep();
+                }
             }
 
             progressBarUnresolvedIncidents.Text = $"{progressBarUnresolvedIncidents.Value}/{progressBarUnresolvedIncidents.Maximum}";
@@ -127,7 +111,6 @@ namespace UI
         private void DisplayAllEnumValues()
         {
             cbPriority.DataSource = Enum.GetValues(typeof(Priority));
-            cbFilterByType.DataSource = Enum.GetValues(typeof(Model.Type));
             cbDeadline.DataSource = Enum.GetValues(typeof(Deadline))
                                     .Cast<Deadline>()
                                     .Select(x => (int)x)
@@ -166,8 +149,7 @@ namespace UI
 
         private void btnCreateIncident_Click(object sender, EventArgs e)
         {
-            CreateTicket createTicket=new CreateTicket(loggedUser);
-            createTicket.Show();
+            ICreateEnity createTicket=new AddTicket(loggedUser);
         }
 
         // update ticket information when you click the update button
@@ -339,19 +321,6 @@ namespace UI
             }
         }
 
-        //filter by incident type
-        private void cbFilterByType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GetTicketByType(cbFilterByType.SelectedText);
-        }
-
-        private void GetTicketByType(String type)
-        {
-            var filter = Builders<Ticket_Model>.Filter.Regex(t => t.Type, BsonRegularExpression.Create(type));
-            var result = ticketService.GetTicketCollection().Find(filter).ToList();
-            dataGVTicketOverview.DataSource = result;
-        }
-
         //------------------------//
         /*end incident management*/
 
@@ -361,8 +330,7 @@ namespace UI
 
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
-            AddUser addUser = new AddUser();
-            addUser.ShowDialog();
+            ICreateEnity addUser = new AddUser();
         }
 
         private void CheckUser()
