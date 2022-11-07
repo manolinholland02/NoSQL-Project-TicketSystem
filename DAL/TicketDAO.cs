@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Model;
 using System;
+using MongoDB.Bson;
 
 namespace DAL
 {
@@ -30,6 +31,16 @@ namespace DAL
                 instance = new TicketDAO();
 
             return instance;
+        }
+
+        public void AddTicket(Ticket_Model ticket)
+        {
+            collection.InsertOne(ticket);
+        }
+
+        public int GetTicketCount()
+        {
+            return (int)collection.CountDocuments(new BsonDocument());
         }
 
         public List<Ticket_Model> GetAllTickets()

@@ -18,10 +18,12 @@ namespace UI
         const int IdColumn = 0;
         List<Ticket_Model> getAllTickets;
         List<User_Model> getAllUsers;
+        User_Model loggedUser;
 
-        public NoDeskUI()
+        public NoDeskUI(User_Model loggedUser)
         {
             InitializeComponent();
+            this.loggedUser = loggedUser;
             ticketService = TicketService.GetInstance();
             userService = UserService.GetInstance();
             DisplayAllEnumValues();
@@ -33,7 +35,24 @@ namespace UI
             HideAllPanel();
             txtTicketNr.Visible = false;
             CheckUser();
-;        }
+            SetEmployeeAccess(loggedUser);
+        }
+
+        private void SetEmployeeAccess(User_Model user)
+        {
+            if (user.Role == Role.Employee)
+            {
+                btnDeleteTicket.Visible = false;
+                btnUserManagement.Visible = false;
+                btnUpdateTicket.Visible = false;
+                txtTicketNr.Visible = false;
+                cbDeadline.Visible = false;
+                cbPriority.Visible = false;
+                dateTimePickerTicket.Visible = false;
+                txtSubject.Visible = false;
+            }
+        }
+
         private void HideAllPanel()
         {
             pnlDashboard.Hide();
@@ -43,46 +62,50 @@ namespace UI
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
+            getAllTickets = ticketService.GetAllTickets();
             pnlIncidentManagemnt.Hide();
             pnlUserManagement.Hide();
             pnlDashboard.Show();
+
             progressBarUnresolvedIncidents.Minimum = 0;
-            progressBarUnresolvedIncidents.Maximum = 15;
             progressBarIncidentsPastDeadline.Minimum = 0;
-            progressBarIncidentsPastDeadline.Maximum = 4;
-            int countUnfinishedTickets = 0;
-            int countPastDeadlineTickets = 0;
+            
+            if (loggedUser.Role==Role.ServiceDeskEmployee)
+            {
+                ServiceEmployeeDashboard();
+            }
+            else if(loggedUser.Role==Role.Employee)
+            {
+                EmployeeDashboard();
+            }
+        }
+        private void ServiceEmployeeDashboard()
+        {
+            progressBarUnresolvedIncidents.Maximum = getAllTickets.Count;
+            progressBarIncidentsPastDeadline.Maximum = 0;
+
             foreach (Ticket_Model ticket in getAllTickets)
             {
                 if (ticket.Status == Status.unfinished)
                 {
-                    countUnfinishedTickets++;
-                    progressBarUnresolvedIncidents.Value= countUnfinishedTickets;
-                    //unfinishedTickets++;
+                    progressBarUnresolvedIncidents.PerformStep();
+                    progressBarIncidentsPastDeadline.Maximum++;
                 }
-                //if(ticket.Status == Status.finished)
+                //DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
+                //int deadline = (int)ticket.Deadline;
+                //int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).TotalDays).ToString());
+                //if (period > deadline)
                 //{
-                //    countPastDeadlineTickets++;
+                //    progressBarIncidentsPastDeadline.PerformStep();
                 //}
             }
-            progressBarUnresolvedIncidents.Text = $"{countUnfinishedTickets}/15";
-            //progressBarIncidentsPastDeadline.Text = $"{4}";
-            //progressBarIncidentsPastDeadline.Value = 0;
-            foreach (Ticket_Model ticket in getAllTickets)
-            {
-                DateTime now = DateTime.Now;
-                DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
-                int deadline = (int)ticket.Deadline;
-                int period = int.Parse(((now.Date - ticketMadeDate.Date).TotalDays).ToString());
-                if (period>deadline)
-                {
-                    countPastDeadlineTickets++;
-                    progressBarIncidentsPastDeadline.Value=countPastDeadlineTickets;
-                    //progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
-                }
-            }
-            progressBarIncidentsPastDeadline.Text = $"{countPastDeadlineTickets}";
 
+            progressBarUnresolvedIncidents.Text = $"{progressBarUnresolvedIncidents.Value}/{progressBarUnresolvedIncidents.Maximum}";
+            progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
+        }
+
+        private void EmployeeDashboard()
+        {
 
         }
 
@@ -104,6 +127,7 @@ namespace UI
         private void DisplayAllEnumValues()
         {
             cbPriority.DataSource = Enum.GetValues(typeof(Priority));
+            cbFilterByType.DataSource = Enum.GetValues(typeof(Model.Type));
             cbDeadline.DataSource = Enum.GetValues(typeof(Deadline))
                                     .Cast<Deadline>()
                                     .Select(x => (int)x)
@@ -142,7 +166,7 @@ namespace UI
 
         private void btnCreateIncident_Click(object sender, EventArgs e)
         {
-            CreateTicket createTicket=new CreateTicket();
+            CreateTicket createTicket=new CreateTicket(loggedUser);
             createTicket.Show();
         }
 
@@ -315,12 +339,26 @@ namespace UI
             }
         }
 
+        //filter by incident type
+        private void cbFilterByType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetTicketByType(cbFilterByType.SelectedText);
+        }
+
+        private void GetTicketByType(String type)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Regex(t => t.Type, BsonRegularExpression.Create(type));
+            var result = ticketService.GetTicketCollection().Find(filter).ToList();
+            dataGVTicketOverview.DataSource = result;
+        }
+
         //------------------------//
         /*end incident management*/
 
 
         //------------------------//
         /*start user management*/
+
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
             AddUser addUser = new AddUser();

@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblDate = new System.Windows.Forms.Label();
+            this.lblSubject = new System.Windows.Forms.Label();
+            this.lblUser = new System.Windows.Forms.Label();
+            this.lblPriority = new System.Windows.Forms.Label();
+            this.lblDeadline = new System.Windows.Forms.Label();
+            this.lblDescription = new System.Windows.Forms.Label();
             this.dtPickerIncident = new System.Windows.Forms.DateTimePicker();
             this.txtSubOfIncident = new System.Windows.Forms.TextBox();
             this.txtDescription = new System.Windows.Forms.TextBox();
@@ -42,74 +42,80 @@
             this.cbDeadline = new System.Windows.Forms.ComboBox();
             this.btnSubmitIncident = new System.Windows.Forms.Button();
             this.btnCancelTicket = new System.Windows.Forms.Button();
+            this.lblType = new System.Windows.Forms.Label();
+            this.cbTypeOfIncident = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // label1
+            // lblDate
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(35, 37);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(163, 22);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Date/time reported:";
+            this.lblDate.AutoSize = true;
+            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.Location = new System.Drawing.Point(35, 37);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(163, 22);
+            this.lblDate.TabIndex = 0;
+            this.lblDate.Text = "Date/time reported:";
             // 
-            // label2
+            // lblSubject
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(35, 80);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(162, 22);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Subject of incident:";
+            this.lblSubject.AutoSize = true;
+            this.lblSubject.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSubject.Location = new System.Drawing.Point(35, 80);
+            this.lblSubject.Name = "lblSubject";
+            this.lblSubject.Size = new System.Drawing.Size(162, 22);
+            this.lblSubject.TabIndex = 0;
+            this.lblSubject.Text = "Subject of incident:";
             // 
-            // label4
+            // lblUser
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(39, 123);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(153, 22);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Reported by user:";
+            this.lblUser.AutoSize = true;
+            this.lblUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUser.Location = new System.Drawing.Point(39, 200);
+            this.lblUser.Name = "lblUser";
+            this.lblUser.Size = new System.Drawing.Size(153, 22);
+            this.lblUser.TabIndex = 0;
+            this.lblUser.Text = "Reported by user:";
             // 
-            // label5
+            // lblPriority
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(39, 166);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(70, 22);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Priotity:";
+            this.lblPriority.AutoSize = true;
+            this.lblPriority.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPriority.Location = new System.Drawing.Point(39, 243);
+            this.lblPriority.Name = "lblPriority";
+            this.lblPriority.Size = new System.Drawing.Size(70, 22);
+            this.lblPriority.TabIndex = 0;
+            this.lblPriority.Text = "Priotity:";
             // 
-            // label6
+            // lblDeadline
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(35, 213);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(162, 22);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Deadline/follow up:";
+            this.lblDeadline.AutoSize = true;
+            this.lblDeadline.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDeadline.Location = new System.Drawing.Point(35, 290);
+            this.lblDeadline.Name = "lblDeadline";
+            this.lblDeadline.Size = new System.Drawing.Size(162, 22);
+            this.lblDeadline.TabIndex = 0;
+            this.lblDeadline.Text = "Deadline/follow up:";
             // 
-            // label7
+            // lblDescription
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(39, 269);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(105, 22);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Description:";
+            this.lblDescription.AutoSize = true;
+            this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescription.Location = new System.Drawing.Point(39, 346);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(105, 22);
+            this.lblDescription.TabIndex = 0;
+            this.lblDescription.Text = "Description:";
             // 
             // dtPickerIncident
             // 
+            this.dtPickerIncident.CustomFormat = "dd.MM.yyyy";
+            this.dtPickerIncident.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtPickerIncident.Location = new System.Drawing.Point(216, 37);
+            this.dtPickerIncident.Margin = new System.Windows.Forms.Padding(0);
             this.dtPickerIncident.Name = "dtPickerIncident";
-            this.dtPickerIncident.Size = new System.Drawing.Size(200, 22);
+            this.dtPickerIncident.Size = new System.Drawing.Size(199, 22);
             this.dtPickerIncident.TabIndex = 1;
+            this.dtPickerIncident.Value = new System.DateTime(2022, 11, 7, 0, 39, 2, 0);
             // 
             // txtSubOfIncident
             // 
@@ -120,7 +126,7 @@
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(216, 276);
+            this.txtDescription.Location = new System.Drawing.Point(216, 353);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(200, 88);
@@ -129,7 +135,7 @@
             // cbReportedUser
             // 
             this.cbReportedUser.FormattingEnabled = true;
-            this.cbReportedUser.Location = new System.Drawing.Point(216, 123);
+            this.cbReportedUser.Location = new System.Drawing.Point(216, 200);
             this.cbReportedUser.Name = "cbReportedUser";
             this.cbReportedUser.Size = new System.Drawing.Size(200, 24);
             this.cbReportedUser.TabIndex = 3;
@@ -137,7 +143,7 @@
             // cbPriority
             // 
             this.cbPriority.FormattingEnabled = true;
-            this.cbPriority.Location = new System.Drawing.Point(216, 168);
+            this.cbPriority.Location = new System.Drawing.Point(216, 245);
             this.cbPriority.Name = "cbPriority";
             this.cbPriority.Size = new System.Drawing.Size(200, 24);
             this.cbPriority.TabIndex = 3;
@@ -145,14 +151,14 @@
             // cbDeadline
             // 
             this.cbDeadline.FormattingEnabled = true;
-            this.cbDeadline.Location = new System.Drawing.Point(216, 215);
+            this.cbDeadline.Location = new System.Drawing.Point(216, 292);
             this.cbDeadline.Name = "cbDeadline";
             this.cbDeadline.Size = new System.Drawing.Size(200, 24);
             this.cbDeadline.TabIndex = 3;
             // 
             // btnSubmitIncident
             // 
-            this.btnSubmitIncident.Location = new System.Drawing.Point(340, 390);
+            this.btnSubmitIncident.Location = new System.Drawing.Point(340, 467);
             this.btnSubmitIncident.Name = "btnSubmitIncident";
             this.btnSubmitIncident.Size = new System.Drawing.Size(75, 23);
             this.btnSubmitIncident.TabIndex = 4;
@@ -162,18 +168,39 @@
             // 
             // btnCancelTicket
             // 
-            this.btnCancelTicket.Location = new System.Drawing.Point(243, 391);
+            this.btnCancelTicket.Location = new System.Drawing.Point(243, 468);
             this.btnCancelTicket.Name = "btnCancelTicket";
             this.btnCancelTicket.Size = new System.Drawing.Size(75, 23);
             this.btnCancelTicket.TabIndex = 5;
             this.btnCancelTicket.Text = "Cancel";
             this.btnCancelTicket.UseVisualStyleBackColor = true;
+            this.btnCancelTicket.Click += new System.EventHandler(this.btnCancelTicket_Click);
+            // 
+            // lblType
+            // 
+            this.lblType.AutoSize = true;
+            this.lblType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblType.Location = new System.Drawing.Point(35, 125);
+            this.lblType.Name = "lblType";
+            this.lblType.Size = new System.Drawing.Size(143, 22);
+            this.lblType.TabIndex = 6;
+            this.lblType.Text = "Type of incident:";
+            // 
+            // cbTypeOfIncident
+            // 
+            this.cbTypeOfIncident.FormattingEnabled = true;
+            this.cbTypeOfIncident.Location = new System.Drawing.Point(216, 123);
+            this.cbTypeOfIncident.Name = "cbTypeOfIncident";
+            this.cbTypeOfIncident.Size = new System.Drawing.Size(200, 24);
+            this.cbTypeOfIncident.TabIndex = 7;
             // 
             // CreateTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 452);
+            this.ClientSize = new System.Drawing.Size(463, 588);
+            this.Controls.Add(this.cbTypeOfIncident);
+            this.Controls.Add(this.lblType);
             this.Controls.Add(this.btnCancelTicket);
             this.Controls.Add(this.btnSubmitIncident);
             this.Controls.Add(this.cbDeadline);
@@ -182,12 +209,12 @@
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.txtSubOfIncident);
             this.Controls.Add(this.dtPickerIncident);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblDescription);
+            this.Controls.Add(this.lblDeadline);
+            this.Controls.Add(this.lblPriority);
+            this.Controls.Add(this.lblUser);
+            this.Controls.Add(this.lblSubject);
+            this.Controls.Add(this.lblDate);
             this.Name = "CreateTicket";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CreateTicket";
@@ -198,12 +225,12 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblDate;
+        private System.Windows.Forms.Label lblSubject;
+        private System.Windows.Forms.Label lblUser;
+        private System.Windows.Forms.Label lblPriority;
+        private System.Windows.Forms.Label lblDeadline;
+        private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.DateTimePicker dtPickerIncident;
         private System.Windows.Forms.TextBox txtSubOfIncident;
         private System.Windows.Forms.TextBox txtDescription;
@@ -212,5 +239,7 @@
         private System.Windows.Forms.ComboBox cbDeadline;
         private System.Windows.Forms.Button btnSubmitIncident;
         private System.Windows.Forms.Button btnCancelTicket;
+        private System.Windows.Forms.Label lblType;
+        private System.Windows.Forms.ComboBox cbTypeOfIncident;
     }
 }
