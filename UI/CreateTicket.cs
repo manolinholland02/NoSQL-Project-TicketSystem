@@ -4,17 +4,22 @@ using Model;
 using Logic;
 using Type = Model.Type;
 using System.Data;
+using System.Collections.Generic;
 
 namespace UI
 {
     public partial class CreateTicket : Form
     {
         TicketService ticketService;
+        UserService userService;
         User_Model loggedUser;
+        List<User_Model> users;
         public CreateTicket(User_Model loggedUser)
         {
             InitializeComponent();
             ticketService = TicketService.GetInstance();
+            userService = UserService.GetInstance();
+            users = userService.GetAllUsers();
             LoadData(loggedUser);
             this.loggedUser = loggedUser;
         }
@@ -120,7 +125,7 @@ namespace UI
             {
                 CheckInputs();
                 Ticket_Model ticket = new Ticket_Model(
-                    cbReportedUser.Text,
+                    GetSelectedUser(),
                     txtSubOfIncident.Text,
                     dtPickerIncident.Text,
                     Model.Status.unfinished,
@@ -143,6 +148,18 @@ namespace UI
         private void btnCancelTicket_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private User_Model GetSelectedUser()
+        {
+            foreach (var user in users)
+            {
+                if (user.FullName == cbReportedUser.Text)
+                {
+                    return user;
+                }
+            }
+            return null;
         }
     }
 }
