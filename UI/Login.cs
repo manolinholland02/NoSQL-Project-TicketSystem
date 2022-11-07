@@ -33,24 +33,23 @@ namespace UI
                 return;
             }
 
-            if (GetUserByUsernameAndPassword())
+            if (GetUserByUsernameAndPassword() != null)
             {           
                 NoDeskUI noDeskUI = new NoDeskUI(loggedUser);
                 this.Hide();
                 noDeskUI.Show();
-            }     
+            }
+            else{
+                lblLoginError.Text = "incorrect login credentials";
+            }
         }
 
         private User_Model GetUserByUsernameAndPassword()
         {    
             var filter = Builders<User_Model>.Filter.Eq(s => s.Email, txtUsername.Text) & Builders<User_Model>.Filter.Eq(s => s.Password, txtPassword.Text);
             loggedUser = userService.GetUserCollection().Find(filter).FirstOrDefault();
-            
-            if(loggedUser == null)
-            {
-                lblLoginError.Text = "incorrect login credentials";
-            }
-            return user;
+
+            return loggedUser;
         }
     }
 }
