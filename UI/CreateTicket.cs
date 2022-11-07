@@ -11,17 +11,12 @@ namespace UI
     public partial class CreateTicket : Form
     {
         TicketService ticketService;
-        UserService userService;
-        User_Model loggedUser;
-        List<User_Model> users;
+
         public CreateTicket(User_Model loggedUser)
         {
             InitializeComponent();
             ticketService = TicketService.GetInstance();
-            userService = UserService.GetInstance();
-            users = userService.GetAllUsers();
             LoadData(loggedUser);
-            this.loggedUser = loggedUser;
         }
 
         private void LoadData(User_Model loggedUser)
@@ -125,7 +120,7 @@ namespace UI
             {
                 CheckInputs();
                 Ticket_Model ticket = new Ticket_Model(
-                    GetSelectedUser(),
+                    cbReportedUser.Text,
                     txtSubOfIncident.Text,
                     dtPickerIncident.Text,
                     Model.Status.unfinished,
@@ -150,16 +145,5 @@ namespace UI
             this.Close();
         }
 
-        private User_Model GetSelectedUser()
-        {
-            foreach (var user in users)
-            {
-                if (user.FullName == cbReportedUser.Text)
-                {
-                    return user;
-                }
-            }
-            return null;
-        }
     }
 }

@@ -53,41 +53,44 @@ namespace UI
 
             progressBarUnresolvedIncidents.Minimum = 0;
             progressBarIncidentsPastDeadline.Minimum = 0;
-            int numberOfUnfinishedTickets = 0;
-
+            
             if (loggedUser.Role==Role.ServiceDeskEmployee)
             {
-                progressBarUnresolvedIncidents.Maximum = getAllTickets.Count;
-                foreach (Ticket_Model ticket in getAllTickets)
-                {
-                    if (ticket.Status == Status.unfinished)
-                    {
-                        progressBarUnresolvedIncidents.PerformStep();
-                        numberOfUnfinishedTickets++;
-                    }
-                }
-                progressBarUnresolvedIncidents.Text = $"{progressBarUnresolvedIncidents.Value}/{progressBarUnresolvedIncidents.Maximum}";
-
-                progressBarIncidentsPastDeadline.Maximum = numberOfUnfinishedTickets;
-                foreach (Ticket_Model ticket in getAllTickets)
-                {
-                    DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
-                    int deadline = (int)ticket.Deadline;
-                    int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).TotalDays).ToString());
-                    if (period > deadline)
-                    {
-                        progressBarIncidentsPastDeadline.PerformStep();
-                    }
-                }
-                progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
+                ServiceEmployeeDashboard();
             }
             else if(loggedUser.Role==Role.Employee)
             {
-                foreach (Ticket_Model ticket in getAllTickets)
+                EmployeeDashboard();
+            }
+        }
+        private void ServiceEmployeeDashboard()
+        {
+            progressBarUnresolvedIncidents.Maximum = getAllTickets.Count;
+            progressBarIncidentsPastDeadline.Maximum = 0;
+
+            foreach (Ticket_Model ticket in getAllTickets)
+            {
+                if (ticket.Status == Status.unfinished)
                 {
-                    if()
+                    progressBarUnresolvedIncidents.PerformStep();
+                    progressBarIncidentsPastDeadline.Maximum++;
+                }
+                DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
+                int deadline = (int)ticket.Deadline;
+                int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).TotalDays).ToString());
+                if (period > deadline)
+                {
+                    progressBarIncidentsPastDeadline.PerformStep();
                 }
             }
+
+            progressBarUnresolvedIncidents.Text = $"{progressBarUnresolvedIncidents.Value}/{progressBarUnresolvedIncidents.Maximum}";
+            progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
+        }
+
+        private void EmployeeDashboard()
+        {
+
         }
 
         private void btnIncidentManagement_Click(object sender, EventArgs e)

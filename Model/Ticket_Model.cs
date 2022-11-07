@@ -10,13 +10,13 @@ namespace Model
         public ObjectId Id { get; set; }
 
         [BsonElement("user")]
-        public User_Model User { get; set; }
+        public string User { get; set; }
 
         [BsonElement("subject")]
         public string Subject { get; set; }
 
         [BsonElement("date")]
-        public String Date { get; set; }
+        public string Date { get; set; }
 
         [BsonElement("status")]
         public Status Status { get; set; }
@@ -36,7 +36,7 @@ namespace Model
         [BsonElement("description")]
         public string Description { get; set; }
 
-        public Ticket_Model(User_Model user, string subject, string date, Status status, int ticketNumber, Deadline deadline, Priority priority, Type type, string description)
+        public Ticket_Model(string user, string subject, string date, Status status, int ticketNumber, Deadline deadline, Priority priority, Type type, string description)
         {
             User = user;
             Subject = subject;
