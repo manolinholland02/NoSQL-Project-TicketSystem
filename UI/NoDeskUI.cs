@@ -18,11 +18,12 @@ namespace UI
         const int IdColumn = 0;
         List<Ticket_Model> getAllTickets;
         List<User_Model> getAllUsers;
-        User_Model user;
+        User_Model loggedUser;
 
-        public NoDeskUI(User_Model user)
+        public NoDeskUI(User_Model loggedUser)
         {
             InitializeComponent();
+            this.loggedUser = loggedUser;
             ticketService = TicketService.GetInstance();
             userService = UserService.GetInstance();
             DisplayAllEnumValues();
@@ -34,8 +35,9 @@ namespace UI
             HideAllPanel();
             txtTicketNr.Visible = false;
             CheckUser();
-            this.user = user
-;        }
+            /*userService.GetUserNames();*/
+
+        }
         private void HideAllPanel()
         {
             pnlDashboard.Hide();
@@ -144,7 +146,7 @@ namespace UI
 
         private void btnCreateIncident_Click(object sender, EventArgs e)
         {
-            CreateTicket createTicket=new CreateTicket();
+            CreateTicket createTicket=new CreateTicket(loggedUser);
             createTicket.Show();
         }
 
@@ -323,6 +325,7 @@ namespace UI
 
         //------------------------//
         /*start user management*/
+
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
             AddUser addUser = new AddUser();

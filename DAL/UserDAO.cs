@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using System.Linq;
 
 namespace DAL
@@ -32,14 +33,6 @@ namespace DAL
 
             return instance;
         }
-
-        //public void GetMongoFields()
-        //{
-        //    collection = db.GetCollection<User_Model>("users");
-        //    var filter = Builders<User_Model>.Filter.Empty;
-        //    var projection = Builders<User_Model>.Projection.Exclude("_id");
-        //    var result = collection.Find<User_Model>(filter).Project(projection).ToList();
-        //}
 
         public void AddUser(User_Model user)
         {
