@@ -77,6 +77,8 @@
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.cbFilterByType = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.pnlMenuCOntainer.SuspendLayout();
             this.pnlDashboard.SuspendLayout();
             this.pnlUserManagement.SuspendLayout();
@@ -350,6 +352,8 @@
             // pnlIncidentManagemnt
             // 
             this.pnlIncidentManagemnt.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.pnlIncidentManagemnt.Controls.Add(this.label9);
+            this.pnlIncidentManagemnt.Controls.Add(this.cbFilterByType);
             this.pnlIncidentManagemnt.Controls.Add(this.btnRecentTicket);
             this.pnlIncidentManagemnt.Controls.Add(this.txtTicketNr);
             this.pnlIncidentManagemnt.Controls.Add(this.btnSearchOr);
@@ -385,7 +389,7 @@
             // btnRecentTicket
             // 
             this.btnRecentTicket.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnRecentTicket.Location = new System.Drawing.Point(1112, 46);
+            this.btnRecentTicket.Location = new System.Drawing.Point(1006, 174);
             this.btnRecentTicket.Name = "btnRecentTicket";
             this.btnRecentTicket.Size = new System.Drawing.Size(110, 34);
             this.btnRecentTicket.TabIndex = 20;
@@ -395,7 +399,7 @@
             // 
             // txtTicketNr
             // 
-            this.txtTicketNr.Location = new System.Drawing.Point(1006, 282);
+            this.txtTicketNr.Location = new System.Drawing.Point(1006, 320);
             this.txtTicketNr.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtTicketNr.Name = "txtTicketNr";
             this.txtTicketNr.Size = new System.Drawing.Size(148, 22);
@@ -536,7 +540,7 @@
             // cbDeadline
             // 
             this.cbDeadline.FormattingEnabled = true;
-            this.cbDeadline.Location = new System.Drawing.Point(1006, 379);
+            this.cbDeadline.Location = new System.Drawing.Point(1006, 400);
             this.cbDeadline.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbDeadline.Name = "cbDeadline";
             this.cbDeadline.Size = new System.Drawing.Size(148, 24);
@@ -545,7 +549,7 @@
             // cbPriority
             // 
             this.cbPriority.FormattingEnabled = true;
-            this.cbPriority.Location = new System.Drawing.Point(1006, 330);
+            this.cbPriority.Location = new System.Drawing.Point(1006, 361);
             this.cbPriority.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbPriority.Name = "cbPriority";
             this.cbPriority.Size = new System.Drawing.Size(148, 24);
@@ -639,13 +643,32 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // cbFilterByType
+            // 
+            this.cbFilterByType.FormattingEnabled = true;
+            this.cbFilterByType.Location = new System.Drawing.Point(1006, 94);
+            this.cbFilterByType.Name = "cbFilterByType";
+            this.cbFilterByType.Size = new System.Drawing.Size(121, 24);
+            this.cbFilterByType.TabIndex = 21;
+            this.cbFilterByType.SelectedIndexChanged += new System.EventHandler(this.cbFilterByType_SelectedIndexChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(1001, 61);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(200, 25);
+            this.label9.TabIndex = 22;
+            this.label9.Text = "Filter by incident type:";
+            // 
             // NoDeskUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1286, 752);
-            this.Controls.Add(this.pnlDashboard);
             this.Controls.Add(this.pnlIncidentManagemnt);
+            this.Controls.Add(this.pnlDashboard);
             this.Controls.Add(this.pnlUserManagement);
             this.Controls.Add(this.pnlMenuCOntainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -717,5 +740,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dataGVUser;
+        private System.Windows.Forms.ComboBox cbFilterByType;
+        private System.Windows.Forms.Label label9;
     }
 }

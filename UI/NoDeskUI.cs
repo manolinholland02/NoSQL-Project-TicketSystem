@@ -36,8 +36,25 @@ namespace UI
             txtTicketNr.Visible = false;
             CheckUser();
             /*userService.GetUserNames();*/
-
+            SetEmployeeAccess(loggedUser);
         }
+
+        private void SetEmployeeAccess(User_Model user)
+        {
+            if (user.Role == Role.Employee)
+            {
+                btnCreateIncident.Visible = false;
+                btnDeleteTicket.Visible = false;
+                btnUserManagement.Visible = false;
+                btnUpdateTicket.Visible = false;
+                txtTicketNr.Visible = false;
+                cbDeadline.Visible = false;
+                cbPriority.Visible = false;
+                dateTimePickerTicket.Visible = false;
+                txtSubject.Visible = false;
+            }
+        }
+
         private void HideAllPanel()
         {
             pnlDashboard.Hide();
@@ -111,6 +128,7 @@ namespace UI
         private void DisplayAllEnumValues()
         {
             cbPriority.DataSource = Enum.GetValues(typeof(Priority));
+            cbFilterByType.DataSource = Enum.GetValues(typeof(Model.Type));
             cbDeadline.DataSource = Enum.GetValues(typeof(Deadline))
                                     .Cast<Deadline>()
                                     .Select(x => (int)x)
@@ -320,6 +338,19 @@ namespace UI
             {
                 MessageBox.Show("Error: " + exception.Message);
             }
+        }
+
+        //filter by incident type
+        private void cbFilterByType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetTicketByType(cbFilterByType.SelectedText);
+        }
+
+        private void GetTicketByType(String type)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Eq(t => t.Type.ToString(), type);
+            var result = ticketService.GetTicketCollection().Find(filter);
+            dataGVTicketOverview.DataSource = result;
         }
 
         //------------------------//
