@@ -35,7 +35,6 @@ namespace UI
             HideAllPanel();
             txtTicketNr.Visible = false;
             CheckUser();
-            /*userService.GetUserNames();*/
             SetEmployeeAccess(loggedUser);
         }
 
@@ -43,7 +42,6 @@ namespace UI
         {
             if (user.Role == Role.Employee)
             {
-                btnCreateIncident.Visible = false;
                 btnDeleteTicket.Visible = false;
                 btnUserManagement.Visible = false;
                 btnUpdateTicket.Visible = false;
@@ -64,6 +62,7 @@ namespace UI
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
+            getAllTickets = ticketService.GetAllTickets();
             pnlIncidentManagemnt.Hide();
             pnlUserManagement.Hide();
             pnlDashboard.Show();
@@ -92,13 +91,13 @@ namespace UI
                     progressBarUnresolvedIncidents.PerformStep();
                     progressBarIncidentsPastDeadline.Maximum++;
                 }
-                DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
-                int deadline = (int)ticket.Deadline;
-                int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).TotalDays).ToString());
-                if (period > deadline)
-                {
-                    progressBarIncidentsPastDeadline.PerformStep();
-                }
+                //DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
+                //int deadline = (int)ticket.Deadline;
+                //int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).TotalDays).ToString());
+                //if (period > deadline)
+                //{
+                //    progressBarIncidentsPastDeadline.PerformStep();
+                //}
             }
 
             progressBarUnresolvedIncidents.Text = $"{progressBarUnresolvedIncidents.Value}/{progressBarUnresolvedIncidents.Maximum}";
@@ -348,8 +347,8 @@ namespace UI
 
         private void GetTicketByType(String type)
         {
-            var filter = Builders<Ticket_Model>.Filter.Eq(t => t.Type.ToString(), type);
-            var result = ticketService.GetTicketCollection().Find(filter);
+            var filter = Builders<Ticket_Model>.Filter.Regex(t => t.Type, BsonRegularExpression.Create(type));
+            var result = ticketService.GetTicketCollection().Find(filter).ToList();
             dataGVTicketOverview.DataSource = result;
         }
 

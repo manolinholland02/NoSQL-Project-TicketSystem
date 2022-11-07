@@ -108,7 +108,8 @@
             // 
             // dtPickerIncident
             // 
-            this.dtPickerIncident.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtPickerIncident.CustomFormat = "dd.MM.yyyy";
+            this.dtPickerIncident.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtPickerIncident.Location = new System.Drawing.Point(216, 37);
             this.dtPickerIncident.Margin = new System.Windows.Forms.Padding(0);
             this.dtPickerIncident.Name = "dtPickerIncident";

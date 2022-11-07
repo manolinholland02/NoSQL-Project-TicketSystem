@@ -26,7 +26,7 @@ namespace UI
             FormatComboBoxes(cbDeadline, "deadline", new Deadline());
             dtPickerIncident.MaxDate = DateTime.Today;
             dtPickerIncident.Value = DateTime.Now.Date;
-            cbReportedUser.Text = loggedUser.FullName;
+            cbReportedUser.Text = loggedUser.Email;
         }
 
         private void FormatComboBoxes(System.Windows.Forms.ComboBox cb, string message, Enum e)
