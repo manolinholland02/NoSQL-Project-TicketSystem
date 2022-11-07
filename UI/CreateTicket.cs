@@ -10,12 +10,13 @@ namespace UI
     public partial class CreateTicket : Form
     {
         TicketService ticketService;
-
+        User_Model loggedUser;
         public CreateTicket(User_Model loggedUser)
         {
             InitializeComponent();
             ticketService = TicketService.GetInstance();
             LoadData(loggedUser);
+            this.loggedUser = loggedUser;
         }
 
         private void LoadData(User_Model loggedUser)
