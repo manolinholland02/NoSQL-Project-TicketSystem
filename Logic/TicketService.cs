@@ -28,6 +28,14 @@ namespace Logic
         {
             dao.AddTicket(ticket);
         }
+        public void UpdateTicketStatus(int ticketNr)
+        {
+            dao.UpdateTicketStatus(ticketNr);
+        }
+        public void TransferTicket(string email, int ticketNr)
+        {
+            dao.TransferTicket(email, ticketNr);
+        }
 
         public int GetTicketCount()
         {

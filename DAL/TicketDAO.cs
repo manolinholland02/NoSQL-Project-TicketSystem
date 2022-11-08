@@ -37,6 +37,19 @@ namespace DAL
         {
             collection.InsertOne(ticket);
         }
+        public void UpdateTicketStatus(int ticketNr)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
+            var update = Builders<Ticket_Model>.Update.Set(s => s.Status, Status.finished);
+            collection.UpdateOne(filter, update);
+        }
+        public void TransferTicket(string email, int ticketNr)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
+            var update = Builders<Ticket_Model>.Update.Set(e => e.Email, email);
+            collection.UpdateOne(filter, update);
+            return;
+        }
 
         public int GetTicketCount()
         {

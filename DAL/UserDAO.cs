@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Linq;
+using MongoDB.Bson;
 
 namespace DAL
 {
@@ -38,10 +39,26 @@ namespace DAL
         {
             collection.InsertOne(user);
         }
+        public void DeleteUser(string email)
+        {
+            var filter = Builders<User_Model>.Filter.Eq(e => e.Email, email);
+            collection.DeleteOne(filter);
+        }
 
         public List<User_Model> GetAllUsers()
         {
             return collection.AsQueryable().ToList<User_Model>();
+        }
+        public List<User_Model> GetAllEmployees()
+        {
+            var filter = Builders<User_Model>.Filter.Eq(r => r.Role, Role.Employee);
+            return collection.Find(filter).ToList();
+        }
+        public bool CheckUniqueEmail(string email)
+        {
+            var filter = Builders<User_Model>.Filter.Eq(e => e.Email, email);
+            if(collection.CountDocuments(filter) == 0) { return true; }
+            else { return false; }
         }
 
         public IMongoCollection<User_Model> GetUserCollection()
