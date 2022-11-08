@@ -31,12 +31,28 @@ namespace UI
             getAllUsers = userService.GetAllUsers();
 
             DisplayTickets(getAllTickets);
+            DisableUpdateBoxes();
             DisplayUsers(getAllUsers);     
             HideAllPanel();
             txtTicketNr.Visible = false;
-            CheckUser();
-            /*userService.GetUserNames();*/
+            SetEmployeeAccess(loggedUser);
+        }
 
+        private void SetEmployeeAccess(User_Model user)
+        {
+            if (user.Role == Role.Employee)
+            {
+                btnDeleteTicket.Visible = false;
+                btnUserManagement.Visible = false;
+                btnUpdateTicket.Visible = false;
+                txtTicketNr.Visible = false;
+                cbDeadline.Visible = false;
+                cbPriority.Visible = false;
+                dateTimePickerTicket.Visible = false;
+                txtSubject.Visible = false;
+                btnTransferTicket.Visible = false;
+                btnCloseTicket.Visible = false;
+            }
         }
         private void HideAllPanel()
         {
@@ -107,6 +123,11 @@ namespace UI
             pnlIncidentManagemnt.Hide();
             pnlUserManagement.Show();
         }
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you wish to logout?", "Logout", MessageBoxButtons.YesNo);
+            if(dialogResult == DialogResult.Yes) { this.Close(); }
+        }
         //showing all the enum values in the combobox
         private void DisplayAllEnumValues()
         {
@@ -139,12 +160,46 @@ namespace UI
         private void dGVTicketOverview_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int indexOfRow = e.RowIndex;
-            DataGridViewRow row = dataGVTicketOverview.Rows[indexOfRow];       
+            DataGridViewRow row = dataGVTicketOverview.Rows[indexOfRow];
             txtSubject.Text = row.Cells[2].Value.ToString();
-            txtTicketNr.Text= row.Cells[5].Value.ToString();
+            txtTicketNr.Text = row.Cells[5].Value.ToString();
             cbDeadline.Text = row.Cells[6].Value.ToString();
             cbPriority.Text = row.Cells[7].Value.ToString();
 
+            CheckTicketStatus();
+
+        }
+
+        //Disables the boxes and update buttons if the ticket is closed.
+        private void CheckTicketStatus()
+        {
+            int indexOfRow = dataGVTicketOverview.SelectedCells[0].RowIndex; 
+            DataGridViewRow row = dataGVTicketOverview.Rows[indexOfRow];
+
+            if (row.Cells[4].Value.ToString() == "finished") { DisableUpdateBoxes(); }
+            else { EnableUpdateBoxes(); }
+        }
+        private void DisableUpdateBoxes()
+        {
+            txtSubject.Enabled = false;
+            txtTicketNr.Enabled = false;
+            cbDeadline.Enabled = false;
+            cbPriority.Enabled = false;
+            btnUpdateTicket.Enabled = false;
+            dateTimePickerTicket.Enabled = false;
+            btnTransferTicket.Enabled = false;
+            btnCloseTicket.Enabled = false;
+        }
+        private void EnableUpdateBoxes()
+        {
+            txtSubject.Enabled = true;
+            txtTicketNr.Enabled = true;
+            cbDeadline.Enabled = true;
+            cbPriority.Enabled = true;
+            btnUpdateTicket.Enabled = true;
+            dateTimePickerTicket.Enabled = true;
+            btnTransferTicket.Enabled = true;
+            btnCloseTicket.Enabled = true;
         }
 
         private void btnCreateIncident_Click(object sender, EventArgs e)
@@ -321,6 +376,85 @@ namespace UI
             }
         }
 
+        //filter by incident type
+        private void cbFilterByType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetTicketByType(cbFilterByType.SelectedText);
+        }
+
+        private void GetTicketByType(String type)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Regex(t => t.Type, BsonRegularExpression.Create(type));
+            var result = ticketService.GetTicketCollection().Find(filter).ToList();
+            dataGVTicketOverview.DataSource = result;
+        }
+        private void RefreshTickets()
+        {
+            var ticketList = ticketService.GetAllTickets();
+            DisplayTickets(ticketList);
+        }
+        private void btnCloseTicket_Click(object sender, EventArgs e)
+        {
+            CloseTicket();
+            MessageBox.Show("Ticket succesfully closed!");
+
+        }
+        private void btnTransferTicket_Click(object sender, EventArgs e)
+        {
+            TransferTicket transfer = new TransferTicket(GetTicketNumber(), GetTicketEmail());
+            transfer.FormClosing += new FormClosingEventHandler(this.transfer_FormClosing);
+            transfer.ShowDialog();
+        }
+        private void transfer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            RefreshTickets();
+            CheckTicketStatus();
+        }
+        private int GetTicketNumber()
+        {
+            try
+            {
+                if (dataGVTicketOverview.SelectedRows.Count == 0) { throw new Exception("No rows selected!"); }
+
+                int rowIndex = dataGVTicketOverview.SelectedCells[0].RowIndex;
+                DataGridViewRow selectedRow = dataGVTicketOverview.Rows[rowIndex];
+                int ticketNr = int.Parse(selectedRow.Cells[5].Value.ToString());
+
+                return ticketNr;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"ERROR: {ex.Message}");
+
+            }
+            return 0;
+        }
+        private string GetTicketEmail()
+        {
+            try
+            {
+                if (dataGVTicketOverview.SelectedRows.Count == 0) { throw new Exception("No rows selected!"); }
+
+                int rowIndex = dataGVTicketOverview.SelectedCells[0].RowIndex;
+                DataGridViewRow selectedRow = dataGVTicketOverview.Rows[rowIndex];
+                string email = selectedRow.Cells[1].Value.ToString();
+
+                return email;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"ERROR: {ex.Message}");
+
+            }
+            return null;
+        }
+        private void CloseTicket()
+        {
+            ticketService.UpdateTicketStatus(GetTicketNumber());
+            RefreshTickets();
+            CheckTicketStatus();
+        }
+
         //------------------------//
         /*end incident management*/
 
@@ -331,13 +465,13 @@ namespace UI
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
             ICreateEnity addUser = new AddUser();
+            AddUser addUser = new AddUser();
+            addUser.FormClosing += new FormClosingEventHandler(this.addUser_FormClosing);
+            addUser.ShowDialog();
         }
-
-        private void CheckUser()
+        private void addUser_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //Check if the logged in user is employee or servicedeskemployee, disabling
-            //buttons if only employee. To-Do after login is finished
-            
+            RefreshUsers();
         }
 
         private void btnShowList_Click(object sender, EventArgs e)
@@ -356,6 +490,40 @@ namespace UI
             dataGVUser.Columns[PasswordColumn].Visible = false;
 
         }
+
+        private void btnRefreshUser_Click(object sender, EventArgs e)
+        {
+            RefreshUsers();
+        }
+        private void RefreshUsers()
+        {
+            var users = userService.GetAllUsers();
+            DisplayUsers(users);
+        }
+
+        private void btnDeleteUser_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult dialogResult = MessageBox.Show("Are you sure you wish to delete this user?", "User deletion", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    int rowIndex = dataGVUser.SelectedCells[0].RowIndex;
+                    DataGridViewRow selectedRow = dataGVUser.Rows[rowIndex];
+                    string email = selectedRow.Cells[3].Value.ToString();
+                    userService.DeleteUser(email);
+
+                    MessageBox.Show("User successfully deleted!");
+
+                    RefreshUsers();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting user \nERROR:{ex.Message}");
+            }
+        }
+
 
         //------------------------//
         /*end user management*/
