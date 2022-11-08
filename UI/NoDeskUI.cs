@@ -464,7 +464,6 @@ namespace UI
 
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
-            ICreateEnity addUser = new AddUser();
             AddUser addUser = new AddUser();
             addUser.FormClosing += new FormClosingEventHandler(this.addUser_FormClosing);
             addUser.ShowDialog();

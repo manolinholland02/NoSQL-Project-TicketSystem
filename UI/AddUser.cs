@@ -33,7 +33,7 @@ namespace UI
 
         //    return password;
         //}
-        private void ClearInputs()
+        public void ClearInputs()
         {
             txtFirstName.Clear();
             txtLastName.Clear();
@@ -84,7 +84,7 @@ namespace UI
             try
             {
                 ValidateInputs();
-                User_Model user = new User_Model(txtFirstName.Text, txtLastName.Text, txtEmail.Text, password, (Role)cbUser.SelectedValue, (Location)cbLocation.SelectedValue, txtNumber.Text);
+                User_Model user = new User_Model(txtFirstName.Text, txtLastName.Text, txtEmail.Text, txtPassword.Text, (Role)cbUser.SelectedValue, (Location)cbLocation.SelectedValue, txtNumber.Text);
 
                 userService.AddUser(user);
                 //MessageBox.Show($"User succesfully added! \nPassword = {password}");
