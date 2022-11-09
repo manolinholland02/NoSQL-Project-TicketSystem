@@ -41,6 +41,7 @@ namespace UI
             txtEmail.Clear();
             txtNumber.Clear();
             txtPassword.Clear();
+            txtVerifyPassword.Clear();
             cbLocation.SelectedIndex = 0;
             cbUser.SelectedIndex = 0;
         }
