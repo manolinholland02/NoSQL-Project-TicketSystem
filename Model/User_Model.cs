@@ -35,12 +35,15 @@ namespace Model
         [BsonElement("phoneNumber")]
         public string PhoneNumber { get; set; }
 
-        //Calculated property for projecting an user's full name 
-        public string FullName
+        //Calculated property for projecting an user's full name in combination with email
+        //For deisgning purposes only (for the ComboBox of selecting reporting user of an incident)
+        //Multiple users can have similar fullnames but uniqie emails
+        //This property differentiate users with similar names when service desk employee wants to select the reporting user of an incident
+        public string FullNameEmailPair
         {
             get
             {
-                return FirstName + " " + LastName;
+                return $"{FirstName} {LastName} ({Email})";
             }
         }
 

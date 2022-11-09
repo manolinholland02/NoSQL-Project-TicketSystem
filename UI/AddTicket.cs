@@ -4,6 +4,7 @@ using Model;
 using Logic;
 using Type = Model.Type;
 using System.Data;
+using System.Collections.Generic;
 
 namespace UI
 {
@@ -21,15 +22,37 @@ namespace UI
 
         private void LoadData(User_Model loggedUser)
         {
-            FormatComboBoxes(cbTypeOfIncident, "type", new Type());
-            FormatComboBoxes(cbPriority, "priority", new Priority());
-            FormatComboBoxes(cbDeadline, "deadline", new Deadline());
+            FormatComboBox(cbTypeOfIncident, "type", new Type());
+            FormatComboBox(cbPriority, "priority", new Priority());
+            FormatComboBox(cbDeadline, "deadline", new Deadline());
             dtPickerIncident.MaxDate = DateTime.Today;
             dtPickerIncident.Value = DateTime.Now.Date;
-            cbReportedUser.Text = loggedUser.Email;
+            FormatReportedUserComboBox(loggedUser);
         }
 
-        private void FormatComboBoxes(System.Windows.Forms.ComboBox cb, string message, Enum e)
+        private void FormatReportedUserComboBox(User_Model loggedUser)
+        {
+            if (loggedUser.Role == Role.ServiceDeskEmployee)
+            {
+                UserService userService = UserService.GetInstance();
+                List<User_Model> users = userService.GetAllUsers();
+                Dictionary<string, string> emailFullnamePairs = new Dictionary<string, string>();
+                const string ComboBoxDefaultMessage = "Select user...";
+
+                emailFullnamePairs.Add("0", ComboBoxDefaultMessage);
+                foreach (User_Model user in users) emailFullnamePairs.Add(user.Email, user.FullNameEmailPair);
+
+                cbReportedUser.DataSource = new BindingSource(emailFullnamePairs, null);
+                cbReportedUser.DisplayMember = "Value";
+                cbReportedUser.ValueMember = "Key";
+            }
+            else
+            {
+                cbReportedUser.Text = loggedUser.FullNameEmailPair;
+            }
+        }
+
+        private void FormatComboBox(ComboBox cb, string message, Enum e)
         {
             var enumValues = Enum.GetValues(e.GetType());
             DataTable dt = new DataTable();
@@ -91,25 +114,27 @@ namespace UI
 
         public void ValidateInputs()
         {
-            if(string.IsNullOrEmpty(txtSubOfIncident.Text))
+            if (string.IsNullOrEmpty(txtSubOfIncident.Text))
                 throw new Exception("Subject field can't be blank!");
-            else if(dtPickerIncident.Value > DateTime.Today)
+            else if (dtPickerIncident.Value > DateTime.Today)
                 throw new Exception("Cannot enter a future date on incident");
-            else if(cbTypeOfIncident.SelectedIndex == 0)
+            else if (cbTypeOfIncident.SelectedIndex == 0)
                 throw new Exception("Please select a type for the incident.");
+            else if (cbReportedUser.SelectedIndex == 0)
+                throw new Exception("Please select a reporting user for the incident");
             else if (cbPriority.SelectedIndex == 0)
                 throw new Exception("Please select a priority for the incident.");
             else if (cbDeadline.SelectedIndex == 0)
                 throw new Exception("Please select a deadline for the incident.");
         }
 
-        private string CastSelectedItemToDataRowView(System.Windows.Forms.ComboBox cb)
+        private string CastSelectedItemToDataRowView(ComboBox cb)
         {
             DataRowView dataRowView = cb.SelectedItem as DataRowView;
             string selectedValue = "";
 
             if (dataRowView != null)
-                selectedValue = dataRowView.Row["Value"] as string;
+                selectedValue = dataRowView.Row["Key"] as string;
 
             return selectedValue;
         }
@@ -123,7 +148,7 @@ namespace UI
                     cbReportedUser.Text,
                     txtSubOfIncident.Text,
                     dtPickerIncident.Text,
-                    Model.Status.unfinished,
+                    Status.unfinished,
                     GenerateTicketNumber(),
                     (Deadline)Enum.Parse(typeof(Deadline), CastSelectedItemToDataRowView(cbDeadline)),
                     (Priority)Enum.Parse(typeof(Priority), CastSelectedItemToDataRowView(cbPriority)),
