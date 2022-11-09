@@ -485,7 +485,6 @@
             this.cbFilterByType.Name = "cbFilterByType";
             this.cbFilterByType.Size = new System.Drawing.Size(121, 24);
             this.cbFilterByType.TabIndex = 21;
-            this.cbFilterByType.SelectedIndexChanged += new System.EventHandler(this.cbFilterByType_SelectedIndexChanged_1);
             // 
             // btnRecentTicket
             // 

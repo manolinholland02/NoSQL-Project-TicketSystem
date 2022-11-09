@@ -63,21 +63,6 @@ namespace UI
             }
         }
 
-        private void SetEmployeeAccess(User_Model user)
-        {
-            if (user.Role == Role.Employee)
-            {
-                btnDeleteTicket.Visible = false;
-                btnUserManagement.Visible = false;
-                btnUpdateTicket.Visible = false;
-                txtTicketNr.Visible = false;
-                cbDeadline.Visible = false;
-                cbPriority.Visible = false;
-                dateTimePickerTicket.Visible = false;
-                txtSubject.Visible = false;
-            }
-        }
-
         private void HideAllPanel()
         {
             pnlDashboard.Hide();

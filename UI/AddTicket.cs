@@ -148,7 +148,7 @@ namespace UI
                     cbReportedUser.Text,
                     txtSubOfIncident.Text,
                     dtPickerIncident.Text,
-                    Status.unfinished,
+                    Status.Unfinished,
                     GenerateTicketNumber(),
                     (Deadline)Enum.Parse(typeof(Deadline), CastSelectedItemToDataRowView(cbDeadline)),
                     (Priority)Enum.Parse(typeof(Priority), CastSelectedItemToDataRowView(cbPriority)),
