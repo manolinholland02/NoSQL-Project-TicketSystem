@@ -196,7 +196,7 @@ namespace UI
             int indexOfRow = dataGVTicketOverview.SelectedCells[0].RowIndex; 
             DataGridViewRow row = dataGVTicketOverview.Rows[indexOfRow];
 
-            if (row.Cells[4].Value.ToString() == "finished") { DisableUpdateBoxes(); }
+            if (row.Cells[4].Value.ToString() == "Finished") { DisableUpdateBoxes(); }
             else { EnableUpdateBoxes(); }
         }
         private void DisableUpdateBoxes()
@@ -224,7 +224,15 @@ namespace UI
 
         private void btnCreateIncident_Click(object sender, EventArgs e)
         {
-            ICreateEnity addTicket = new AddTicket(loggedUser);
+            AddTicket addTicket = new AddTicket(loggedUser);
+            addTicket.FormClosing += new FormClosingEventHandler(this.addTicket_FormClosing);
+            addTicket.ShowDialog();
+        }
+
+        private void addTicket_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            RefreshTickets();
+            CheckTicketStatus();
         }
 
         // update ticket information when you click the update button
@@ -403,6 +411,7 @@ namespace UI
             RefreshTickets();
             CheckTicketStatus();
         }
+
         private int GetTicketNumber()
         {
             try

@@ -17,7 +17,6 @@ namespace UI
             InitializeComponent();
             ticketService = TicketService.GetInstance();
             LoadData(loggedUser);
-            this.ShowDialog();
         }
 
         private void LoadData(User_Model loggedUser)
@@ -134,7 +133,7 @@ namespace UI
             string selectedValue = "";
 
             if (dataRowView != null)
-                selectedValue = dataRowView.Row["Key"] as string;
+                selectedValue = dataRowView.Row["Value"] as string;
 
             return selectedValue;
         }
@@ -158,6 +157,7 @@ namespace UI
                 ticketService.AddTicket(ticket);
                 ClearInputs();
                 MessageBox.Show($"Ticket has been succesfully added!");
+                this.Close();
             }
             catch (Exception error)
             {

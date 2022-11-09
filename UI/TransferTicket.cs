@@ -59,7 +59,7 @@ namespace UI
             {
                 if (email != employee.Email)
                 {
-                    cbEmployees.Items.Add($"{employee.FullNameEmailPair}");
+                    cbEmployees.Items.Add($"{employee.FullName} @ {employee.Email}");
                 }
             }
         }

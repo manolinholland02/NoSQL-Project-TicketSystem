@@ -50,6 +50,16 @@ namespace Model
             }
         }
 
+        //Calculated property for projecting an user's full name
+        //For deisgning purposes only
+        public string FullName
+        {
+            get
+            {
+                return $"{FirstName} {LastName}";
+            }
+        }
+
         public User_Model(string firstName, string lastName, string email, string salt, string digest, Role role, Location location, string phoneNumber)
         {
             FirstName = firstName;

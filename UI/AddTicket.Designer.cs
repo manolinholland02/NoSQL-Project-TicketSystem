@@ -134,6 +134,7 @@
             // 
             // cbReportedUser
             // 
+            this.cbReportedUser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbReportedUser.FormattingEnabled = true;
             this.cbReportedUser.Location = new System.Drawing.Point(216, 200);
             this.cbReportedUser.Name = "cbReportedUser";
@@ -142,6 +143,7 @@
             // 
             // cbPriority
             // 
+            this.cbPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPriority.FormattingEnabled = true;
             this.cbPriority.Location = new System.Drawing.Point(216, 245);
             this.cbPriority.Name = "cbPriority";
@@ -150,6 +152,7 @@
             // 
             // cbDeadline
             // 
+            this.cbDeadline.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDeadline.FormattingEnabled = true;
             this.cbDeadline.Location = new System.Drawing.Point(216, 292);
             this.cbDeadline.Name = "cbDeadline";
@@ -188,13 +191,14 @@
             // 
             // cbTypeOfIncident
             // 
+            this.cbTypeOfIncident.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTypeOfIncident.FormattingEnabled = true;
             this.cbTypeOfIncident.Location = new System.Drawing.Point(216, 123);
             this.cbTypeOfIncident.Name = "cbTypeOfIncident";
             this.cbTypeOfIncident.Size = new System.Drawing.Size(200, 24);
             this.cbTypeOfIncident.TabIndex = 7;
             // 
-            // CreateTicket
+            // AddTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -215,7 +219,7 @@
             this.Controls.Add(this.lblUser);
             this.Controls.Add(this.lblSubject);
             this.Controls.Add(this.lblDate);
-            this.Name = "CreateTicket";
+            this.Name = "AddTicket";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CreateTicket";
             this.ResumeLayout(false);
