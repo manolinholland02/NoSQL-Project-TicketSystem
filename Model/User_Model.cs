@@ -20,7 +20,10 @@ namespace Model
         public string Email { get; set; }
 
         [BsonElement("password")]
-        public string Password { get; set; }
+        public string Salt { get; set; }
+
+        [BsonElement("digest")]
+        public string Digest { get; set; }
 
         [BsonElement("role")]
         [JsonConverter(typeof(StringEnumConverter))]  
@@ -44,12 +47,13 @@ namespace Model
             }
         }
 
-        public User_Model(string firstName, string lastName, string email, string password, Role role, Location location, string phoneNumber)
+        public User_Model(string firstName, string lastName, string email, string salt, string digest, Role role, Location location, string phoneNumber)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
-            Password = password;
+            Salt = salt;
+            Digest = digest;
             Role = role;
             Location = location;
             PhoneNumber = phoneNumber;

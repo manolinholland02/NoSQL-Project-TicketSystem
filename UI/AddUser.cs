@@ -9,13 +9,14 @@ namespace UI
     public partial class AddUser : Form, ICreateEnity
     {
         UserService userService;
+        HashTool tool;
         public AddUser()
         {
             InitializeComponent();
             userService = UserService.GetInstance();
             cbLocation.DataSource = Enum.GetValues(typeof(Location));
             cbUser.DataSource = Enum.GetValues(typeof(Role));
-
+            tool = new HashTool();
 
         }
 
@@ -86,8 +87,11 @@ namespace UI
             try
             {
                 ValidateInputs();
-                User_Model user = new User_Model(txtFirstName.Text, txtLastName.Text, txtEmail.Text, txtPassword.Text, (Role)cbUser.SelectedValue, (Location)cbLocation.SelectedValue, txtNumber.Text);
-
+                HashWithSaltResult hashResultSha256 = tool.HashPassword(txtPassword.Text);
+                string salt = hashResultSha256.Salt;
+                string digest = hashResultSha256.Digest;
+                User_Model user = new User_Model(txtFirstName.Text, txtLastName.Text, txtEmail.Text, salt, digest, (Role)cbUser.SelectedValue, (Location)cbLocation.SelectedValue, txtNumber.Text);
+                
                 userService.AddUser(user);
                 //MessageBox.Show($"User succesfully added! \nPassword = {password}");
                 ClearInputs();
