@@ -96,7 +96,7 @@ namespace UI
 
             foreach (Ticket_Model ticket in getAllTickets)
             {
-                if (ticket.Status == Status.unfinished)
+                if (ticket.Status == Status.Unfinished)
                 {
                     progressBarUnresolvedIncidents.PerformStep();
                     unresolvedTicketsCount++;
@@ -104,7 +104,7 @@ namespace UI
                 DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
                 int deadline = (int)ticket.Deadline;
                 int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
-                if (period > deadline &ticket.Status!=Status.finished)
+                if (period > deadline &ticket.Status!=Status.Finished)
                 {
                     progressBarIncidentsPastDeadline.PerformStep();
                     pastDeadlineTicketsCount++;
@@ -137,7 +137,13 @@ namespace UI
         private void btnLogout_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you wish to logout?", "Logout", MessageBoxButtons.YesNo);
-            if(dialogResult == DialogResult.Yes) { this.Close(); }
+            if(dialogResult == DialogResult.Yes) 
+            { 
+                Login login = new Login();
+                Hide();
+                login.ShowDialog();
+                Close();
+            }
         }
         //showing all the enum values in the combobox
         private void DisplayAllEnumValues()

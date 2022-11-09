@@ -1,4 +1,4 @@
 ﻿namespace Model
 {
-    public enum Status { unfinished, finished,pastdeadline}
+    public enum Status { Unfinished, Finished, PastDeadline}
 }

@@ -123,7 +123,7 @@ namespace UI
                     cbReportedUser.Text,
                     txtSubOfIncident.Text,
                     dtPickerIncident.Text,
-                    Model.Status.unfinished,
+                    Model.Status.Unfinished,
                     GenerateTicketNumber(),
                     (Deadline)Enum.Parse(typeof(Deadline), CastSelectedItemToDataRowView(cbDeadline)),
                     (Priority)Enum.Parse(typeof(Priority), CastSelectedItemToDataRowView(cbPriority)),
