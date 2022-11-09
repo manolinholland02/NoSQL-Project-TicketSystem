@@ -33,6 +33,7 @@ namespace UI
 
         //    return password;
         //}
+
         public void ClearInputs()
         {
             txtFirstName.Clear();
