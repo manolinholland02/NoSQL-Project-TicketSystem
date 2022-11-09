@@ -485,11 +485,20 @@ namespace UI
 
         private void DisplayUsers(List<User_Model> users)
         {
+            const int FirstName = 1;
+            const int LastName = 2;
             const int PasswordColumn = 4;
+            const int DigestColumn = 5;
+            const int FullNamePair = 9;
+            const int Fullname = 10;
             dataGVUser.DataSource = users;
             dataGVUser.Columns[IdColumn].Visible = false;
+            dataGVUser.Columns[FirstName].Visible = false;
+            dataGVUser.Columns[LastName].Visible = false;
             dataGVUser.Columns[PasswordColumn].Visible = false;
-
+            dataGVUser.Columns[DigestColumn].Visible = false;
+            dataGVUser.Columns[FullNamePair].Visible = false;
+            dataGVUser.Columns[Fullname].DisplayIndex = 0;
         }
 
         private void btnRefreshUser_Click(object sender, EventArgs e)
