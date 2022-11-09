@@ -29,8 +29,9 @@ namespace UI
             if (GetUserByUsernameAndPassword() != null)
             {           
                 NoDeskUI noDeskUI = new NoDeskUI(loggedUser);
-                this.Hide();
-                noDeskUI.Show();
+                Hide();
+                noDeskUI.ShowDialog();
+                Close();
             }
             else{
                 lblLoginError.Text = "incorrect login credentials";
