@@ -1,6 +1,6 @@
 ﻿namespace UI
 {
-    partial class CreateTicket
+    partial class AddTicket
     {
         /// <summary>
         /// Required designer variable.

@@ -28,7 +28,14 @@ namespace Logic
         {
             dao.AddUser(user);
         }
-
+        public void DeleteUser(string email)
+        {
+            dao.DeleteUser(email);
+        }
+        public bool CheckUniqueEmail(string email)
+        {
+            return dao.CheckUniqueEmail(email); 
+        }
         public IMongoCollection<User_Model> GetUserCollection()
         {
             return dao.GetUserCollection();
@@ -36,6 +43,10 @@ namespace Logic
         public List<User_Model> GetAllUsers()
         {
             return dao.GetAllUsers();
+        }
+        public List<User_Model> GetAllEmployees()
+        {
+            return dao.GetAllEmployees();
         }
     }
 }

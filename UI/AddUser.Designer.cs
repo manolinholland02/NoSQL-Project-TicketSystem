@@ -45,6 +45,9 @@
             this.cbUser = new System.Windows.Forms.ComboBox();
             this.cbLocation = new System.Windows.Forms.ComboBox();
             this.lblPassword = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.txtVerifyPassword = new System.Windows.Forms.TextBox();
+            this.lblVerifyPassword = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblNewUser
@@ -135,10 +138,28 @@
             resources.ApplyResources(this.lblPassword, "lblPassword");
             this.lblPassword.Name = "lblPassword";
             // 
+            // txtPassword
+            // 
+            resources.ApplyResources(this.txtPassword, "txtPassword");
+            this.txtPassword.Name = "txtPassword";
+            // 
+            // txtVerifyPassword
+            // 
+            resources.ApplyResources(this.txtVerifyPassword, "txtVerifyPassword");
+            this.txtVerifyPassword.Name = "txtVerifyPassword";
+            // 
+            // lblVerifyPassword
+            // 
+            resources.ApplyResources(this.lblVerifyPassword, "lblVerifyPassword");
+            this.lblVerifyPassword.Name = "lblVerifyPassword";
+            // 
             // AddUser
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblVerifyPassword);
+            this.Controls.Add(this.txtVerifyPassword);
+            this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.cbLocation);
             this.Controls.Add(this.cbUser);
@@ -180,5 +201,8 @@
         private System.Windows.Forms.ComboBox cbUser;
         private System.Windows.Forms.ComboBox cbLocation;
         private System.Windows.Forms.Label lblPassword;
+        private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.TextBox txtVerifyPassword;
+        private System.Windows.Forms.Label lblVerifyPassword;
     }
 }

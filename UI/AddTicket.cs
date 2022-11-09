@@ -4,19 +4,19 @@ using Model;
 using Logic;
 using Type = Model.Type;
 using System.Data;
-using System.Collections.Generic;
 
 namespace UI
 {
-    public partial class CreateTicket : Form
+    public partial class AddTicket : Form, ICreateEnity
     {
         TicketService ticketService;
 
-        public CreateTicket(User_Model loggedUser)
+        public AddTicket(User_Model loggedUser)
         {
             InitializeComponent();
             ticketService = TicketService.GetInstance();
             LoadData(loggedUser);
+            this.ShowDialog();
         }
 
         private void LoadData(User_Model loggedUser)
@@ -48,7 +48,7 @@ namespace UI
             cb.DisplayMember = "Value";
         }
 
-        private void ClearInputs()
+        public void ClearInputs()
         {
             txtSubOfIncident.Clear();
             txtDescription.Clear();
@@ -89,7 +89,7 @@ namespace UI
             return combinedOutput;
         }
 
-        public void CheckInputs()
+        public void ValidateInputs()
         {
             if(string.IsNullOrEmpty(txtSubOfIncident.Text))
                 throw new Exception("Subject field can't be blank!");
@@ -118,7 +118,7 @@ namespace UI
         {
             try
             {
-                CheckInputs();
+                ValidateInputs();
                 Ticket_Model ticket = new Ticket_Model(
                     cbReportedUser.Text,
                     txtSubOfIncident.Text,
