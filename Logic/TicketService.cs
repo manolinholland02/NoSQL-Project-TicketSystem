@@ -3,6 +3,7 @@ using Model;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace Logic
 {
@@ -51,5 +52,24 @@ namespace Logic
             return dao.GetTicketCollection();
         }
 
+        public List<Ticket_Model> GetFilteredTicketBySubject(string serachText)
+        {
+            return dao.GetFilteredTicketBySubject(serachText);
+
+        }
+
+        public async Task<List<Ticket_Model>> GetFilteredTicketByStatusAndPriority(string status, string priority)
+        {
+            return  await dao.GetFilteredTicketByStatusAndPriorityAsync(status,priority);
+        }
+        public List<Ticket_Model> GetFilteredTicketByStatusOrPriority(string status, string priority)
+        {
+
+            return dao.GetFilteredTicketByStatusOrPriority(status, priority);
+        }
+        public List<Ticket_Model> GetFilteredTicketByTicketNr(int ticketNr)
+        {
+            return dao.GetFilteredTicketByTicketNr(ticketNr);
+        }
     }
 }

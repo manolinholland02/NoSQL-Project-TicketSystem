@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Logic;
 using Model;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace UI
@@ -24,10 +25,11 @@ namespace UI
         {
             InitializeComponent();
             this.loggedUser = loggedUser;
+            GridViewAutoColumnSize();           
+            DisplayAllEnumValues();
             ticketService = TicketService.GetInstance();
             userService = UserService.GetInstance();
-            DisplayAllEnumValues();
-            getAllTickets=ticketService.GetAllTickets();
+            getAllTickets =ticketService.GetAllTickets();
             getAllUsers = userService.GetAllUsers();
 
             DisplayTickets(getAllTickets);
@@ -36,6 +38,12 @@ namespace UI
             HideAllPanel();
             txtTicketNr.Visible = false;
             SetEmployeeAccess(loggedUser);
+             
+        }
+        private void GridViewAutoColumnSize()
+        {
+            dataGVTicketOverview.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGVUser.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void SetEmployeeAccess(User_Model user)
@@ -82,26 +90,29 @@ namespace UI
         private void ServiceEmployeeDashboard()
         {
             progressBarUnresolvedIncidents.Maximum = getAllTickets.Count;
-            progressBarIncidentsPastDeadline.Maximum = 0;
+            progressBarIncidentsPastDeadline.Maximum = getAllTickets.Count;
+            int unresolvedTicketsCount = 0;
+            int pastDeadlineTicketsCount = 0;
 
             foreach (Ticket_Model ticket in getAllTickets)
             {
                 if (ticket.Status == Status.unfinished)
                 {
                     progressBarUnresolvedIncidents.PerformStep();
-                    progressBarIncidentsPastDeadline.Maximum++;
+                    unresolvedTicketsCount++;
                 }
                 DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
                 int deadline = (int)ticket.Deadline;
-                int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).TotalDays).ToString());
-                if (period > deadline)
+                int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
+                if (period > deadline &ticket.Status!=Status.finished)
                 {
                     progressBarIncidentsPastDeadline.PerformStep();
+                    pastDeadlineTicketsCount++;
                 }
             }
 
-            progressBarUnresolvedIncidents.Text = $"{progressBarUnresolvedIncidents.Value}/{progressBarUnresolvedIncidents.Maximum}";
-            progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
+            progressBarUnresolvedIncidents.Text = $"{unresolvedTicketsCount}/{progressBarUnresolvedIncidents.Maximum}";
+            progressBarIncidentsPastDeadline.Text = $"{pastDeadlineTicketsCount}";
         }
 
         private void EmployeeDashboard()
@@ -143,7 +154,7 @@ namespace UI
 
         }
 
-        //list all the tickets in the datagridview for the incident management
+        //diaplay all the tickets in the datagridview for the incident management
 
         private void DisplayTickets(List<Ticket_Model> getAllTickets)
         {
@@ -250,67 +261,46 @@ namespace UI
         {
             try
             {
-                DisplayTickets(GetFilteredTicketBySubject());
+                string searchTxt = txtSearch.Text;
+                DisplayTickets(ticketService.GetFilteredTicketBySubject(searchTxt));
             }
             catch(Exception exception)
             {
                 MessageBox.Show("Error: " + exception.Message);
             }
         }
-        private List<Ticket_Model> GetFilteredTicketBySubject()
-        {
-            string searchText = txtSearch.Text;
-            var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Subject, searchText);
-            var result = ticketService.GetTicketCollection().Find(filter).ToList();
-            return result;
 
-        }
 
-        // search by status and priority when both match display the tickets 
-        private void btnAndSearch_Click(object sender, EventArgs e)
+        // search by status and priority when both match and display the tickets 
+        private async void btnAndSearch_Click(object sender, EventArgs e)
         {
             try
             {
-                DisplayTickets(GetFilteredTicketByStatusAndPriority());
+                string status = comboBoxStatusAnd.Text;
+                string priority = comboBoxPriorityAnd.Text;
+                var listOfTickets = await ticketService.GetFilteredTicketByStatusAndPriority(status, priority);
+                dataGVTicketOverview.DataSource = listOfTickets;
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
-                MessageBox.Show("Error: "+exception.Message);
+                MessageBox.Show("Error: " + exception.Message);
             }
         }
-        private List<Ticket_Model> GetFilteredTicketByStatusAndPriority()
-        {
-            string status = comboBoxStatusAnd.Text;
-            string priority = comboBoxPriorityAnd.Text;
-            var filter = Builders<Ticket_Model>.Filter.Regex(s => s.Status, BsonRegularExpression.Create(status)) &
-                Builders<Ticket_Model>.Filter.Regex(p => p.Priority, BsonRegularExpression.Create(priority));
-            var result = ticketService.GetTicketCollection().Find(filter).ToList();
-            return result;
-        }
-
 
         // search by status or priority when any of these two match
         private void btnSearchOr_Click(object sender, EventArgs e)
         {
             try
             {
-                DisplayTickets(GetFilteredTicketByStatusOrPriority());
+                string status=comboBoxStatusOr.Text;
+                string priority=comboBoxPriorityOr.Text;
+                DisplayTickets(ticketService.GetFilteredTicketByStatusOrPriority(status,priority));
             }
             catch(Exception exception)
             {
                 MessageBox.Show("Error: "+exception.Message);
             }
 
-        }
-        private List<Ticket_Model> GetFilteredTicketByStatusOrPriority()
-        {
-            string status = comboBoxStatusOr.Text;
-            string priority = comboBoxPriorityOr.Text;
-            var filter = Builders<Ticket_Model>.Filter.Regex(s => s.Status, BsonRegularExpression.Create(status)) |
-               Builders<Ticket_Model>.Filter.Regex(p => p.Priority, BsonRegularExpression.Create(priority));
-            var result = ticketService.GetTicketCollection().Find(filter).ToList();
-            
-            return result;
         }
 
         // search by ticket
@@ -318,21 +308,15 @@ namespace UI
         {
             try
             {
-                DisplayTickets(GetFilteredTicketByTicketNr());
+                int ticketNr = int.Parse(textBoxTicketSearch.Text);
+                DisplayTickets(ticketService.GetFilteredTicketByTicketNr(ticketNr));
             }
             catch(Exception exception)
             {
                 MessageBox.Show("Error: " + exception.Message);
             }
         }
-        private List<Ticket_Model> GetFilteredTicketByTicketNr()
-        {
-            int ticketNr = int.Parse(textBoxTicketSearch.Text);
-            var filter=Builders<Ticket_Model>.Filter.Eq(t=>t.TicketNumber,ticketNr);
-            var listOfTickets = ticketService.GetTicketCollection().Find(filter).ToList();
-            return listOfTickets;
-        }
-
+ 
         // delete a ticket item
         private void btnDeleteTicket_Click(object sender, EventArgs e)
         {
@@ -382,7 +366,7 @@ namespace UI
             GetTicketByType(cbFilterByType.SelectedText);
         }
 
-        private void GetTicketByType(String type)
+        private void GetTicketByType(string type)
         {
             var filter = Builders<Ticket_Model>.Filter.Regex(t => t.Type, BsonRegularExpression.Create(type));
             var result = ticketService.GetTicketCollection().Find(filter).ToList();
@@ -522,6 +506,8 @@ namespace UI
                 MessageBox.Show($"Error deleting user \nERROR:{ex.Message}");
             }
         }
+
+        
 
 
         //------------------------//
