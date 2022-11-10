@@ -2,20 +2,20 @@
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.IO.Pipes;
 using System.Linq;
-using MongoDB.Bson;
 
 namespace DAL
 {
     public class UserDAO : BaseDAO
     {
+        private const string DataBaseName = "gardengroupdb";
         private IMongoCollection<User_Model> collection;
         private const string CollectionName = "users";
         //Singleton for UserDAO
         private static UserDAO instance;
 
         private UserDAO()
+            :base(DataBaseName)
         {
             try
             {
