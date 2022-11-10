@@ -1,5 +1,6 @@
 ﻿using DAL;
 using Model;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -63,9 +64,9 @@ namespace Logic
             return  await dao.GetFilteredTicketByStatusAndPriorityAsync(status,priority);
         }
 
-        public async Task<List<Ticket_Model>> GetFilteredTickets(string status, string priority, string deadline, string type)
+        public async Task<List<Ticket_Model>> GetFilteredTickets(string status, string priority, string deadline, string type, BsonDocument doc)
         {
-            return await dao.GetFilteredTickets(status, priority, deadline, type);
+            return await dao.GetFilteredTickets(status, priority, deadline, type, doc);
         }
 
         public List<Ticket_Model> GetFilteredTicketByStatusOrPriority(string status, string priority)

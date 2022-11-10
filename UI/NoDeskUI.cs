@@ -16,12 +16,12 @@ namespace UI
 {
     public partial class NoDeskUI : Form
     {
-        TicketService ticketService;
-        UserService userService;
-        const int IdColumn = 0;
-        List<Ticket_Model> getAllTickets;
-        List<User_Model> getAllUsers;
-        User_Model loggedUser;
+        private TicketService ticketService;
+        private UserService userService;
+        private const int IdColumn = 0;
+        private List<Ticket_Model> getAllTickets;
+        private List<User_Model> getAllUsers;
+        private User_Model loggedUser;
 
         public NoDeskUI(User_Model loggedUser)
         {
@@ -211,12 +211,17 @@ namespace UI
 
         private async void FilterTickets()
         {           
+            BsonDocument doc = new BsonDocument();
             string status = cbFilterByStatus.Text;
             string priority = cbFilterByPriority.Text;
             string deadline = cbFilterByDeadline.Text;
             string type = cbFilterByType.Text;
-            var tickets = await ticketService.GetFilteredTickets(status, priority, deadline, type);
+            if (loggedUser.Role == Role.Employee)
+            {            
+                doc.Add("user", loggedUser.FullNameEmailPair);
+            }     
 
+            var tickets = await ticketService.GetFilteredTickets(status, priority, deadline, type, doc);
             dataGVTicketOverview.DataSource = tickets;
         }
 

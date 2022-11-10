@@ -4,6 +4,7 @@ using Model;
 using System;
 using MongoDB.Bson;
 using System.Threading.Tasks;
+using System.Net.Sockets;
 
 namespace DAL
 {
@@ -75,9 +76,8 @@ namespace DAL
             return results;
         }
 
-        public async Task<List<Ticket_Model>> GetFilteredTickets(string status, string priority, string deadline, string type)
+        public async Task<List<Ticket_Model>> GetFilteredTickets(string status, string priority, string deadline, string type, BsonDocument doc)
         {
-            BsonDocument doc = new BsonDocument { };
   
             if (status != "select ticket status")
             {
@@ -98,6 +98,8 @@ namespace DAL
             {
                 doc.Add("type", (int)Enum.Parse(typeof(Model.Type), type));
             }
+
+            
 
             var query = collection.Aggregate()
                         .Match(doc);
