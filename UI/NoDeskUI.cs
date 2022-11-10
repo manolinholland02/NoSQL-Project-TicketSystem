@@ -62,7 +62,9 @@ namespace UI
                 txtSubject.Visible = false;
                 btnTransferTicket.Visible = false;
                 btnCloseTicket.Visible = false;
+                btnIncidentManagement.Text = "Tickets";
             }
+            
         }
 
         private void HideAllPanel()
@@ -97,6 +99,8 @@ namespace UI
         {
             progressBarUnresolvedIncidents.Maximum = getAllTickets.Count;
             progressBarIncidentsPastDeadline.Maximum = getAllTickets.Count;
+            progressBarUnresolvedIncidents.Value = 0;
+            progressBarIncidentsPastDeadline.Value = 0;
 
             foreach (Ticket_Model ticket in getAllTickets)
             {
@@ -120,7 +124,7 @@ namespace UI
 
             foreach (Ticket_Model ticket in getAllTickets)
             {
-                if (ticket.Email.Split('(', ')')[1] == loggedUser.Email)
+                if (ticket.User.Split('(', ')')[1] == loggedUser.Email)
                 {
                     progressBarUnresolvedIncidents.Maximum++;
                     progressBarIncidentsPastDeadline.Maximum++;
@@ -248,13 +252,17 @@ namespace UI
         private void dGVTicketOverview_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int indexOfRow = e.RowIndex;
-            DataGridViewRow row = dataGVTicketOverview.Rows[indexOfRow];
-            txtSubject.Text = row.Cells[2].Value.ToString();
-            txtTicketNr.Text = row.Cells[5].Value.ToString();
-            cbDeadline.Text = row.Cells[6].Value.ToString();
-            cbPriority.Text = row.Cells[7].Value.ToString();
 
-            CheckTicketStatus();
+            if (indexOfRow != -1)
+            {
+                DataGridViewRow row = dataGVTicketOverview.Rows[indexOfRow];
+                txtSubject.Text = row.Cells[2].Value.ToString();
+                txtTicketNr.Text = row.Cells[5].Value.ToString();
+                cbDeadline.Text = row.Cells[6].Value.ToString();
+                cbPriority.Text = row.Cells[7].Value.ToString();
+
+                CheckTicketStatus();
+            }
 
         }
 

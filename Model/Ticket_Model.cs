@@ -10,7 +10,7 @@ namespace Model
         public ObjectId Id { get; set; }
 
         [BsonElement("user")]
-        public string Email { get; set; }
+        public string User { get; set; }
 
         [BsonElement("subject")]
         public string Subject { get; set; }
@@ -38,7 +38,7 @@ namespace Model
 
         public Ticket_Model(string user, string subject, string date, Status status, int ticketNumber, Deadline deadline, Priority priority, Type type, string description)
         {
-            Email = user;
+            User = user;
             Subject = subject;
             Date = date;
             Status = status;

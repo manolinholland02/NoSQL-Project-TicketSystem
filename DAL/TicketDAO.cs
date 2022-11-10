@@ -50,7 +50,7 @@ namespace DAL
         public void TransferTicket(string email, int ticketNr)
         {
             var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
-            var update = Builders<Ticket_Model>.Update.Set(e => e.Email, email);
+            var update = Builders<Ticket_Model>.Update.Set(e => e.User, email);
             collection.UpdateOne(filter, update);
         }
 
