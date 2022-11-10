@@ -54,7 +54,6 @@ namespace DAL
             return;
         }
 
-         
         public  List<Ticket_Model> GetFilteredTicketBySubject(string serachText)
         {
             var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Subject, serachText);
@@ -62,7 +61,7 @@ namespace DAL
             return result;
 
         }
-
+        
         public async Task<List<Ticket_Model>> GetFilteredTicketByStatusAndPriorityAsync(string status,string priority)
         {
             var query = collection.Aggregate()
@@ -72,6 +71,36 @@ namespace DAL
                                     { "priority", (int)Enum.Parse(typeof(Priority),priority) }
                                 }
                         );
+            var results = await query.ToListAsync();
+            return results;
+        }
+
+        public async Task<List<Ticket_Model>> GetFilteredTickets(string status, string priority, string deadline, string type)
+        {
+            BsonDocument doc = new BsonDocument { };
+  
+            if (status != "select ticket status")
+            {
+                doc.Add("status", (int)Enum.Parse(typeof(Status), status));
+            }
+
+            if (priority != "select priority")
+            {
+                doc.Add("priority", (int)Enum.Parse(typeof(Priority), priority));
+            }
+
+            if (deadline != "select deadline")
+            {
+                doc.Add("deadline", (int)Enum.Parse(typeof(Deadline), deadline));
+            }
+
+            if (type != "select incident type")
+            {
+                doc.Add("type", (int)Enum.Parse(typeof(Model.Type), type));
+            }
+
+            var query = collection.Aggregate()
+                        .Match(doc);
             var results = await query.ToListAsync();
             return results;
         }

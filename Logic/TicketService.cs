@@ -1,6 +1,7 @@
 ﻿using DAL;
 using Model;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -61,6 +62,12 @@ namespace Logic
         {
             return  await dao.GetFilteredTicketByStatusAndPriorityAsync(status,priority);
         }
+
+        public async Task<List<Ticket_Model>> GetFilteredTickets(string status, string priority, string deadline, string type)
+        {
+            return await dao.GetFilteredTickets(status, priority, deadline, type);
+        }
+
         public List<Ticket_Model> GetFilteredTicketByStatusOrPriority(string status, string priority)
         {
 

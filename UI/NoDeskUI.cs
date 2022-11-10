@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,20 +26,20 @@ namespace UI
         {
             InitializeComponent();
             this.loggedUser = loggedUser;
-            GridViewAutoColumnSize();           
+            GridViewAutoColumnSize();
             DisplayAllEnumValues();
             ticketService = TicketService.GetInstance();
             userService = UserService.GetInstance();
-            getAllTickets =ticketService.GetAllTickets();
+            getAllTickets = ticketService.GetAllTickets();
             getAllUsers = userService.GetAllUsers();
 
             DisplayTickets(getAllTickets);
             DisableUpdateBoxes();
-            DisplayUsers(getAllUsers);     
+            DisplayUsers(getAllUsers);
             HideAllPanel();
             txtTicketNr.Visible = false;
             SetEmployeeAccess(loggedUser);
-             
+
         }
         private void GridViewAutoColumnSize()
         {
@@ -116,7 +117,7 @@ namespace UI
             progressBarIncidentsPastDeadline.Maximum = 0;
             progressBarUnresolvedIncidents.Maximum = 0;
 
-            foreach(Ticket_Model ticket in getAllTickets)
+            foreach (Ticket_Model ticket in getAllTickets)
             {
                 if (ticket.Email == loggedUser.Email)
                 {
@@ -155,8 +156,8 @@ namespace UI
         private void btnLogout_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you wish to logout?", "Logout", MessageBoxButtons.YesNo);
-            if(dialogResult == DialogResult.Yes) 
-            { 
+            if (dialogResult == DialogResult.Yes)
+            {
                 Login login = new Login();
                 Hide();
                 login.ShowDialog();
@@ -167,7 +168,6 @@ namespace UI
         private void DisplayAllEnumValues()
         {
             cbPriority.DataSource = Enum.GetValues(typeof(Priority));
-            cbFilterByType.DataSource = Enum.GetValues(typeof(Model.Type));
             cbDeadline.DataSource = Enum.GetValues(typeof(Deadline))
                                     .Cast<Deadline>()
                                     .Select(x => (int)x)
@@ -177,6 +177,52 @@ namespace UI
             comboBoxPriorityAnd.DataSource = Enum.GetValues(typeof(Priority));
             comboBoxPriorityOr.DataSource = Enum.GetValues(typeof(Priority));
 
+            FillPromptTextComboBox(cbFilterByPriority, "select priority");
+            FillPromptTextComboBox(cbFilterByStatus, "select ticket status");
+            FillPromptTextComboBox(cbFilterByType, "select incident type");
+            FillPromptTextComboBox(cbFilterByDeadline, "select deadline");
+
+            foreach (Enum e in Enum.GetValues(typeof(Status)))
+            {
+                cbFilterByStatus.Items.Add(e);
+            }
+
+            foreach (Enum e in Enum.GetValues(typeof(Priority)))
+            {
+                cbFilterByPriority.Items.Add(e);
+            }
+
+            foreach (Enum e in Enum.GetValues(typeof(Deadline)))
+            {
+                cbFilterByDeadline.Items.Add(e);
+            }
+
+            foreach (Enum e in Enum.GetValues(typeof(Model.Type)))
+            {
+                cbFilterByType.Items.Add(e);
+            }
+        }
+
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+            FilterTickets();
+        }
+
+        private async void FilterTickets()
+        {           
+            string status = cbFilterByStatus.Text;
+            string priority = cbFilterByPriority.Text;
+            string deadline = cbFilterByDeadline.Text;
+            string type = cbFilterByType.Text;
+            var tickets = await ticketService.GetFilteredTickets(status, priority, deadline, type);
+
+            dataGVTicketOverview.DataSource = tickets;
+        }
+
+        private void FillPromptTextComboBox(ComboBox cb,string text)
+        {
+            cb.Items.Add(text);
+            cb.SelectedIndex = 0;
         }
 
         //diaplay all the tickets in the datagridview for the incident management
@@ -549,10 +595,6 @@ namespace UI
                 MessageBox.Show($"Error deleting user \nERROR:{ex.Message}");
             }
         }
-
-        
-
-
         //------------------------//
         /*end user management*/
     }
