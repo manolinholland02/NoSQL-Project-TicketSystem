@@ -33,6 +33,10 @@ namespace Logic
         {
             dao.AddUser(user);
         }
+        public void AddMultipleUsers(List<User_Model> users)
+        {
+            dao.AddMultipleUsers(users);
+        }
         public void DeleteUser(string email)
         {
             dao.DeleteUser(email);

@@ -38,7 +38,7 @@ namespace UI
         {
             try
             {
-                if (cbEmployees.SelectedItem == null) { throw new Exception("Please select an employee!"); }
+                if (cbEmployees.SelectedIndex == 0) { throw new Exception("Please select an employee!"); }
                 string email = cbEmployees.SelectedItem.ToString().Split(' ')[3];
                 ticketService.TransferTicket(email, ticketNr);
                 MessageBox.Show("Ticket succesfully transferred!");
@@ -53,6 +53,9 @@ namespace UI
         }
         private void FillEmployees()
         {
+            cbEmployees.Items.Add("Select employee...");
+            cbEmployees.SelectedIndex = 0;
+
             List<User_Model> employees = userService.GetAllEmployees();
             employees.Sort((x, y) => string.Compare(x.FirstName, y.FirstName));
             foreach (User_Model employee in employees)

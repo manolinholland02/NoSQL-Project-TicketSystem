@@ -414,7 +414,7 @@
     <value>8</value>
   </data>
   <data name="btnAddUser.Location" type="System.Drawing.Point, System.Drawing">
-    <value>291, 341</value>
+    <value>168, 341</value>
   </data>
   <data name="btnAddUser.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 37</value>
@@ -438,7 +438,7 @@
     <value>7</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 341</value>
+    <value>301, 341</value>
   </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 37</value>

@@ -39,6 +39,10 @@ namespace DAL
         {
             collection.InsertOne(user);
         }
+        public void AddMultipleUsers(List<User_Model> users)
+        {
+            collection.InsertMany(users);
+        }
         public void DeleteUser(string email)
         {
             var filter = Builders<User_Model>.Filter.Eq(e => e.Email, email);

@@ -48,9 +48,9 @@
             // 
             this.cbEmployees.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbEmployees.FormattingEnabled = true;
-            this.cbEmployees.Location = new System.Drawing.Point(57, 64);
+            this.cbEmployees.Location = new System.Drawing.Point(34, 67);
             this.cbEmployees.Name = "cbEmployees";
-            this.cbEmployees.Size = new System.Drawing.Size(201, 21);
+            this.cbEmployees.Size = new System.Drawing.Size(260, 21);
             this.cbEmployees.TabIndex = 1;
             // 
             // btnTransfer
@@ -85,6 +85,7 @@
             this.Controls.Add(this.lblTransfer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "TransferTicket";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "TransferTicket";
             this.ResumeLayout(false);
             this.PerformLayout();

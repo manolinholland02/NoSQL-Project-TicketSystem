@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using Model;
 using Logic;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.IO;
 
 namespace UI
 {
@@ -10,30 +12,39 @@ namespace UI
     {
         UserService userService;
         HashTool tool;
+        Random rnd = new Random();
         public AddUser()
         {
             InitializeComponent();
             userService = UserService.GetInstance();
-            cbLocation.DataSource = Enum.GetValues(typeof(Location));
-            cbUser.DataSource = Enum.GetValues(typeof(Role));
+            FillData();
             tool = new HashTool();
 
         }
 
-        //private string GeneratePassword()
-        //{ 
-        //    //Generates a number password to simulate randomly generated passwords being sent.
-        //    string password = null;
-        //    const int Length = 5;
-        //    Random rnd = new Random();
+        private void FillData()
+        {
+            cbLocation.Items.Add("Select location...");
+            cbLocation.SelectedIndex = 0;
 
-        //    for (int i = 0; i < Length; i++)
-        //    {
-        //        password += rnd.Next(10).ToString();
-        //    }
+            cbUser.Items.Add("Select role...");
+            cbUser.SelectedIndex = 0;
 
-        //    return password;
-        //}
+            foreach (Location i in Enum.GetValues(typeof(Location)))
+            {
+                cbLocation.Items.Add(i);
+            }
+
+            foreach (Role i in Enum.GetValues(typeof(Role)))
+            {
+                cbUser.Items.Add(i);
+            }
+            //Changed from datasource to foreach loops due to wanting index 0 to be default text
+
+            //cbLocation.DataSource = Enum.GetValues(typeof(Location));
+            //cbUser.DataSource = Enum.GetValues(typeof(Role));
+        }
+
 
         public void ClearInputs()
         {
@@ -56,6 +67,14 @@ namespace UI
             //Check if all fields are filled
             if (string.IsNullOrEmpty(txtFirstName.Text) || string.IsNullOrEmpty(txtLastName.Text) || string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtNumber.Text) || string.IsNullOrEmpty(txtPassword.Text) || string.IsNullOrEmpty(txtVerifyPassword.Text))
             { throw new Exception("Field can't be blank!"); }
+
+            //Check if role is selected
+            if(cbUser.SelectedIndex == 0)
+            { throw new Exception("Select a user role!"); }
+
+            //Check if location is selected
+            if(cbLocation.SelectedIndex == 0)
+            { throw new Exception("Select a user location!"); }
 
             //Check if name only contains letters
             const string patternA = @"^[a-zA-Z]+$";
@@ -88,12 +107,9 @@ namespace UI
             {
                 ValidateInputs();
                 HashWithSaltResult hashResultSha256 = tool.HashPassword(txtPassword.Text);
-                string salt = hashResultSha256.Salt;
-                string digest = hashResultSha256.Digest;
-                User_Model user = new User_Model(txtFirstName.Text, txtLastName.Text, txtEmail.Text, salt, digest, (Role)cbUser.SelectedValue, (Location)cbLocation.SelectedValue, txtNumber.Text);
+                User_Model user = new User_Model(txtFirstName.Text, txtLastName.Text, txtEmail.Text, hashResultSha256.Salt, hashResultSha256.Digest, (Role)cbUser.SelectedItem, (Location)cbLocation.SelectedItem, txtNumber.Text);
                 
                 userService.AddUser(user);
-                //MessageBox.Show($"User succesfully added! \nPassword = {password}");
                 ClearInputs();
                 this.Close();
             }
@@ -103,7 +119,83 @@ namespace UI
             }
 
         }
-        
 
+        //
+        //Used to randomly generate 100+ users for the database using random names and numbers.
+        //
+        //private void GenerateUsers()
+        //{
+        //    List<User_Model> users = new List<User_Model>();
+        //    int numberOfUsers = 100;
+
+        //    for (int i = 0; i < numberOfUsers; i++)
+        //    {
+        //        HashWithSaltResult hashResultSha256 = tool.HashPassword(GeneratePassword());
+        //        string[] name = GenerateName();
+
+        //        User_Model user = new User_Model(name[0], name[1], GenerateEmail(name), hashResultSha256.Salt, hashResultSha256.Digest, Role.Employee, RandomLocation(), GenerateNumber());
+        //        users.Add(user);
+        //    }
+
+        //    userService.AddMultipleUsers(users);
+        //    MessageBox.Show("It didn't break!");
+        //}
+
+        //private string[] GenerateName()
+        //{
+        //    //Generate random first and last name from list of names
+        //    string[] name = new string[2];
+
+        //    const string fileName = "first-names.txt";
+        //    string[] names = File.ReadAllLines(fileName);
+
+        //    name[0] = names[rnd.Next(names.Length)];
+        //    name[1] = names[rnd.Next(names.Length)];
+
+        //    while (name[0] == name[1])
+        //    {
+        //        name[1] = names[rnd.Next(names.Length)];
+        //    }
+
+        //    return name;
+        //}
+        //private string GenerateEmail(string[] name)
+        //{
+        //    return $"{name[0]}{name[1]}@gmail.com";
+        //}
+        //private Location RandomLocation()
+        //{
+        //    Location[] locations = new Location[] { Model.Location.Haarlem, Model.Location.Amsterdam, Model.Location.Knuppeldam, Model.Location.HeadQuarters };
+        //    return locations[rnd.Next(locations.Length)];
+        //}
+        //private string GenerateNumber()
+        //{
+        //    string number = "+31";
+        //    const int numberOfDigits = 10;
+
+        //    for (int i = 0; i < numberOfDigits; i++)
+        //    {
+        //        number += rnd.Next(10);
+        //    }
+
+        //    return number;
+        //}
+
+        //private string GeneratePassword()
+        //{
+        //    //
+        //    //Generates a number password to simulate randomly generated passwords being sent.
+        //    //  
+        //   string password = null;
+        //    const int Length = 5;
+        //    Random rnd = new Random();
+
+        //    for (int i = 0; i < Length; i++)
+        //    {
+        //        password += rnd.Next(10).ToString();
+        //    }
+
+        //    return password;
+        //}
     }
 }

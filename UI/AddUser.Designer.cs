@@ -142,11 +142,13 @@
             // 
             resources.ApplyResources(this.txtPassword, "txtPassword");
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.UseSystemPasswordChar = true;
             // 
             // txtVerifyPassword
             // 
             resources.ApplyResources(this.txtVerifyPassword, "txtVerifyPassword");
             this.txtVerifyPassword.Name = "txtVerifyPassword";
+            this.txtVerifyPassword.UseSystemPasswordChar = true;
             // 
             // lblVerifyPassword
             // 
