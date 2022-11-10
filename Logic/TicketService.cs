@@ -34,10 +34,6 @@ namespace Logic
         {
             dao.UpdateTicketStatus(ticketNr);
         }
-        public void TransferTicket(string email, int ticketNr)
-        {
-            dao.TransferTicket(email, ticketNr);
-        }
 
         public int GetTicketCount()
         {
