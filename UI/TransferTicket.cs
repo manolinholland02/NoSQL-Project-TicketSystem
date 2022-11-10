@@ -11,14 +11,14 @@ namespace UI
     {
         int ticketNr;
         string email;
-        TicketService ticketService;    
+        TransferService transferService;    
         UserService userService;
         public TransferTicket(int ticketNr, string email)
         {
             InitializeComponent();
             this.ticketNr = ticketNr;
             this.email = email;
-            ticketService = TicketService.GetInstance();
+            transferService = TransferService.GetInstance();
             userService = UserService.GetInstance();
             FillEmployees();
         }
@@ -34,7 +34,7 @@ namespace UI
             {
                 if (cbEmployees.SelectedIndex == 0) { throw new Exception("Please select an employee!"); }
                 string email = cbEmployees.SelectedItem.ToString().Split(' ')[3];
-                ticketService.TransferTicket(email, ticketNr);
+                transferService.TransferTicket(email, ticketNr);
                 MessageBox.Show("Ticket succesfully transferred!");
                 this.Close();
             }

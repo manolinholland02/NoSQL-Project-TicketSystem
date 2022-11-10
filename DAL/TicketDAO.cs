@@ -51,7 +51,6 @@ namespace DAL
             var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
             var update = Builders<Ticket_Model>.Update.Set(e => e.Email, email);
             collection.UpdateOne(filter, update);
-            return;
         }
 
         public  List<Ticket_Model> GetFilteredTicketBySubject(string serachText)
