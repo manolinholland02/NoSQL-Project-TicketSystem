@@ -151,6 +151,12 @@
     <Compile Include="AddUser.Designer.cs">
       <DependentUpon>AddUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="ArchiveTicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArchiveTicket.Designer.cs">
+      <DependentUpon>ArchiveTicket.cs</DependentUpon>
+    </Compile>
     <Compile Include="ICreateEnity.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
@@ -180,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddTicket.resx">
       <DependentUpon>AddTicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArchiveTicket.resx">
+      <DependentUpon>ArchiveTicket.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

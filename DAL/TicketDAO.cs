@@ -9,12 +9,14 @@ namespace DAL
 {
     public class TicketDAO : BaseDAO
     {
+        private const string DataBaseName = "gardengroupdb";
         private IMongoCollection<Ticket_Model> collection;
         private const string CollectionName = "tickets";
         //Singleton for TicketDAO
         private static TicketDAO instance;
 
         private TicketDAO()
+            : base(DataBaseName)
         {
             try
             {
@@ -73,6 +75,16 @@ namespace DAL
             var results = await query.ToListAsync();
             return results;
         }
+
+        public List<Ticket_Model> GetFilteredTicketByDate()
+        {
+            var filter = Builders<Ticket_Model>.Filter.Lte(t => t.Date, "08.11.2022");
+            var result = collection.Find(filter).ToList();
+            collection.DeleteMany(filter);
+            
+            return result;
+        }
+
         public List<Ticket_Model> GetFilteredTicketByStatusOrPriority(string status,string priority)
         {
             
