@@ -10,6 +10,7 @@ using Model;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
+using System.Globalization;
 
 namespace UI
 {
@@ -102,7 +103,7 @@ namespace UI
                 if (ticket.Status == Status.Unfinished)
                 {
                     progressBarUnresolvedIncidents.PerformStep();
-                    DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
+                    DateTime ticketMadeDate = DateTime.ParseExact(ticket.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
                     int deadline = (int)ticket.Deadline;
                     int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
                     if (period > deadline)
@@ -119,7 +120,7 @@ namespace UI
 
             foreach (Ticket_Model ticket in getAllTickets)
             {
-                if (ticket.Email == loggedUser.Email)
+                if (ticket.Email.Split('(', ')')[1] == loggedUser.Email)
                 {
                     progressBarUnresolvedIncidents.Maximum++;
                     progressBarIncidentsPastDeadline.Maximum++;
@@ -127,7 +128,7 @@ namespace UI
                     if (ticket.Status == Status.Unfinished)
                     {
                         progressBarUnresolvedIncidents.PerformStep();
-                        DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
+                        DateTime ticketMadeDate = DateTime.ParseExact(ticket.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
                         int deadline = (int)ticket.Deadline;
                         int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
                         if (period > deadline)

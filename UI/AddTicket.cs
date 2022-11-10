@@ -37,7 +37,7 @@ namespace UI
                 List<User_Model> users = userService.GetAllUsers();
                 Dictionary<string, string> emailFullnamePairs = new Dictionary<string, string>();
                 const string ComboBoxDefaultMessage = "Select user...";
-
+                
                 emailFullnamePairs.Add("0", ComboBoxDefaultMessage);
                 foreach (User_Model user in users) emailFullnamePairs.Add(user.Email, user.FullNameEmailPair);
 
@@ -47,7 +47,9 @@ namespace UI
             }
             else
             {
-                cbReportedUser.Text = loggedUser.FullNameEmailPair;
+                cbReportedUser.Items.Add("Select user...");
+                cbReportedUser.Items.Add(loggedUser.FullNameEmailPair);
+                cbReportedUser.SelectedIndex = 0;
             }
         }
 

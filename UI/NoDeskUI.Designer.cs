@@ -211,9 +211,9 @@
             this.lblSubtitle2.Location = new System.Drawing.Point(689, 99);
             this.lblSubtitle2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSubtitle2.Name = "lblSubtitle2";
-            this.lblSubtitle2.Size = new System.Drawing.Size(327, 17);
+            this.lblSubtitle2.Size = new System.Drawing.Size(330, 17);
             this.lblSubtitle2.TabIndex = 11;
-            this.lblSubtitle2.Text = "These tickets need your imeediate attention";
+            this.lblSubtitle2.Text = "These tickets need your immediate attention";
             // 
             // lblSubtitle1
             // 
@@ -544,12 +544,12 @@
             // btnRecentTicket
             // 
             this.btnRecentTicket.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnRecentTicket.Location = new System.Drawing.Point(806, 139);
+            this.btnRecentTicket.Location = new System.Drawing.Point(806, 148);
             this.btnRecentTicket.Margin = new System.Windows.Forms.Padding(2);
             this.btnRecentTicket.Name = "btnRecentTicket";
             this.btnRecentTicket.Size = new System.Drawing.Size(82, 28);
             this.btnRecentTicket.TabIndex = 20;
-            this.btnRecentTicket.Text = "Recent ticket";
+            this.btnRecentTicket.Text = "Reset Filters";
             this.btnRecentTicket.UseVisualStyleBackColor = false;
             this.btnRecentTicket.Click += new System.EventHandler(this.btnRecentTicket_Click);
             // 
