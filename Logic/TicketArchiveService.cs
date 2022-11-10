@@ -26,9 +26,9 @@ namespace Logic
             return instance;
         }
 
-        public void AddArchive()
-        {
-            dao.AddArchive();
-        }
+        //public void AddArchive()
+        //{
+        //    dao.AddArchive();
+        //}
     }
 }

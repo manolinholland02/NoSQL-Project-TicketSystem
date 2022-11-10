@@ -142,13 +142,14 @@ namespace UI
 
         private void btnSubmitIncident_Click(object sender, EventArgs e)
         {
+            
             try
             {
                 ValidateInputs();
                 Ticket_Model ticket = new Ticket_Model(
                     cbReportedUser.Text,
                     txtSubOfIncident.Text,
-                    dtPickerIncident.Text,
+                    dtPickerIncident.Value,
                     Status.Unfinished,
                     GenerateTicketNumber(),
                     (Deadline)Enum.Parse(typeof(Deadline), CastSelectedItemToDataRowView(cbDeadline)),

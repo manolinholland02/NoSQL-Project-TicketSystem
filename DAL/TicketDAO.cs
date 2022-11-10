@@ -106,14 +106,14 @@ namespace DAL
             return results;
         }
 
-        public List<Ticket_Model> GetFilteredTicketByDate()
-        {
-            var filter = Builders<Ticket_Model>.Filter.Lte(t => t.Date, "08.11.2022");
-            var result = collection.Find(filter).ToList();
-            collection.DeleteMany(filter);
+        //public List<Ticket_Model> GetFilteredTicketByDate()
+        //{
+        //    var filter = Builders<Ticket_Model>.Filter.Lte(t => t.Date, "08.11.2022");
+        //    var result = collection.Find(filter).ToList();
+        //    collection.DeleteMany(filter);
             
-            return result;
-        }
+        //    return result;
+        //}
 
         public List<Ticket_Model> GetFilteredTicketByStatusOrPriority(string status,string priority)
         {

@@ -114,10 +114,11 @@
             // 
             // dtPickerIncident
             // 
-            this.dtPickerIncident.CustomFormat = "dd.MM.yyyy";
+            this.dtPickerIncident.CustomFormat = "MM.dd.yyyy";
             this.dtPickerIncident.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtPickerIncident.Location = new System.Drawing.Point(162, 30);
             this.dtPickerIncident.Margin = new System.Windows.Forms.Padding(0);
+            this.dtPickerIncident.MinDate = new System.DateTime(2010, 1, 1, 0, 0, 0, 0);
             this.dtPickerIncident.Name = "dtPickerIncident";
             this.dtPickerIncident.Size = new System.Drawing.Size(150, 20);
             this.dtPickerIncident.TabIndex = 1;
@@ -126,7 +127,7 @@
             // txtSubOfIncident
             // 
             this.txtSubOfIncident.Location = new System.Drawing.Point(162, 65);
-            this.txtSubOfIncident.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtSubOfIncident.Margin = new System.Windows.Forms.Padding(2);
             this.txtSubOfIncident.Name = "txtSubOfIncident";
             this.txtSubOfIncident.Size = new System.Drawing.Size(222, 20);
             this.txtSubOfIncident.TabIndex = 2;
@@ -134,7 +135,7 @@
             // txtDescription
             // 
             this.txtDescription.Location = new System.Drawing.Point(162, 287);
-            this.txtDescription.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtDescription.Margin = new System.Windows.Forms.Padding(2);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(222, 72);
@@ -145,7 +146,7 @@
             this.cbReportedUser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbReportedUser.FormattingEnabled = true;
             this.cbReportedUser.Location = new System.Drawing.Point(162, 162);
-            this.cbReportedUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbReportedUser.Margin = new System.Windows.Forms.Padding(2);
             this.cbReportedUser.Name = "cbReportedUser";
             this.cbReportedUser.Size = new System.Drawing.Size(222, 21);
             this.cbReportedUser.TabIndex = 3;
@@ -155,7 +156,7 @@
             this.cbPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPriority.FormattingEnabled = true;
             this.cbPriority.Location = new System.Drawing.Point(162, 199);
-            this.cbPriority.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbPriority.Margin = new System.Windows.Forms.Padding(2);
             this.cbPriority.Name = "cbPriority";
             this.cbPriority.Size = new System.Drawing.Size(151, 21);
             this.cbPriority.TabIndex = 3;
@@ -165,7 +166,7 @@
             this.cbDeadline.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDeadline.FormattingEnabled = true;
             this.cbDeadline.Location = new System.Drawing.Point(162, 237);
-            this.cbDeadline.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbDeadline.Margin = new System.Windows.Forms.Padding(2);
             this.cbDeadline.Name = "cbDeadline";
             this.cbDeadline.Size = new System.Drawing.Size(151, 21);
             this.cbDeadline.TabIndex = 3;
@@ -173,7 +174,7 @@
             // btnSubmitIncident
             // 
             this.btnSubmitIncident.Location = new System.Drawing.Point(213, 373);
-            this.btnSubmitIncident.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSubmitIncident.Margin = new System.Windows.Forms.Padding(2);
             this.btnSubmitIncident.Name = "btnSubmitIncident";
             this.btnSubmitIncident.Size = new System.Drawing.Size(81, 35);
             this.btnSubmitIncident.TabIndex = 4;
@@ -184,7 +185,7 @@
             // btnCancelTicket
             // 
             this.btnCancelTicket.Location = new System.Drawing.Point(307, 373);
-            this.btnCancelTicket.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancelTicket.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancelTicket.Name = "btnCancelTicket";
             this.btnCancelTicket.Size = new System.Drawing.Size(77, 35);
             this.btnCancelTicket.TabIndex = 5;
@@ -208,7 +209,7 @@
             this.cbTypeOfIncident.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTypeOfIncident.FormattingEnabled = true;
             this.cbTypeOfIncident.Location = new System.Drawing.Point(162, 100);
-            this.cbTypeOfIncident.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbTypeOfIncident.Margin = new System.Windows.Forms.Padding(2);
             this.cbTypeOfIncident.Name = "cbTypeOfIncident";
             this.cbTypeOfIncident.Size = new System.Drawing.Size(151, 21);
             this.cbTypeOfIncident.TabIndex = 7;
@@ -234,7 +235,7 @@
             this.Controls.Add(this.lblUser);
             this.Controls.Add(this.lblSubject);
             this.Controls.Add(this.lblDate);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "AddTicket";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CreateTicket";

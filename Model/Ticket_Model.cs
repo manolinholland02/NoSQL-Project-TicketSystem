@@ -16,7 +16,8 @@ namespace Model
         public string Subject { get; set; }
 
         [BsonElement("date")]
-        public string Date { get; set; }
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+        public DateTime Date { get; set; }
 
         [BsonElement("status")]
         public Status Status { get; set; }
@@ -36,7 +37,7 @@ namespace Model
         [BsonElement("description")]
         public string Description { get; set; }
 
-        public Ticket_Model(string user, string subject, string date, Status status, int ticketNumber, Deadline deadline, Priority priority, Type type, string description)
+        public Ticket_Model(string user, string subject, DateTime date, Status status, int ticketNumber, Deadline deadline, Priority priority, Type type, string description)
         {
             User = user;
             Subject = subject;

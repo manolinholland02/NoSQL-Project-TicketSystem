@@ -29,15 +29,11 @@ namespace UI
             this.loggedUser = loggedUser;
             GridViewAutoColumnSize();
             DisplayAllEnumValues();
+            dateTimePickerTicket.MaxDate = DateTime.Today;
             ticketService = TicketService.GetInstance();
             userService = UserService.GetInstance();
-            getAllTickets = ticketService.GetAllTickets();
-            getAllUsers = userService.GetAllUsers();
-
-            DisplayTickets(getAllTickets);
             DisableUpdateBoxes();
-            DisplayUsers(getAllUsers);
-            HideAllPanel();
+            InitDashboard();
             txtTicketNr.Visible = false;
             SetEmployeeAccess(loggedUser);
 
@@ -67,14 +63,7 @@ namespace UI
             
         }
 
-        private void HideAllPanel()
-        {
-            pnlDashboard.Hide();
-            pnlIncidentManagemnt.Hide();
-            pnlUserManagement.Hide();
-        }
-
-        private void btnDashboard_Click(object sender, EventArgs e)
+        private void InitDashboard()
         {
             getAllTickets = ticketService.GetAllTickets();
             pnlIncidentManagemnt.Hide();
@@ -95,6 +84,12 @@ namespace UI
             progressBarUnresolvedIncidents.Text = $"{progressBarUnresolvedIncidents.Value}/{progressBarUnresolvedIncidents.Maximum}";
             progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
         }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            InitDashboard();
+        }
+        
         private void ServiceEmployeeDashboard()
         {
             progressBarUnresolvedIncidents.Maximum = getAllTickets.Count;
@@ -107,7 +102,8 @@ namespace UI
                 if (ticket.Status == Status.Unfinished)
                 {
                     progressBarUnresolvedIncidents.PerformStep();
-                    DateTime ticketMadeDate = DateTime.ParseExact(ticket.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                    //DateTime ticketMadeDate = DateTime.ParseExact(ticket.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                    DateTime ticketMadeDate = ticket.Date;
                     int deadline = (int)ticket.Deadline;
                     int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
                     if (period > deadline)
@@ -132,7 +128,8 @@ namespace UI
                     if (ticket.Status == Status.Unfinished)
                     {
                         progressBarUnresolvedIncidents.PerformStep();
-                        DateTime ticketMadeDate = DateTime.ParseExact(ticket.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                        //DateTime ticketMadeDate = DateTime.ParseExact(ticket.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                        DateTime ticketMadeDate = ticket.Date;
                         int deadline = (int)ticket.Deadline;
                         int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
                         if (period > deadline)
@@ -146,10 +143,11 @@ namespace UI
 
         private void btnIncidentManagement_Click(object sender, EventArgs e)
         {
-
             pnlDashboard.Hide();
             pnlUserManagement.Hide();
             pnlIncidentManagemnt.Show();
+            getAllTickets = ticketService.GetAllTickets();
+            DisplayTickets(getAllTickets);
         }
 
         private void btnUserManagement_Click(object sender, EventArgs e)
@@ -157,6 +155,8 @@ namespace UI
             pnlDashboard.Hide();
             pnlIncidentManagemnt.Hide();
             pnlUserManagement.Show();
+            getAllUsers = userService.GetAllUsers();
+            DisplayUsers(getAllUsers);
         }
         private void btnLogout_Click(object sender, EventArgs e)
         {
@@ -239,6 +239,7 @@ namespace UI
 
         private void DisplayTickets(List<Ticket_Model> getAllTickets)
         {
+            
             dataGVTicketOverview.DataSource = getAllTickets;
             dataGVTicketOverview.Columns[IdColumn].Visible = false;
         }
@@ -343,7 +344,7 @@ namespace UI
                 .Set(s => s.Subject, txtSubject.Text)
                 .Set(z => z.Priority, (Priority)Enum.Parse(typeof(Priority), cbPriority.Text))
                 .Set(v => v.Deadline, (Deadline)Enum.Parse(typeof(Deadline), cbDeadline.Text))
-                .Set(d => d.Date, dateTimePickerTicket.Text.ToString());
+                .Set(d => d.Date, dateTimePickerTicket.Value.Date);
             var update = ticketService.GetTicketCollection().UpdateOne(ticketFilter, updateTicket);
             var listOfUpdateResult = ticketService.GetAllTickets();
             return listOfUpdateResult;

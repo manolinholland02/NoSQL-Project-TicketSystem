@@ -691,13 +691,16 @@
             // 
             // dateTimePickerTicket
             // 
-            this.dateTimePickerTicket.CustomFormat = "dd.MM.yyyy";
+            this.dateTimePickerTicket.CustomFormat = "MM.dd.yyyy";
             this.dateTimePickerTicket.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePickerTicket.Location = new System.Drawing.Point(906, 311);
             this.dateTimePickerTicket.Margin = new System.Windows.Forms.Padding(2);
+            this.dateTimePickerTicket.MaxDate = new System.DateTime(2022, 11, 10, 0, 0, 0, 0);
+            this.dateTimePickerTicket.MinDate = new System.DateTime(2010, 1, 1, 0, 0, 0, 0);
             this.dateTimePickerTicket.Name = "dateTimePickerTicket";
             this.dateTimePickerTicket.Size = new System.Drawing.Size(112, 20);
             this.dateTimePickerTicket.TabIndex = 13;
+            this.dateTimePickerTicket.Value = new System.DateTime(2022, 11, 10, 0, 0, 0, 0);
             // 
             // cbDeadline
             // 

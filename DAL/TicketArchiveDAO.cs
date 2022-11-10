@@ -36,11 +36,11 @@ namespace DAL
             return instance;
         }
 
-        public void AddArchive()
-        {
-            TicketDAO ticketDAO = TicketDAO.GetInstance();
-            List<Ticket_Model> selectedTickets = ticketDAO.GetFilteredTicketByDate();
-            collection.InsertMany(selectedTickets);
-        }
+        //public void AddArchive()
+        //{
+        //    TicketDAO ticketDAO = TicketDAO.GetInstance();
+        //    List<Ticket_Model> selectedTickets = ticketDAO.GetFilteredTicketByDate();
+        //    collection.InsertMany(selectedTickets);
+        //}
     }
 }

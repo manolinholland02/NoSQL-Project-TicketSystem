@@ -20,8 +20,8 @@ namespace UI
 
         private void btnAddArchive_Click(object sender, EventArgs e)
         {
-            TicketArchiveService service = TicketArchiveService.GetInstance();
-            service.AddArchive();
+            //TicketArchiveService service = TicketArchiveService.GetInstance();
+            //service.AddArchive();
         }
     }
 }
