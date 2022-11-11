@@ -55,6 +55,7 @@ namespace UI
                 btnTransferTicket.Visible = false;
                 btnCloseTicket.Visible = false;
                 btnArchiveTickets.Visible = false;
+                btnLogout.Left -= 200;
                 btnIncidentManagement.Text = "Tickets";
             }
             
@@ -79,7 +80,7 @@ namespace UI
                 EmployeeDashboard();
             }
             progressBarUnresolvedIncidents.Text = $"{progressBarUnresolvedIncidents.Value}/{progressBarUnresolvedIncidents.Maximum}";
-            progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
+            progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}/{progressBarIncidentsPastDeadline.Maximum}";
         }
 
         private void btnDashboard_Click(object sender, EventArgs e)
@@ -91,6 +92,7 @@ namespace UI
         {
             progressBarUnresolvedIncidents.Maximum = getAllTickets.Count;
             progressBarIncidentsPastDeadline.Maximum = getAllTickets.Count;
+
             progressBarUnresolvedIncidents.Value = 0;
             progressBarIncidentsPastDeadline.Value = 0;
 
@@ -99,7 +101,6 @@ namespace UI
                 if (ticket.Status == Status.Unfinished)
                 {
                     progressBarUnresolvedIncidents.PerformStep();
-                    //DateTime ticketMadeDate = DateTime.ParseExact(ticket.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
                     DateTime ticketMadeDate = ticket.Date;
                     int deadline = (int)ticket.Deadline;
                     int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
@@ -125,7 +126,6 @@ namespace UI
                     if (ticket.Status == Status.Unfinished)
                     {
                         progressBarUnresolvedIncidents.PerformStep();
-                        //DateTime ticketMadeDate = DateTime.ParseExact(ticket.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
                         DateTime ticketMadeDate = ticket.Date;
                         int deadline = (int)ticket.Deadline;
                         int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
@@ -185,11 +185,10 @@ namespace UI
 
 
 
-
-            FillPromptTextComboBox(cbFilterByPriority, "priority");
-            FillPromptTextComboBox(cbFilterByStatus, "ticket status");
-            FillPromptTextComboBox(cbFilterByType, "incident type");
-            FillPromptTextComboBox(cbFilterByDeadline, "deadline");
+            FillPromptTextComboBox(cbFilterByPriority, "Priority");
+            FillPromptTextComboBox(cbFilterByStatus, "Ticket status");
+            FillPromptTextComboBox(cbFilterByType, "Incident type");
+            FillPromptTextComboBox(cbFilterByDeadline, "Deadline");
 
             foreach (Enum e in Enum.GetValues(typeof(Status)))
             {
