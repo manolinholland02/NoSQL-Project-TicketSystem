@@ -33,7 +33,7 @@ namespace UI
             try
             {
                 if (cbEmployees.SelectedIndex == 0) { throw new Exception("Please select an employee!"); }
-               string email = cbEmployees.SelectedItem.ToString();  
+                string email = cbEmployees.SelectedItem.ToString();  
                 transferService.TransferTicket(email, ticketNr);
                 MessageBox.Show("Ticket succesfully transferred!");
                 this.Close();
@@ -52,6 +52,7 @@ namespace UI
 
             List<User_Model> employees = userService.GetAllEmployees();
             employees.Sort((x, y) => string.Compare(x.FirstName, y.FirstName));
+            //Add all users besides the one who the ticket is assigned to
             foreach (User_Model employee in employees)
             {
                 if (email != employee.Email)

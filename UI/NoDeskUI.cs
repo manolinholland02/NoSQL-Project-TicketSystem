@@ -578,6 +578,7 @@ namespace UI
             addUser.ShowDialog();
         }
 
+        //Refresh list when form closes
         private void addUser_FormClosing(object sender, FormClosingEventArgs e)
         {
             RefreshUsers();
@@ -621,6 +622,7 @@ namespace UI
             DisplayUsers(users);
         }
 
+        //Delete user
         private void btnDeleteUser_Click(object sender, EventArgs e)
         {
             try
