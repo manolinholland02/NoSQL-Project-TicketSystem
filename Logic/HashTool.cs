@@ -6,6 +6,7 @@ namespace Logic
 {
     public class HashTool
     {
+        //is used to hash a passsword
         public HashWithSaltResult HashPassword(string password)
         {
             PasswordWithSaltHasher pwHasher = new PasswordWithSaltHasher();

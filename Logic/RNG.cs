@@ -5,11 +5,7 @@ namespace Logic
 {
     public class RNG
     {
-        public string GenerateRandomCryptographicKey(int keyLength)
-        {
-            return Convert.ToBase64String(GenerateRandomCryptographicBytes(keyLength));
-        }
-
+        //generates random bytes
         public byte[] GenerateRandomCryptographicBytes(int keyLength)
         {
             RNGCryptoServiceProvider rngCryptoServiceProvider = new RNGCryptoServiceProvider();

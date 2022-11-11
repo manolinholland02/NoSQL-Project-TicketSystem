@@ -18,21 +18,22 @@ namespace UI
         private List<Ticket_Model> getAllTickets;
         private List<User_Model> getAllUsers;
         private User_Model loggedUser;
+        private FilterTicket filterTicketFuction;
 
         public NoDeskUI(User_Model loggedUser)
         {
+            filterTicketFuction = new FilterTicket();
             InitializeComponent();
             this.loggedUser = loggedUser;
             GridViewAutoColumnSize();
-            DisplayAllEnumValues();
+            DisplayAllEnumValues();         
             dateTimePickerTicket.MaxDate = DateTime.Today;
             ticketService = TicketService.GetInstance();
-            userService = UserService.GetInstance();
+            userService = UserService.GetInstance();          
             DisableUpdateBoxes();
             InitDashboard();
             txtTicketNr.Visible = false;
-            SetEmployeeAccess(loggedUser);
-
+            SetEmployeeAccess(loggedUser);            
         }
         private void GridViewAutoColumnSize()
         {
@@ -191,32 +192,7 @@ namespace UI
             comboBoxPrioritySorting.Items.Add("Ascending");
             comboBoxPrioritySorting.Items.Add("Descending");
 
-
-
-            FillPromptTextComboBox(cbFilterByPriority, "Priority");
-            FillPromptTextComboBox(cbFilterByStatus, "Ticket status");
-            FillPromptTextComboBox(cbFilterByType, "Incident type");
-            FillPromptTextComboBox(cbFilterByDeadline, "Deadline");
-
-            foreach (Enum e in Enum.GetValues(typeof(Status)))
-            {
-                cbFilterByStatus.Items.Add(e);
-            }
-
-            foreach (Enum e in Enum.GetValues(typeof(Priority)))
-            {
-                cbFilterByPriority.Items.Add(e);
-            }
-
-            foreach (Enum e in Enum.GetValues(typeof(Deadline)))
-            {
-                cbFilterByDeadline.Items.Add(e);
-            }
-
-            foreach (Enum e in Enum.GetValues(typeof(Model.Type)))
-            {
-                cbFilterByType.Items.Add(e);
-            }
+            filterTicketFuction.FillComboBox(cbFilterByPriority, cbFilterByStatus, cbFilterByType, cbFilterByDeadline);
         }
         private async Task SortPriorityAscending()
         {
@@ -248,29 +224,14 @@ namespace UI
         }
         private void btnFilter_Click(object sender, EventArgs e)
         {
-            FilterTickets();
-        }
-
-        private async void FilterTickets()
-        {           
-            BsonDocument doc = new BsonDocument();
-            string status = cbFilterByStatus.Text;
-            string priority = cbFilterByPriority.Text;
-            string deadline = cbFilterByDeadline.Text;
-            string type = cbFilterByType.Text;
-            if (loggedUser.Role == Role.Employee)
-            {            
-                doc.Add("user", loggedUser.FullNameEmailPair);
-            }     
-
-            var tickets = await ticketService.GetFilteredTickets(status, priority, deadline, type, doc);
-            dataGVTicketOverview.DataSource = tickets;
-        }
-
-        private void FillPromptTextComboBox(ComboBox cb,string text)
-        {
-            cb.Items.Add(text);
-            cb.SelectedIndex = 0;
+            try
+            {
+                filterTicketFuction.FilterTickets(loggedUser, cbFilterByPriority, cbFilterByStatus, cbFilterByType, cbFilterByDeadline, dataGVTicketOverview);
+            }
+            catch(Exception exp)
+            {
+                MessageBox.Show(exp.Message);
+            }
         }
 
         //diaplay all the tickets in the datagridview for the incident management
@@ -486,11 +447,15 @@ namespace UI
         //}
 
 
-        private void btnRecentTicket_Click(object sender, EventArgs e)
+        private void btnResetFilter_Click(object sender, EventArgs e)
         {
             try
             {
                 //GetRecentTicketsAsync();
+                cbFilterByStatus.SelectedIndex = 0;
+                cbFilterByPriority.SelectedIndex = 0;
+                cbFilterByDeadline.SelectedIndex = 0;
+                cbFilterByType.SelectedIndex = 0;
                 var tickets = GetTickets();
                 tickets.Sort((x, y) => y.Date.CompareTo(x.Date));
                 dataGVTicketOverview.DataSource = tickets;

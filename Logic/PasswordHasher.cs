@@ -8,6 +8,7 @@ namespace Logic
 {
     public class PasswordWithSaltHasher
     {
+        //returns the hashed string
         public HashWithSaltResult HashWithSalt(string password, int saltLength, HashAlgorithm hashAlgo)
         {
             RNG rng = new RNG();
