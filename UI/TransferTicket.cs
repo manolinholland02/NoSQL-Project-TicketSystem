@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Model;
 using Logic;
@@ -17,14 +11,14 @@ namespace UI
     {
         int ticketNr;
         string email;
-        TicketService ticketService;    
+        TransferService transferService;    
         UserService userService;
         public TransferTicket(int ticketNr, string email)
         {
             InitializeComponent();
             this.ticketNr = ticketNr;
             this.email = email;
-            ticketService = TicketService.GetInstance();
+            transferService = TransferService.GetInstance();
             userService = UserService.GetInstance();
             FillEmployees();
         }
@@ -38,9 +32,10 @@ namespace UI
         {
             try
             {
-                if (cbEmployees.SelectedItem == null) { throw new Exception("Please select an employee!"); }
-                string email = cbEmployees.SelectedItem.ToString().Split(' ')[3];
-                ticketService.TransferTicket(email, ticketNr);
+                if (cbEmployees.SelectedIndex == 0) { throw new Exception("Please select an employee!"); }
+               // string email = cbEmployees.SelectedItem.ToString().Split(' ')[3];
+               string email = cbEmployees.SelectedItem.ToString();  
+                transferService.TransferTicket(email, ticketNr);
                 MessageBox.Show("Ticket succesfully transferred!");
                 this.Close();
             }
@@ -53,13 +48,17 @@ namespace UI
         }
         private void FillEmployees()
         {
+            cbEmployees.Items.Add("Select employee...");
+            cbEmployees.SelectedIndex = 0;
+
             List<User_Model> employees = userService.GetAllEmployees();
             employees.Sort((x, y) => string.Compare(x.FirstName, y.FirstName));
             foreach (User_Model employee in employees)
             {
                 if (email != employee.Email)
                 {
-                    cbEmployees.Items.Add($"{employee.FullName} @ {employee.Email}");
+                    cbEmployees.Items.Add(employee.FullNameEmailPair);
+                    //cbEmployees.Items.Add($"{employee.FullName} @ {employee.Email}");
                 }
             }
         }

@@ -9,12 +9,14 @@ namespace DAL
 {
     public class TicketDAO : BaseDAO
     {
+        private const string DataBaseName = "gardengroupdb";
         private IMongoCollection<Ticket_Model> collection;
         private const string CollectionName = "tickets";
         //Singleton for TicketDAO
         private static TicketDAO instance;
 
         private TicketDAO()
+            : base(DataBaseName)
         {
             try
             {
@@ -41,18 +43,16 @@ namespace DAL
         public void UpdateTicketStatus(int ticketNr)
         {
             var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
-            var update = Builders<Ticket_Model>.Update.Set(s => s.Status, Status.finished);
+            var update = Builders<Ticket_Model>.Update.Set(s => s.Status, Status.Finished);
             collection.UpdateOne(filter, update);
         }
         public void TransferTicket(string email, int ticketNr)
         {
             var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
-            var update = Builders<Ticket_Model>.Update.Set(e => e.Email, email);
+            var update = Builders<Ticket_Model>.Update.Set(e => e.User, email);
             collection.UpdateOne(filter, update);
-            return;
         }
 
-         
         public  List<Ticket_Model> GetFilteredTicketBySubject(string serachText)
         {
             var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Subject, serachText);
@@ -60,7 +60,7 @@ namespace DAL
             return result;
 
         }
-
+        
         public async Task<List<Ticket_Model>> GetFilteredTicketByStatusAndPriorityAsync(string status,string priority)
         {
             var query = collection.Aggregate()
@@ -73,6 +73,62 @@ namespace DAL
             var results = await query.ToListAsync();
             return results;
         }
+
+        public async Task<List<Ticket_Model>> GetFilteredTickets(string status, string priority, string deadline, string type, BsonDocument doc)
+        {
+  
+            if (status != "select ticket status")
+            {
+                doc.Add("status", (int)Enum.Parse(typeof(Status), status));
+            }
+
+            if (priority != "select priority")
+            {
+                doc.Add("priority", (int)Enum.Parse(typeof(Priority), priority));
+            }
+
+            if (deadline != "select deadline")
+            {
+                doc.Add("deadline", (int)Enum.Parse(typeof(Deadline), deadline));
+            }
+
+            if (type != "select incident type")
+            {
+                doc.Add("type", (int)Enum.Parse(typeof(Model.Type), type));
+            }
+
+            
+
+            var query = collection.Aggregate()
+                        .Match(doc);
+            var results = await query.ToListAsync();
+            return results;
+        }
+
+        public List<Ticket_Model> GetFilteredTicketByDate(DateTime date)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Lte(t => t.Date, date);
+            var result = collection.Find(filter).ToList();
+
+            /*if (result.Count == 0) 
+                throw new Exception("There are no records");*/
+
+            return result;
+        }
+
+        public void DeleteDocumentsLteDate(DateTime date)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Lte(t => t.Date, date);
+            try
+            {
+                collection.DeleteMany(filter);
+            }
+            catch
+            {
+                throw new Exception("Ne");
+            }
+        }
+
         public List<Ticket_Model> GetFilteredTicketByStatusOrPriority(string status,string priority)
         {
             

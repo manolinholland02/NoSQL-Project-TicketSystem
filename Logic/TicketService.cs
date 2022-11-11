@@ -1,8 +1,9 @@
 ﻿using DAL;
 using Model;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace Logic
@@ -33,10 +34,6 @@ namespace Logic
         {
             dao.UpdateTicketStatus(ticketNr);
         }
-        public void TransferTicket(string email, int ticketNr)
-        {
-            dao.TransferTicket(email, ticketNr);
-        }
 
         public int GetTicketCount()
         {
@@ -62,6 +59,12 @@ namespace Logic
         {
             return  await dao.GetFilteredTicketByStatusAndPriorityAsync(status,priority);
         }
+
+        public async Task<List<Ticket_Model>> GetFilteredTickets(string status, string priority, string deadline, string type, BsonDocument doc)
+        {
+            return await dao.GetFilteredTickets(status, priority, deadline, type, doc);
+        }
+
         public List<Ticket_Model> GetFilteredTicketByStatusOrPriority(string status, string priority)
         {
 
@@ -70,6 +73,16 @@ namespace Logic
         public List<Ticket_Model> GetFilteredTicketByTicketNr(int ticketNr)
         {
             return dao.GetFilteredTicketByTicketNr(ticketNr);
+        }
+
+        public List<Ticket_Model> GetFilteredTicketByDate(DateTime date)
+        {
+            return dao.GetFilteredTicketByDate(date);
+        }
+
+        public void DeleteDocumentsLteDate(DateTime date)
+        {
+            dao.DeleteDocumentsLteDate(date);
         }
     }
 }

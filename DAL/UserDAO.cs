@@ -2,20 +2,20 @@
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.IO.Pipes;
 using System.Linq;
-using MongoDB.Bson;
 
 namespace DAL
 {
     public class UserDAO : BaseDAO
     {
+        private const string DataBaseName = "gardengroupdb";
         private IMongoCollection<User_Model> collection;
         private const string CollectionName = "users";
         //Singleton for UserDAO
         private static UserDAO instance;
 
         private UserDAO()
+            :base(DataBaseName)
         {
             try
             {
@@ -39,6 +39,10 @@ namespace DAL
         {
             collection.InsertOne(user);
         }
+        public void AddMultipleUsers(List<User_Model> users)
+        {
+            collection.InsertMany(users);
+        }
         public void DeleteUser(string email)
         {
             var filter = Builders<User_Model>.Filter.Eq(e => e.Email, email);
@@ -49,6 +53,14 @@ namespace DAL
         {
             return collection.AsQueryable().ToList<User_Model>();
         }
+
+        public User_Model GetUserByEmail(string email)
+        {
+            var filter = Builders<User_Model>.Filter.Eq(u => u.Email, email);
+            var user = collection.Find(filter).FirstOrDefault();
+            return user;
+        }
+
         public List<User_Model> GetAllEmployees()
         {
             var filter = Builders<User_Model>.Filter.Eq(r => r.Role, Role.Employee);

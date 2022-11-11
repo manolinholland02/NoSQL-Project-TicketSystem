@@ -20,7 +20,10 @@ namespace Model
         public string Email { get; set; }
 
         [BsonElement("password")]
-        public string Password { get; set; }
+        public string Salt { get; set; }
+
+        [BsonElement("digest")]
+        public string Digest { get; set; }
 
         [BsonElement("role")]
         [JsonConverter(typeof(StringEnumConverter))]  
@@ -35,21 +38,35 @@ namespace Model
         [BsonElement("phoneNumber")]
         public string PhoneNumber { get; set; }
 
-        //Calculated property for projecting an user's full name 
+        //Calculated property for projecting an user's full name in combination with email
+        //For deisgning purposes only (for the ComboBox of selecting reporting user of an incident)
+        //Multiple users can have similar fullnames but uniqie emails
+        //This property differentiate users with similar names when service desk employee wants to select the reporting user of an incident
+        public string FullNameEmailPair
+        {
+            get
+            {
+                return $"{FirstName} {LastName} ({Email})";
+            }
+        }
+
+        //Calculated property for projecting an user's full name
+        //For deisgning purposes only
         public string FullName
         {
             get
             {
-                return FirstName + " " + LastName;
+                return $"{FirstName} {LastName}";
             }
         }
 
-        public User_Model(string firstName, string lastName, string email, string password, Role role, Location location, string phoneNumber)
+        public User_Model(string firstName, string lastName, string email, string salt, string digest, Role role, Location location, string phoneNumber)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
-            Password = password;
+            Salt = salt;
+            Digest = digest;
             Role = role;
             Location = location;
             PhoneNumber = phoneNumber;

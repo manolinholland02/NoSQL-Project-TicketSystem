@@ -1,44 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Logic;
 using Model;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace UI
 {
     public partial class NoDeskUI : Form
     {
-        TicketService ticketService;
-        UserService userService;
-        const int IdColumn = 0;
-        List<Ticket_Model> getAllTickets;
-        List<User_Model> getAllUsers;
-        User_Model loggedUser;
+        private TicketService ticketService;
+        private UserService userService;
+        private const int IdColumn = 0;
+        private List<Ticket_Model> getAllTickets;
+        private List<User_Model> getAllUsers;
+        private User_Model loggedUser;
 
         public NoDeskUI(User_Model loggedUser)
         {
             InitializeComponent();
             this.loggedUser = loggedUser;
-            GridViewAutoColumnSize();           
+            GridViewAutoColumnSize();
             DisplayAllEnumValues();
+            dateTimePickerTicket.MaxDate = DateTime.Today;
             ticketService = TicketService.GetInstance();
             userService = UserService.GetInstance();
-            getAllTickets =ticketService.GetAllTickets();
-            getAllUsers = userService.GetAllUsers();
-
-            DisplayTickets(getAllTickets);
             DisableUpdateBoxes();
-            DisplayUsers(getAllUsers);     
-            HideAllPanel();
+            InitDashboard();
             txtTicketNr.Visible = false;
             SetEmployeeAccess(loggedUser);
-             
+
         }
         private void GridViewAutoColumnSize()
         {
@@ -60,72 +54,97 @@ namespace UI
                 txtSubject.Visible = false;
                 btnTransferTicket.Visible = false;
                 btnCloseTicket.Visible = false;
+                btnArchiveTickets.Visible = false;
+                btnIncidentManagement.Text = "Tickets";
             }
-        }
-        private void HideAllPanel()
-        {
-            pnlDashboard.Hide();
-            pnlIncidentManagemnt.Hide();
-            pnlUserManagement.Hide();
+            
         }
 
-        private void btnDashboard_Click(object sender, EventArgs e)
+        private void InitDashboard()
         {
+            getAllTickets = ticketService.GetAllTickets();
             pnlIncidentManagemnt.Hide();
             pnlUserManagement.Hide();
             pnlDashboard.Show();
 
             progressBarUnresolvedIncidents.Minimum = 0;
             progressBarIncidentsPastDeadline.Minimum = 0;
-            
-            if (loggedUser.Role==Role.ServiceDeskEmployee)
+
+            if (loggedUser.Role == Role.ServiceDeskEmployee)
             {
                 ServiceEmployeeDashboard();
             }
-            else if(loggedUser.Role==Role.Employee)
+            else if (loggedUser.Role == Role.Employee)
             {
                 EmployeeDashboard();
             }
+            progressBarUnresolvedIncidents.Text = $"{progressBarUnresolvedIncidents.Value}/{progressBarUnresolvedIncidents.Maximum}";
+            progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
         }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            InitDashboard();
+        }
+        
         private void ServiceEmployeeDashboard()
         {
             progressBarUnresolvedIncidents.Maximum = getAllTickets.Count;
             progressBarIncidentsPastDeadline.Maximum = getAllTickets.Count;
-            int unresolvedTicketsCount = 0;
-            int pastDeadlineTicketsCount = 0;
+            progressBarUnresolvedIncidents.Value = 0;
+            progressBarIncidentsPastDeadline.Value = 0;
 
             foreach (Ticket_Model ticket in getAllTickets)
             {
-                if (ticket.Status == Status.unfinished)
+                if (ticket.Status == Status.Unfinished)
                 {
                     progressBarUnresolvedIncidents.PerformStep();
-                    unresolvedTicketsCount++;
-                }
-                DateTime ticketMadeDate = DateTime.Parse(ticket.Date);
-                int deadline = (int)ticket.Deadline;
-                int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
-                if (period > deadline &ticket.Status!=Status.finished)
-                {
-                    progressBarIncidentsPastDeadline.PerformStep();
-                    pastDeadlineTicketsCount++;
+                    //DateTime ticketMadeDate = DateTime.ParseExact(ticket.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                    DateTime ticketMadeDate = ticket.Date;
+                    int deadline = (int)ticket.Deadline;
+                    int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
+                    if (period > deadline)
+                    {
+                        progressBarIncidentsPastDeadline.PerformStep();
+                    }
                 }
             }
-
-            progressBarUnresolvedIncidents.Text = $"{unresolvedTicketsCount}/{progressBarUnresolvedIncidents.Maximum}";
-            progressBarIncidentsPastDeadline.Text = $"{pastDeadlineTicketsCount}";
         }
-
         private void EmployeeDashboard()
         {
+            progressBarIncidentsPastDeadline.Maximum = 0;
+            progressBarUnresolvedIncidents.Maximum = 0;
 
+            foreach (Ticket_Model ticket in getAllTickets)
+            {
+                if (ticket.User.Split('(', ')')[1] == loggedUser.Email)
+                {
+                    progressBarUnresolvedIncidents.Maximum++;
+                    progressBarIncidentsPastDeadline.Maximum++;
+
+                    if (ticket.Status == Status.Unfinished)
+                    {
+                        progressBarUnresolvedIncidents.PerformStep();
+                        //DateTime ticketMadeDate = DateTime.ParseExact(ticket.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                        DateTime ticketMadeDate = ticket.Date;
+                        int deadline = (int)ticket.Deadline;
+                        int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
+                        if (period > deadline)
+                        {
+                            progressBarIncidentsPastDeadline.PerformStep();
+                        }
+                    }
+                }
+            }
         }
 
         private void btnIncidentManagement_Click(object sender, EventArgs e)
         {
-
             pnlDashboard.Hide();
             pnlUserManagement.Hide();
             pnlIncidentManagemnt.Show();
+            getAllTickets = ticketService.GetAllTickets();
+            DisplayTickets(getAllTickets);
         }
 
         private void btnUserManagement_Click(object sender, EventArgs e)
@@ -133,11 +152,19 @@ namespace UI
             pnlDashboard.Hide();
             pnlIncidentManagemnt.Hide();
             pnlUserManagement.Show();
+            getAllUsers = userService.GetAllUsers();
+            DisplayUsers(getAllUsers);
         }
         private void btnLogout_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you wish to logout?", "Logout", MessageBoxButtons.YesNo);
-            if(dialogResult == DialogResult.Yes) { this.Close(); }
+            if (dialogResult == DialogResult.Yes)
+            {
+                Login login = new Login();
+                Hide();
+                login.ShowDialog();
+                Close();
+            }
         }
         //showing all the enum values in the combobox
         private void DisplayAllEnumValues()
@@ -149,15 +176,68 @@ namespace UI
                                     .ToList();
             comboBoxStatusAnd.DataSource = Enum.GetValues(typeof(Status));
             comboBoxStatusOr.DataSource = Enum.GetValues(typeof(Status));
-            comboBoxPriorityAnd.DataSource= Enum.GetValues(typeof(Priority));
-            comboBoxPriorityOr.DataSource= Enum.GetValues(typeof(Priority));
+            comboBoxPriorityAnd.DataSource = Enum.GetValues(typeof(Priority));
+            comboBoxPriorityOr.DataSource = Enum.GetValues(typeof(Priority));
+            comboBoxPrioritySorting.DataSource = Enum.GetValues(typeof(Priority));
 
+            FillPromptTextComboBox(cbFilterByPriority, "priority");
+            FillPromptTextComboBox(cbFilterByStatus, "ticket status");
+            FillPromptTextComboBox(cbFilterByType, "incident type");
+            FillPromptTextComboBox(cbFilterByDeadline, "deadline");
+
+            foreach (Enum e in Enum.GetValues(typeof(Status)))
+            {
+                cbFilterByStatus.Items.Add(e);
+            }
+
+            foreach (Enum e in Enum.GetValues(typeof(Priority)))
+            {
+                cbFilterByPriority.Items.Add(e);
+            }
+
+            foreach (Enum e in Enum.GetValues(typeof(Deadline)))
+            {
+                cbFilterByDeadline.Items.Add(e);
+            }
+
+            foreach (Enum e in Enum.GetValues(typeof(Model.Type)))
+            {
+                cbFilterByType.Items.Add(e);
+            }
+        }
+
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+            FilterTickets();
+        }
+
+        private async void FilterTickets()
+        {           
+            BsonDocument doc = new BsonDocument();
+            string status = cbFilterByStatus.Text;
+            string priority = cbFilterByPriority.Text;
+            string deadline = cbFilterByDeadline.Text;
+            string type = cbFilterByType.Text;
+            if (loggedUser.Role == Role.Employee)
+            {            
+                doc.Add("user", loggedUser.FullNameEmailPair);
+            }     
+
+            var tickets = await ticketService.GetFilteredTickets(status, priority, deadline, type, doc);
+            dataGVTicketOverview.DataSource = tickets;
+        }
+
+        private void FillPromptTextComboBox(ComboBox cb,string text)
+        {
+            cb.Items.Add(text);
+            cb.SelectedIndex = 0;
         }
 
         //diaplay all the tickets in the datagridview for the incident management
 
         private void DisplayTickets(List<Ticket_Model> getAllTickets)
         {
+            
             dataGVTicketOverview.DataSource = getAllTickets;
             dataGVTicketOverview.Columns[IdColumn].Visible = false;
         }
@@ -171,13 +251,17 @@ namespace UI
         private void dGVTicketOverview_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int indexOfRow = e.RowIndex;
-            DataGridViewRow row = dataGVTicketOverview.Rows[indexOfRow];
-            txtSubject.Text = row.Cells[2].Value.ToString();
-            txtTicketNr.Text = row.Cells[5].Value.ToString();
-            cbDeadline.Text = row.Cells[6].Value.ToString();
-            cbPriority.Text = row.Cells[7].Value.ToString();
 
-            CheckTicketStatus();
+            if (indexOfRow != -1)
+            {
+                DataGridViewRow row = dataGVTicketOverview.Rows[indexOfRow];
+                txtSubject.Text = row.Cells[2].Value.ToString();
+                txtTicketNr.Text = row.Cells[5].Value.ToString();
+                cbDeadline.Text = row.Cells[6].Value.ToString();
+                cbPriority.Text = row.Cells[7].Value.ToString();
+
+                CheckTicketStatus();
+            }
 
         }
 
@@ -187,7 +271,7 @@ namespace UI
             int indexOfRow = dataGVTicketOverview.SelectedCells[0].RowIndex; 
             DataGridViewRow row = dataGVTicketOverview.Rows[indexOfRow];
 
-            if (row.Cells[4].Value.ToString() == "finished") { DisableUpdateBoxes(); }
+            if (row.Cells[4].Value.ToString() == "Finished") { DisableUpdateBoxes(); }
             else { EnableUpdateBoxes(); }
         }
         private void DisableUpdateBoxes()
@@ -215,7 +299,15 @@ namespace UI
 
         private void btnCreateIncident_Click(object sender, EventArgs e)
         {
-            ICreateEnity createTicket=new AddTicket(loggedUser);
+            AddTicket addTicket = new AddTicket(loggedUser);
+            addTicket.FormClosing += new FormClosingEventHandler(this.addTicket_FormClosing);
+            addTicket.ShowDialog();
+        }
+
+        private void addTicket_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            RefreshTickets();
+            CheckTicketStatus();
         }
 
         // update ticket information when you click the update button
@@ -237,22 +329,22 @@ namespace UI
                     MessageBox.Show("Something went wrong");
                 }
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
-                MessageBox.Show("Error: " +exception.Message);
+                MessageBox.Show("Error: " + exception.Message);
             }
-            
+
         }
         private List<Ticket_Model> GetUpdatedTickets()
         {
-            var ticketFilter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, int.Parse(txtTicketNr.Text)); 
+            var ticketFilter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, int.Parse(txtTicketNr.Text));
             var updateTicket = Builders<Ticket_Model>.Update
                 .Set(s => s.Subject, txtSubject.Text)
                 .Set(z => z.Priority, (Priority)Enum.Parse(typeof(Priority), cbPriority.Text))
                 .Set(v => v.Deadline, (Deadline)Enum.Parse(typeof(Deadline), cbDeadline.Text))
-                .Set(d => d.Date, dateTimePickerTicket.Text.ToString());
-            var update=ticketService.GetTicketCollection().UpdateOne(ticketFilter, updateTicket);
-            var  listOfUpdateResult= ticketService.GetAllTickets();
+                .Set(d => d.Date, dateTimePickerTicket.Value.Date);
+            var update = ticketService.GetTicketCollection().UpdateOne(ticketFilter, updateTicket);
+            var listOfUpdateResult = ticketService.GetAllTickets();
             return listOfUpdateResult;
 
         }
@@ -264,7 +356,7 @@ namespace UI
                 string searchTxt = txtSearch.Text;
                 DisplayTickets(ticketService.GetFilteredTicketBySubject(searchTxt));
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 MessageBox.Show("Error: " + exception.Message);
             }
@@ -296,9 +388,9 @@ namespace UI
                 string priority=comboBoxPriorityOr.Text;
                 DisplayTickets(ticketService.GetFilteredTicketByStatusOrPriority(status,priority));
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
-                MessageBox.Show("Error: "+exception.Message);
+                MessageBox.Show("Error: " + exception.Message);
             }
 
         }
@@ -311,7 +403,7 @@ namespace UI
                 int ticketNr = int.Parse(textBoxTicketSearch.Text);
                 DisplayTickets(ticketService.GetFilteredTicketByTicketNr(ticketNr));
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 MessageBox.Show("Error: " + exception.Message);
             }
@@ -324,9 +416,9 @@ namespace UI
             {
                 DisplayTickets(GetTicketListAfterDelete());
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
-                MessageBox.Show("Error: "+exception.Message);
+                MessageBox.Show("Error: " + exception.Message);
             }
         }
         private List<Ticket_Model> GetTicketListAfterDelete()
@@ -341,20 +433,20 @@ namespace UI
         private async Task GetRecentTicketsAsync()
         {
             var query = ticketService.GetTicketCollection().Aggregate()
-                        .Sort(new BsonDocument { { "date", -1 }});
+                        .Sort(new BsonDocument { { "date", -1 } });
             var results = await query.ToListAsync();
             dataGVTicketOverview.DataSource = results;
 
         }
 
- 
+
         private void btnRecentTicket_Click(object sender, EventArgs e)
         {
             try
             {
                 GetRecentTicketsAsync();
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 MessageBox.Show("Error: " + exception.Message);
             }
@@ -394,6 +486,7 @@ namespace UI
             RefreshTickets();
             CheckTicketStatus();
         }
+
         private int GetTicketNumber()
         {
             try
@@ -439,6 +532,19 @@ namespace UI
             CheckTicketStatus();
         }
 
+        private void btnArchiveTickets_Click(object sender, EventArgs e)
+        {
+            ArchiveTicket archiveTicket = new ArchiveTicket(loggedUser);
+            archiveTicket.FormClosing += new FormClosingEventHandler(this.archiveTicket_FormClosing);
+            archiveTicket.ShowDialog();
+        }
+
+        private void archiveTicket_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            RefreshTickets();
+            CheckTicketStatus();
+        }
+
         //------------------------//
         /*end incident management*/
 
@@ -467,11 +573,20 @@ namespace UI
 
         private void DisplayUsers(List<User_Model> users)
         {
+            const int FirstName = 1;
+            const int LastName = 2;
             const int PasswordColumn = 4;
+            const int DigestColumn = 5;
+            const int FullNamePair = 9;
+            const int Fullname = 10;
             dataGVUser.DataSource = users;
             dataGVUser.Columns[IdColumn].Visible = false;
+            dataGVUser.Columns[FirstName].Visible = false;
+            dataGVUser.Columns[LastName].Visible = false;
             dataGVUser.Columns[PasswordColumn].Visible = false;
-
+            dataGVUser.Columns[DigestColumn].Visible = false;
+            dataGVUser.Columns[FullNamePair].Visible = false;
+            dataGVUser.Columns[Fullname].DisplayIndex = 0;
         }
 
         private void btnRefreshUser_Click(object sender, EventArgs e)
@@ -507,7 +622,6 @@ namespace UI
             }
         }
 
-        
 
 
         //------------------------//

@@ -24,9 +24,18 @@ namespace Logic
             return instance;
         }
 
+        public User_Model GetUserByEmail(string email)
+        {
+            return dao.GetUserByEmail(email);
+        }
+
         public void AddUser(User_Model user)
         {
             dao.AddUser(user);
+        }
+        public void AddMultipleUsers(List<User_Model> users)
+        {
+            dao.AddMultipleUsers(users);
         }
         public void DeleteUser(string email)
         {

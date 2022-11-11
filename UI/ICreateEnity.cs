@@ -4,6 +4,5 @@
     {
         void ClearInputs();
         void ValidateInputs();
-        //void GenerateNumber();
     }
 }
