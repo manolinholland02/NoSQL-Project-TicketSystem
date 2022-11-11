@@ -4,6 +4,7 @@ using Model;
 using System;
 using MongoDB.Bson;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace DAL
 {
@@ -55,14 +56,14 @@ namespace DAL
 
         public  List<Ticket_Model> GetFilteredTicketBySubject(string serachText)
         {
-            var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Subject, serachText);
+            var filter = Builders<Ticket_Model>.Filter.Regex(s => s.Subject, new BsonRegularExpression(Regex.Escape(serachText), "i"));
             var result = collection.Find(filter).ToList();
             return result;
 
         }
         public List<Ticket_Model> GetFilteredTicketBySubject(string serachText, string user)
         {
-            var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Subject, serachText) & Builders<Ticket_Model>.Filter.Eq(u => u.User, user);
+            var filter = Builders<Ticket_Model>.Filter.Regex(s => s.Subject, new BsonRegularExpression(Regex.Escape(serachText), "i")) & Builders<Ticket_Model>.Filter.Eq(u => u.User, user);
             var result = collection.Find(filter).ToList();
             return result;
 
