@@ -178,7 +178,13 @@ namespace UI
             comboBoxStatusOr.DataSource = Enum.GetValues(typeof(Status));
             comboBoxPriorityAnd.DataSource = Enum.GetValues(typeof(Priority));
             comboBoxPriorityOr.DataSource = Enum.GetValues(typeof(Priority));
-            comboBoxPrioritySorting.DataSource = Enum.GetValues(typeof(Priority));
+           
+
+            comboBoxPrioritySorting.Items.Add("Ascending");
+            comboBoxPrioritySorting.Items.Add("Descending");
+
+
+
 
             FillPromptTextComboBox(cbFilterByPriority, "priority");
             FillPromptTextComboBox(cbFilterByStatus, "ticket status");
@@ -205,7 +211,30 @@ namespace UI
                 cbFilterByType.Items.Add(e);
             }
         }
+        private async Task SortPriorityAscending()
+        {
+            var result = ticketService.SortPriorityAscending();
+            dataGVTicketOverview.DataSource = await result;
 
+        }
+        private async Task SortPriorityDescending()
+        {
+            var result = ticketService.SortPriorityDescending();
+            dataGVTicketOverview.DataSource = await result;
+
+        }
+
+        private void comboBoxPrioritySorting_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxPrioritySorting.Text == "Ascending")
+            {
+                SortPriorityAscending();
+            }
+            else if(comboBoxPrioritySorting.Text == "Descending")
+            {
+                SortPriorityDescending();
+            }
+        }
         private void btnFilter_Click(object sender, EventArgs e)
         {
             FilterTickets();
@@ -621,6 +650,8 @@ namespace UI
                 MessageBox.Show($"Error deleting user \nERROR:{ex.Message}");
             }
         }
+
+       
 
 
 

@@ -160,5 +160,26 @@ namespace DAL
         {
             return collection;
         }
+
+        // sorting by ascending order by the low priority value
+        public async Task<List<Ticket_Model>> SortPriorityAscending()
+        {
+            var query = collection.Aggregate()
+                        .Sort(new BsonDocument { { "priority", 1 } });
+            var results = await query.ToListAsync();
+            return results;
+          
+
+        }
+        // sorting by descending order by the hign priority value
+        public async Task<List<Ticket_Model>> SortPriorityDescending()
+        {
+            var query = collection.Aggregate()
+                        .Sort(new BsonDocument { { "priority", -1 } });
+            var results = await query.ToListAsync();
+            return results;
+
+        }
+
     }
 }

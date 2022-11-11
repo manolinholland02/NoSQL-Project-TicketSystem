@@ -84,5 +84,18 @@ namespace Logic
         {
             dao.DeleteDocumentsLteDate(date);
         }
+
+        public async Task<List<Ticket_Model>> SortPriorityAscending()
+        {
+
+           return await dao.SortPriorityAscending();
+
+        }
+        // sorting by descending order by the hign priority value
+        public async Task<List<Ticket_Model>> SortPriorityDescending()
+        {
+            return await dao.SortPriorityDescending();
+
+        }
     }
 }
