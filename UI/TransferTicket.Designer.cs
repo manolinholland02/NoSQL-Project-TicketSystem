@@ -94,6 +94,7 @@
             this.Controls.Add(this.cbEmployees);
             this.Controls.Add(this.lblTransfer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "TransferTicket";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "TransferTicket";

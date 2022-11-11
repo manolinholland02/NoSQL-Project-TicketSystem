@@ -220,14 +220,18 @@ namespace UI
         }
         private async Task SortPriorityAscending()
         {
-            var result = ticketService.SortPriorityAscending();
-            dataGVTicketOverview.DataSource = await result;
+            //var result = ticketService.SortPriorityAscending();
+            //dataGVTicketOverview.DataSource = await result;
+            if (loggedUser.Role == Role.ServiceDeskEmployee) { dataGVTicketOverview.DataSource = await ticketService.SortPriorityAscending(); }
+            else if (loggedUser.Role == Role.Employee) { dataGVTicketOverview.DataSource = await ticketService.SortPriorityAscending(loggedUser.FullNameEmailPair); }
 
         }
         private async Task SortPriorityDescending()
         {
-            var result = ticketService.SortPriorityDescending();
-            dataGVTicketOverview.DataSource = await result;
+            //var result = ticketService.SortPriorityDescending();
+            //dataGVTicketOverview.DataSource = await result;
+            if (loggedUser.Role == Role.ServiceDeskEmployee) { dataGVTicketOverview.DataSource = await ticketService.SortPriorityDescending(); }
+            else if (loggedUser.Role == Role.Employee) { dataGVTicketOverview.DataSource = await ticketService.SortPriorityDescending(loggedUser.FullNameEmailPair); }
 
         }
 
@@ -390,7 +394,8 @@ namespace UI
             try
             {
                 string searchTxt = txtSearch.Text;
-                DisplayTickets(ticketService.GetFilteredTicketBySubject(searchTxt));
+                if(loggedUser.Role == Role.ServiceDeskEmployee) { DisplayTickets(ticketService.GetFilteredTicketBySubject(searchTxt)); }
+                else if(loggedUser.Role == Role.Employee) { DisplayTickets(ticketService.GetFilteredTicketBySubject(searchTxt, loggedUser.FullNameEmailPair)); }
             }
             catch (Exception exception)
             {
@@ -406,8 +411,10 @@ namespace UI
             {
                 string status = comboBoxStatusAnd.Text;
                 string priority = comboBoxPriorityAnd.Text;
-                var listOfTickets = await ticketService.GetFilteredTicketByStatusAndPriority(status, priority);
-                dataGVTicketOverview.DataSource = listOfTickets;
+                if(loggedUser.Role == Role.ServiceDeskEmployee) { dataGVTicketOverview.DataSource = await ticketService.GetFilteredTicketByStatusAndPriority(status, priority); }
+                else if (loggedUser.Role == Role.Employee) { dataGVTicketOverview.DataSource = await ticketService.GetFilteredTicketByStatusAndPriority(status, priority, loggedUser.FullNameEmailPair); }
+                //var listOfTickets = await ticketService.GetFilteredTicketByStatusAndPriority(status, priority);
+                //dataGVTicketOverview.DataSource = listOfTickets;
             }
             catch (Exception exception)
             {
@@ -422,7 +429,8 @@ namespace UI
             {
                 string status=comboBoxStatusOr.Text;
                 string priority=comboBoxPriorityOr.Text;
-                DisplayTickets(ticketService.GetFilteredTicketByStatusOrPriority(status,priority));
+                if (loggedUser.Role == Role.ServiceDeskEmployee) { DisplayTickets(ticketService.GetFilteredTicketByStatusOrPriority(status, priority)); }
+                else if (loggedUser.Role == Role.Employee) { DisplayTickets(ticketService.GetFilteredTicketByStatusOrPriority(status, priority, loggedUser.FullNameEmailPair)); }
             }
             catch (Exception exception)
             {
@@ -437,7 +445,8 @@ namespace UI
             try
             {
                 int ticketNr = int.Parse(textBoxTicketSearch.Text);
-                DisplayTickets(ticketService.GetFilteredTicketByTicketNr(ticketNr));
+                if (loggedUser.Role == Role.ServiceDeskEmployee) { DisplayTickets(ticketService.GetFilteredTicketByTicketNr(ticketNr)); }
+                else if (loggedUser.Role == Role.Employee) { DisplayTickets(ticketService.GetFilteredTicketByTicketNr(ticketNr, loggedUser.FullNameEmailPair)); }
             }
             catch (Exception exception)
             {
@@ -466,21 +475,25 @@ namespace UI
             return listOfTickets;
 
         }
-        private async Task GetRecentTicketsAsync()
-        {
-            var query = ticketService.GetTicketCollection().Aggregate()
-                        .Sort(new BsonDocument { { "date", -1 } });
-            var results = await query.ToListAsync();
-            dataGVTicketOverview.DataSource = results;
+        //private async Task GetRecentTicketsAsync()
+        //{
+        //    var query = ticketService.GetTicketCollection().Aggregate()
+        //                .Match(Builders<Ticket_Model>.Filter.Eq(u => u.User, loggedUser.FullNameEmailPair))
+        //                .Sort(new BsonDocument { { "date", -1 } });
+        //    var results = await query.ToListAsync();
+        //    dataGVTicketOverview.DataSource = results;
 
-        }
+        //}
 
 
         private void btnRecentTicket_Click(object sender, EventArgs e)
         {
             try
             {
-                GetRecentTicketsAsync();
+                //GetRecentTicketsAsync();
+                var tickets = GetTickets();
+                tickets.Sort((x, y) => y.Date.CompareTo(x.Date));
+                dataGVTicketOverview.DataSource = tickets;
             }
             catch (Exception exception)
             {
@@ -603,6 +616,8 @@ namespace UI
         {
             pnlDashboard.Hide();
             pnlIncidentManagemnt.Show();
+            dataGVTicketOverview.DataSource = GetTickets();
+            dataGVTicketOverview.Columns[0].Visible = false;
         }
 
         // displaying all the user in the data gridview

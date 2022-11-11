@@ -161,6 +161,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ControlBox = false;
             this.Controls.Add(this.lblVerifyPassword);
             this.Controls.Add(this.txtVerifyPassword);
             this.Controls.Add(this.txtPassword);
@@ -181,6 +182,7 @@
             this.Controls.Add(this.lblFirstName);
             this.Controls.Add(this.lblNewUser);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "AddUser";
             this.ResumeLayout(false);
             this.PerformLayout();

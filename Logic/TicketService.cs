@@ -59,10 +59,19 @@ namespace Logic
             return dao.GetFilteredTicketBySubject(serachText);
 
         }
+        public List<Ticket_Model> GetFilteredTicketBySubject(string serachText, string user)
+        {
+            return dao.GetFilteredTicketBySubject(serachText, user);
+
+        }
 
         public async Task<List<Ticket_Model>> GetFilteredTicketByStatusAndPriority(string status, string priority)
         {
             return  await dao.GetFilteredTicketByStatusAndPriorityAsync(status,priority);
+        }
+        public async Task<List<Ticket_Model>> GetFilteredTicketByStatusAndPriority(string status, string priority, string user)
+        {
+            return await dao.GetFilteredTicketByStatusAndPriorityAsync(status, priority, user);
         }
 
         public async Task<List<Ticket_Model>> GetFilteredTickets(string status, string priority, string deadline, string type, BsonDocument doc)
@@ -75,9 +84,18 @@ namespace Logic
 
             return dao.GetFilteredTicketByStatusOrPriority(status, priority);
         }
+        public List<Ticket_Model> GetFilteredTicketByStatusOrPriority(string status, string priority, string user)
+        {
+
+            return dao.GetFilteredTicketByStatusOrPriority(status, priority, user);
+        }
         public List<Ticket_Model> GetFilteredTicketByTicketNr(int ticketNr)
         {
             return dao.GetFilteredTicketByTicketNr(ticketNr);
+        }
+        public List<Ticket_Model> GetFilteredTicketByTicketNr(int ticketNr, string user)
+        {
+            return dao.GetFilteredTicketByTicketNr(ticketNr, user);
         }
 
         public List<Ticket_Model> GetFilteredTicketByDate(DateTime date)
@@ -96,10 +114,21 @@ namespace Logic
            return await dao.SortPriorityAscending();
 
         }
+        public async Task<List<Ticket_Model>> SortPriorityAscending(string user)
+        {
+
+            return await dao.SortPriorityAscending(user);
+
+        }
         // sorting by descending order by the hign priority value
         public async Task<List<Ticket_Model>> SortPriorityDescending()
         {
             return await dao.SortPriorityDescending();
+
+        }
+        public async Task<List<Ticket_Model>> SortPriorityDescending(string user)
+        {
+            return await dao.SortPriorityDescending(user);
 
         }
     }
