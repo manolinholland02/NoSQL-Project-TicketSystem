@@ -155,7 +155,12 @@ namespace DAL
         {
             return collection.AsQueryable().ToList<Ticket_Model>();
         }
-
+        public List<Ticket_Model> GetTicketByUser(string user)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Eq(u => u.User, user);
+            var listOfTickets = collection.Find(filter).ToList();
+            return listOfTickets;
+        }
         public IMongoCollection<Ticket_Model> GetTicketCollection()
         {
             return collection;
