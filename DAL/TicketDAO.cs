@@ -122,25 +122,22 @@ namespace DAL
                 doc.Add("type", (int)Enum.Parse(typeof(Model.Type), type));
             }
 
-            
-
             var query = collection.Aggregate()
                         .Match(doc);
             var results = await query.ToListAsync();
             return results;
         }
 
+        //Finding ticket documents less than or equal to a date passed in the parameter
         public List<Ticket_Model> GetFilteredTicketByDate(DateTime date)
         {
             var filter = Builders<Ticket_Model>.Filter.Lte(t => t.Date, date);
             var result = collection.Find(filter).ToList();
 
-            /*if (result.Count == 0) 
-                throw new Exception("There are no records");*/
-
             return result;
         }
 
+        //Deleting ticket documents less than or equal to a date passed in the parameter
         public void DeleteDocumentsLteDate(DateTime date)
         {
             var filter = Builders<Ticket_Model>.Filter.Lte(t => t.Date, date);

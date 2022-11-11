@@ -19,18 +19,21 @@ namespace UI
             SwitchPanel(pnlTicketSelection, pnlVerifyUser);
         }
 
+        //swithing panels based on the stage in which the archiving process is 
         private void SwitchPanel(Panel panelFirst, Panel panelSecond)
         {
             panelFirst.Visible = true;
             panelSecond.Visible = false;
         }
 
+        //return how many tickets are selected that are older/equal to the selected date
         private int GetTicketCount()
         {
             TicketService ticketService = TicketService.GetInstance();
             return ticketService.GetFilteredTicketByDate(dtPickerArchive.Value).Count;
         }
 
+        //display number of selected tickets
         private void dtPickerArchive_ValueChanged(object sender, EventArgs e)
         {
             int tickets = GetTicketCount();
@@ -57,6 +60,7 @@ namespace UI
             }
         }
 
+        //checks if the user has enter correctly his creditential(password) to proceed to archiving
         private bool IsUserValidated()
         {
             HashTool tool = new HashTool();
@@ -81,8 +85,10 @@ namespace UI
             {
                 try
                 {
+                    //conformation message comes before the archiving operation because count of selected tickets counts dynamically from the active database 
                     MessageBox.Show($"{GetTicketCount()} from {dtPickerArchive.Value.ToString("MM.dd.yyyy")} and before have been archived.");
                     TicketArchiveService service = TicketArchiveService.GetInstance();
+                    //archiving the selected tickets
                     service.AddArchive(dtPickerArchive.Value);
                     this.Close();
                 }

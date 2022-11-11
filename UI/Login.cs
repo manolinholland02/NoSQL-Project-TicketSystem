@@ -37,7 +37,7 @@ namespace UI
                     return;
                 }
 
-                if (GetUserByUsernameAndPassword(user) != null)
+                if (GetUserByEmailAndPassword(user) != null)
                 {
                     NoDeskUI noDeskUI = new NoDeskUI(loggedUser);
                     Hide();
@@ -52,7 +52,8 @@ namespace UI
         }
 
         //tries to get the user from the database by username and password
-        private User_Model GetUserByUsernameAndPassword(User_Model user)
+        //this method is not in the UserDAO because it needs to retrieve the salt of the user to authenticate the login
+        private User_Model GetUserByEmailAndPassword(User_Model user)
         {
             string result = tool.HashPassword(txtPassword.Text, user.Salt).Digest;
             var filter = Builders<User_Model>.Filter.Eq(s => s.Email, txtEmail.Text) & Builders<User_Model>.Filter.Eq(s => s.Digest, result);

@@ -19,6 +19,7 @@ namespace UI
             LoadData(loggedUser);
         }
 
+        //loads the corresponding data in the user controls
         private void LoadData(User_Model loggedUser)
         {
             FormatComboBox(cbTypeOfIncident, "type", new Type());
@@ -29,6 +30,10 @@ namespace UI
             FormatReportedUserComboBox(loggedUser);
         }
 
+        //formats ReportedUserComboBox to match name of user with their email and display the pair
+        //users can have the same names but they have unique emails
+        //email is unique for every user but it's not UX friendly to select reporting user based only on their email
+        //full name + email pair gives certainty for the employee that he is selecting the correct user
         private void FormatReportedUserComboBox(User_Model loggedUser)
         {
             if (loggedUser.Role == Role.ServiceDeskEmployee)
@@ -53,6 +58,7 @@ namespace UI
             }
         }
 
+        //formats ComboBox controls to display "Select ..." message without messing with the enumeration values(selectable options)
         private void FormatComboBox(ComboBox cb, string message, Enum e)
         {
             var enumValues = Enum.GetValues(e.GetType());
@@ -81,6 +87,7 @@ namespace UI
             cbDeadline.SelectedIndex = 0;
         }
 
+        //generate randomized 5-digit ticket number when creating a ticket
         private int GenerateTicketNumber()
         {
             bool isValidNumberCreated = true;
@@ -93,11 +100,13 @@ namespace UI
                 {
                     if (i == 0)
                     {
+                        //first digit can be from 1-9 because the ticket number is stored as integer (integers cannot start with 0.....)
                         tickeNumber[i] = rdn.Next(1, 10);
                         combinedOutput = tickeNumber[i];
                     }
                     else
                     {
+                        //any other digit after the first one can vary from 0-9
                         tickeNumber[i] = rdn.Next(0, 10);
                         combinedOutput = (combinedOutput * 10) + tickeNumber[i];
                     }
@@ -105,6 +114,7 @@ namespace UI
 
                 foreach (Ticket_Model ticket in ticketService.GetAllTickets())
                 {
+                    //checks if ticket with such a number already exists (if yes, method is repeated)
                     if (ticket.TicketNumber == combinedOutput) isValidNumberCreated = false;
                 }
             }
@@ -113,6 +123,7 @@ namespace UI
             return combinedOutput;
         }
 
+        //validating for the right inputs
         public void ValidateInputs()
         {
             if (string.IsNullOrEmpty(txtSubOfIncident.Text))
@@ -142,7 +153,6 @@ namespace UI
 
         private void btnSubmitIncident_Click(object sender, EventArgs e)
         {
-            
             try
             {
                 ValidateInputs();
