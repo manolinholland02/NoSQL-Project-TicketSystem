@@ -111,7 +111,7 @@
             this.pnlMenuCOntainer.Controls.Add(this.label1);
             this.pnlMenuCOntainer.Controls.Add(this.btnDashboard);
             this.pnlMenuCOntainer.Location = new System.Drawing.Point(0, 1);
-            this.pnlMenuCOntainer.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlMenuCOntainer.Margin = new System.Windows.Forms.Padding(2);
             this.pnlMenuCOntainer.Name = "pnlMenuCOntainer";
             this.pnlMenuCOntainer.Size = new System.Drawing.Size(1102, 80);
             this.pnlMenuCOntainer.TabIndex = 0;
@@ -123,7 +123,7 @@
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogout.Location = new System.Drawing.Point(634, 31);
-            this.btnLogout.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnLogout.Margin = new System.Windows.Forms.Padding(2);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(114, 44);
             this.btnLogout.TabIndex = 2;
@@ -138,7 +138,7 @@
             this.btnUserManagement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUserManagement.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUserManagement.Location = new System.Drawing.Point(363, 31);
-            this.btnUserManagement.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnUserManagement.Margin = new System.Windows.Forms.Padding(2);
             this.btnUserManagement.Name = "btnUserManagement";
             this.btnUserManagement.Size = new System.Drawing.Size(160, 44);
             this.btnUserManagement.TabIndex = 1;
@@ -164,7 +164,7 @@
             this.btnIncidentManagement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnIncidentManagement.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnIncidentManagement.Location = new System.Drawing.Point(151, 31);
-            this.btnIncidentManagement.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnIncidentManagement.Margin = new System.Windows.Forms.Padding(2);
             this.btnIncidentManagement.Name = "btnIncidentManagement";
             this.btnIncidentManagement.Size = new System.Drawing.Size(179, 44);
             this.btnIncidentManagement.TabIndex = 1;
@@ -193,7 +193,7 @@
             this.btnDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDashboard.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDashboard.Location = new System.Drawing.Point(9, 31);
-            this.btnDashboard.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDashboard.Margin = new System.Windows.Forms.Padding(2);
             this.btnDashboard.Name = "btnDashboard";
             this.btnDashboard.Size = new System.Drawing.Size(110, 44);
             this.btnDashboard.TabIndex = 1;
@@ -213,7 +213,7 @@
             this.pnlDashboard.Controls.Add(this.btnShowList);
             this.pnlDashboard.Controls.Add(this.lblCurrentIncidents);
             this.pnlDashboard.Location = new System.Drawing.Point(9, 87);
-            this.pnlDashboard.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlDashboard.Margin = new System.Windows.Forms.Padding(2);
             this.pnlDashboard.Name = "pnlDashboard";
             this.pnlDashboard.Size = new System.Drawing.Size(1073, 474);
             this.pnlDashboard.TabIndex = 1;
@@ -277,7 +277,7 @@
             this.progressBarIncidentsPastDeadline.InnerMargin = 2;
             this.progressBarIncidentsPastDeadline.InnerWidth = -1;
             this.progressBarIncidentsPastDeadline.Location = new System.Drawing.Point(682, 131);
-            this.progressBarIncidentsPastDeadline.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.progressBarIncidentsPastDeadline.Margin = new System.Windows.Forms.Padding(2);
             this.progressBarIncidentsPastDeadline.MarqueeAnimationSpeed = 2000;
             this.progressBarIncidentsPastDeadline.Name = "progressBarIncidentsPastDeadline";
             this.progressBarIncidentsPastDeadline.OuterColor = System.Drawing.Color.Silver;
@@ -310,7 +310,7 @@
             this.progressBarUnresolvedIncidents.InnerMargin = 2;
             this.progressBarUnresolvedIncidents.InnerWidth = -1;
             this.progressBarUnresolvedIncidents.Location = new System.Drawing.Point(76, 131);
-            this.progressBarUnresolvedIncidents.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.progressBarUnresolvedIncidents.Margin = new System.Windows.Forms.Padding(2);
             this.progressBarUnresolvedIncidents.MarqueeAnimationSpeed = 2000;
             this.progressBarUnresolvedIncidents.Name = "progressBarUnresolvedIncidents";
             this.progressBarUnresolvedIncidents.OuterColor = System.Drawing.Color.Silver;
@@ -340,7 +340,7 @@
             this.btnShowList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnShowList.ForeColor = System.Drawing.Color.Black;
             this.btnShowList.Location = new System.Drawing.Point(932, 16);
-            this.btnShowList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnShowList.Margin = new System.Windows.Forms.Padding(2);
             this.btnShowList.Name = "btnShowList";
             this.btnShowList.Size = new System.Drawing.Size(129, 39);
             this.btnShowList.TabIndex = 4;
@@ -368,7 +368,7 @@
             this.pnlUserManagement.Controls.Add(this.btnAddEmployee);
             this.pnlUserManagement.Controls.Add(this.label5);
             this.pnlUserManagement.Location = new System.Drawing.Point(9, 85);
-            this.pnlUserManagement.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlUserManagement.Margin = new System.Windows.Forms.Padding(2);
             this.pnlUserManagement.Name = "pnlUserManagement";
             this.pnlUserManagement.Size = new System.Drawing.Size(1071, 474);
             this.pnlUserManagement.TabIndex = 1;
@@ -381,7 +381,7 @@
             this.btnDeleteUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDeleteUser.Location = new System.Drawing.Point(347, 401);
             this.btnDeleteUser.Name = "btnDeleteUser";
-            this.btnDeleteUser.Size = new System.Drawing.Size(124, 41);
+            this.btnDeleteUser.Size = new System.Drawing.Size(143, 41);
             this.btnDeleteUser.TabIndex = 6;
             this.btnDeleteUser.Text = "Delete Employee";
             this.btnDeleteUser.UseVisualStyleBackColor = false;
@@ -410,7 +410,7 @@
             this.dataGVUser.BackgroundColor = System.Drawing.Color.White;
             this.dataGVUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGVUser.Location = new System.Drawing.Point(46, 95);
-            this.dataGVUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGVUser.Margin = new System.Windows.Forms.Padding(2);
             this.dataGVUser.MultiSelect = false;
             this.dataGVUser.Name = "dataGVUser";
             this.dataGVUser.ReadOnly = true;
@@ -486,7 +486,7 @@
             this.pnlIncidentManagemnt.Controls.Add(this.btnCreateIncident);
             this.pnlIncidentManagemnt.Controls.Add(this.dataGVTicketOverview);
             this.pnlIncidentManagemnt.Location = new System.Drawing.Point(9, 87);
-            this.pnlIncidentManagemnt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlIncidentManagemnt.Margin = new System.Windows.Forms.Padding(2);
             this.pnlIncidentManagemnt.Name = "pnlIncidentManagemnt";
             this.pnlIncidentManagemnt.Size = new System.Drawing.Size(1073, 474);
             this.pnlIncidentManagemnt.TabIndex = 0;
@@ -507,7 +507,7 @@
             this.comboBoxPrioritySorting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPrioritySorting.FormattingEnabled = true;
             this.comboBoxPrioritySorting.Location = new System.Drawing.Point(909, 206);
-            this.comboBoxPrioritySorting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxPrioritySorting.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxPrioritySorting.Name = "comboBoxPrioritySorting";
             this.comboBoxPrioritySorting.Size = new System.Drawing.Size(96, 21);
             this.comboBoxPrioritySorting.TabIndex = 30;
@@ -521,7 +521,7 @@
             this.btnArchiveTickets.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnArchiveTickets.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnArchiveTickets.Location = new System.Drawing.Point(466, 415);
-            this.btnArchiveTickets.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnArchiveTickets.Margin = new System.Windows.Forms.Padding(2);
             this.btnArchiveTickets.Name = "btnArchiveTickets";
             this.btnArchiveTickets.Size = new System.Drawing.Size(124, 41);
             this.btnArchiveTickets.TabIndex = 29;
@@ -576,7 +576,7 @@
             this.btnTransferTicket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTransferTicket.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTransferTicket.Location = new System.Drawing.Point(318, 415);
-            this.btnTransferTicket.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnTransferTicket.Margin = new System.Windows.Forms.Padding(2);
             this.btnTransferTicket.Name = "btnTransferTicket";
             this.btnTransferTicket.Size = new System.Drawing.Size(124, 41);
             this.btnTransferTicket.TabIndex = 24;
@@ -591,7 +591,7 @@
             this.btnCloseTicket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCloseTicket.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCloseTicket.Location = new System.Drawing.Point(615, 415);
-            this.btnCloseTicket.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCloseTicket.Margin = new System.Windows.Forms.Padding(2);
             this.btnCloseTicket.Name = "btnCloseTicket";
             this.btnCloseTicket.Size = new System.Drawing.Size(124, 41);
             this.btnCloseTicket.TabIndex = 23;
@@ -615,7 +615,7 @@
             this.cbFilterByType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbFilterByType.FormattingEnabled = true;
             this.cbFilterByType.Location = new System.Drawing.Point(841, 124);
-            this.cbFilterByType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbFilterByType.Margin = new System.Windows.Forms.Padding(2);
             this.cbFilterByType.Name = "cbFilterByType";
             this.cbFilterByType.Size = new System.Drawing.Size(99, 21);
             this.cbFilterByType.TabIndex = 21;
@@ -626,7 +626,7 @@
             this.btnResetFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnResetFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnResetFilter.Location = new System.Drawing.Point(962, 121);
-            this.btnResetFilter.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnResetFilter.Margin = new System.Windows.Forms.Padding(2);
             this.btnResetFilter.Name = "btnResetFilter";
             this.btnResetFilter.Size = new System.Drawing.Size(90, 23);
             this.btnResetFilter.TabIndex = 20;
@@ -637,7 +637,7 @@
             // txtTicketNr
             // 
             this.txtTicketNr.Location = new System.Drawing.Point(909, 247);
-            this.txtTicketNr.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtTicketNr.Margin = new System.Windows.Forms.Padding(2);
             this.txtTicketNr.Name = "txtTicketNr";
             this.txtTicketNr.Size = new System.Drawing.Size(112, 20);
             this.txtTicketNr.TabIndex = 19;
@@ -648,7 +648,7 @@
             this.btnSearchOr.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearchOr.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearchOr.Location = new System.Drawing.Point(519, 122);
-            this.btnSearchOr.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSearchOr.Margin = new System.Windows.Forms.Padding(2);
             this.btnSearchOr.Name = "btnSearchOr";
             this.btnSearchOr.Size = new System.Drawing.Size(63, 28);
             this.btnSearchOr.TabIndex = 18;
@@ -662,7 +662,7 @@
             this.btnAndSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAndSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAndSearch.Location = new System.Drawing.Point(306, 119);
-            this.btnAndSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAndSearch.Margin = new System.Windows.Forms.Padding(2);
             this.btnAndSearch.Name = "btnAndSearch";
             this.btnAndSearch.Size = new System.Drawing.Size(63, 28);
             this.btnAndSearch.TabIndex = 18;
@@ -674,7 +674,7 @@
             // 
             this.comboBoxPriorityOr.FormattingEnabled = true;
             this.comboBoxPriorityOr.Location = new System.Drawing.Point(622, 92);
-            this.comboBoxPriorityOr.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxPriorityOr.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxPriorityOr.Name = "comboBoxPriorityOr";
             this.comboBoxPriorityOr.Size = new System.Drawing.Size(92, 21);
             this.comboBoxPriorityOr.TabIndex = 17;
@@ -683,7 +683,7 @@
             // 
             this.comboBoxPriorityAnd.FormattingEnabled = true;
             this.comboBoxPriorityAnd.Location = new System.Drawing.Point(410, 92);
-            this.comboBoxPriorityAnd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxPriorityAnd.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxPriorityAnd.Name = "comboBoxPriorityAnd";
             this.comboBoxPriorityAnd.Size = new System.Drawing.Size(92, 21);
             this.comboBoxPriorityAnd.TabIndex = 17;
@@ -692,7 +692,7 @@
             // 
             this.comboBoxStatusOr.FormattingEnabled = true;
             this.comboBoxStatusOr.Location = new System.Drawing.Point(519, 92);
-            this.comboBoxStatusOr.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxStatusOr.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxStatusOr.Name = "comboBoxStatusOr";
             this.comboBoxStatusOr.Size = new System.Drawing.Size(92, 21);
             this.comboBoxStatusOr.TabIndex = 16;
@@ -712,7 +712,7 @@
             // 
             this.comboBoxStatusAnd.FormattingEnabled = true;
             this.comboBoxStatusAnd.Location = new System.Drawing.Point(306, 92);
-            this.comboBoxStatusAnd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxStatusAnd.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxStatusAnd.Name = "comboBoxStatusAnd";
             this.comboBoxStatusAnd.Size = new System.Drawing.Size(92, 21);
             this.comboBoxStatusAnd.TabIndex = 16;
@@ -756,7 +756,7 @@
             this.buttonSearchByTicket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSearchByTicket.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSearchByTicket.Location = new System.Drawing.Point(159, 119);
-            this.buttonSearchByTicket.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonSearchByTicket.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSearchByTicket.Name = "buttonSearchByTicket";
             this.buttonSearchByTicket.Size = new System.Drawing.Size(63, 28);
             this.buttonSearchByTicket.TabIndex = 14;
@@ -770,7 +770,7 @@
             this.btnSearchBySubject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearchBySubject.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearchBySubject.Location = new System.Drawing.Point(24, 119);
-            this.btnSearchBySubject.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSearchBySubject.Margin = new System.Windows.Forms.Padding(2);
             this.btnSearchBySubject.Name = "btnSearchBySubject";
             this.btnSearchBySubject.Size = new System.Drawing.Size(63, 28);
             this.btnSearchBySubject.TabIndex = 14;
@@ -783,7 +783,7 @@
             this.dateTimePickerTicket.CustomFormat = "MM.dd.yyyy";
             this.dateTimePickerTicket.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePickerTicket.Location = new System.Drawing.Point(909, 375);
-            this.dateTimePickerTicket.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dateTimePickerTicket.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimePickerTicket.MaxDate = new System.DateTime(2022, 11, 10, 0, 0, 0, 0);
             this.dateTimePickerTicket.MinDate = new System.DateTime(2010, 1, 1, 0, 0, 0, 0);
             this.dateTimePickerTicket.Name = "dateTimePickerTicket";
@@ -795,7 +795,7 @@
             // 
             this.cbDeadline.FormattingEnabled = true;
             this.cbDeadline.Location = new System.Drawing.Point(909, 341);
-            this.cbDeadline.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbDeadline.Margin = new System.Windows.Forms.Padding(2);
             this.cbDeadline.Name = "cbDeadline";
             this.cbDeadline.Size = new System.Drawing.Size(112, 21);
             this.cbDeadline.TabIndex = 12;
@@ -804,7 +804,7 @@
             // 
             this.cbPriority.FormattingEnabled = true;
             this.cbPriority.Location = new System.Drawing.Point(909, 310);
-            this.cbPriority.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbPriority.Margin = new System.Windows.Forms.Padding(2);
             this.cbPriority.Name = "cbPriority";
             this.cbPriority.Size = new System.Drawing.Size(112, 21);
             this.cbPriority.TabIndex = 12;
@@ -812,7 +812,7 @@
             // txtSubject
             // 
             this.txtSubject.Location = new System.Drawing.Point(909, 276);
-            this.txtSubject.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtSubject.Margin = new System.Windows.Forms.Padding(2);
             this.txtSubject.Name = "txtSubject";
             this.txtSubject.Size = new System.Drawing.Size(112, 20);
             this.txtSubject.TabIndex = 11;
@@ -825,7 +825,7 @@
             this.btnDeleteTicket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeleteTicket.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDeleteTicket.Location = new System.Drawing.Point(764, 415);
-            this.btnDeleteTicket.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDeleteTicket.Margin = new System.Windows.Forms.Padding(2);
             this.btnDeleteTicket.Name = "btnDeleteTicket";
             this.btnDeleteTicket.Size = new System.Drawing.Size(124, 41);
             this.btnDeleteTicket.TabIndex = 10;
@@ -840,7 +840,7 @@
             this.btnUpdateTicket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdateTicket.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpdateTicket.Location = new System.Drawing.Point(172, 415);
-            this.btnUpdateTicket.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnUpdateTicket.Margin = new System.Windows.Forms.Padding(2);
             this.btnUpdateTicket.Name = "btnUpdateTicket";
             this.btnUpdateTicket.Size = new System.Drawing.Size(124, 41);
             this.btnUpdateTicket.TabIndex = 10;
@@ -862,7 +862,7 @@
             // textBoxTicketSearch
             // 
             this.textBoxTicketSearch.Location = new System.Drawing.Point(159, 92);
-            this.textBoxTicketSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxTicketSearch.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxTicketSearch.Name = "textBoxTicketSearch";
             this.textBoxTicketSearch.Size = new System.Drawing.Size(122, 20);
             this.textBoxTicketSearch.TabIndex = 8;
@@ -870,7 +870,7 @@
             // txtSearch
             // 
             this.txtSearch.Location = new System.Drawing.Point(24, 92);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(2);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(120, 20);
             this.txtSearch.TabIndex = 8;
@@ -882,7 +882,7 @@
             this.btnCreateIncident.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreateIncident.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCreateIncident.Location = new System.Drawing.Point(23, 415);
-            this.btnCreateIncident.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCreateIncident.Margin = new System.Windows.Forms.Padding(2);
             this.btnCreateIncident.Name = "btnCreateIncident";
             this.btnCreateIncident.Size = new System.Drawing.Size(124, 41);
             this.btnCreateIncident.TabIndex = 7;
@@ -899,7 +899,7 @@
             this.dataGVTicketOverview.BackgroundColor = System.Drawing.Color.White;
             this.dataGVTicketOverview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGVTicketOverview.Location = new System.Drawing.Point(24, 165);
-            this.dataGVTicketOverview.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGVTicketOverview.Margin = new System.Windows.Forms.Padding(2);
             this.dataGVTicketOverview.MultiSelect = false;
             this.dataGVTicketOverview.Name = "dataGVTicketOverview";
             this.dataGVTicketOverview.ReadOnly = true;
@@ -924,11 +924,11 @@
             this.ClientSize = new System.Drawing.Size(1100, 581);
             this.ControlBox = false;
             this.Controls.Add(this.pnlMenuCOntainer);
+            this.Controls.Add(this.pnlUserManagement);
             this.Controls.Add(this.pnlIncidentManagemnt);
             this.Controls.Add(this.pnlDashboard);
-            this.Controls.Add(this.pnlUserManagement);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NoDeskUI";

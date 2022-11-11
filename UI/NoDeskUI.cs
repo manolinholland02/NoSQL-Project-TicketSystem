@@ -69,7 +69,6 @@ namespace UI
                 btnTransferTicket.Visible = false;
                 btnCloseTicket.Visible = false;
                 btnArchiveTickets.Visible = false;
-                btnLogout.Left -= 200;
                 btnIncidentManagement.Text = "Tickets";
             }
             
@@ -427,8 +426,8 @@ namespace UI
                 if(dialogResult == DialogResult.Yes)
                 {
                     DisplayTickets(GetTicketListAfterDelete());
+                    MessageBox.Show("Ticket succesfully deleted!");
                 }
-                MessageBox.Show("Ticket succesfully deleted!");
             }
             catch (Exception exception)
             {
