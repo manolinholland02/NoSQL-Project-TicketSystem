@@ -41,12 +41,14 @@ namespace DAL
         {
             collection.InsertOne(ticket);
         }
+
         public void UpdateTicketStatus(int ticketNr)
         {
             var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
             var update = Builders<Ticket_Model>.Update.Set(s => s.Status, Status.Finished);
             collection.UpdateOne(filter, update);
         }
+
         public void TransferTicket(string email, int ticketNr)
         {
             var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
@@ -61,6 +63,7 @@ namespace DAL
             return result;
 
         }
+
         public List<Ticket_Model> GetFilteredTicketBySubject(string serachText, string user)
         {
             var filter = Builders<Ticket_Model>.Filter.Regex(s => s.Subject, new BsonRegularExpression(Regex.Escape(serachText), "i")) & Builders<Ticket_Model>.Filter.Eq(u => u.User, user);
@@ -81,6 +84,7 @@ namespace DAL
             var results = await query.ToListAsync();
             return results;
         }
+
         public async Task<List<Ticket_Model>> GetFilteredTicketByStatusAndPriorityAsync(string status, string priority, string user)
         {
             var query = collection.Aggregate()
@@ -160,6 +164,7 @@ namespace DAL
 
             return result;
         }
+
         public List<Ticket_Model> GetFilteredTicketByStatusOrPriority(string status, string priority, string user)
         {
 
@@ -171,12 +176,14 @@ namespace DAL
 
             return result;
         }
+
         public  List<Ticket_Model> GetFilteredTicketByTicketNr(int ticketNr)
         {
             var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
             var listOfTickets = collection.Find(filter).ToList();
             return listOfTickets;
         }
+
         public List<Ticket_Model> GetFilteredTicketByTicketNr(int ticketNr, string user)
         {
             var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr) & Builders<Ticket_Model>.Filter.Eq(u => u.User, user);
@@ -184,21 +191,18 @@ namespace DAL
             return listOfTickets;
         }
 
-        public int GetTicketCount()
-        {
-            return (int)collection.CountDocuments(new BsonDocument());
-        }
-
         public List<Ticket_Model> GetAllTickets()
         {
             return collection.AsQueryable().ToList<Ticket_Model>();
         }
+
         public List<Ticket_Model> GetTicketByUser(string user)
         {
             var filter = Builders<Ticket_Model>.Filter.Eq(u => u.User, user);
             var listOfTickets = collection.Find(filter).ToList();
             return listOfTickets;
         }
+
         public IMongoCollection<Ticket_Model> GetTicketCollection()
         {
             return collection;
@@ -214,6 +218,7 @@ namespace DAL
           
 
         }
+
         public async Task<List<Ticket_Model>> SortPriorityAscending(string user)
         {
             var query = collection.Aggregate()
@@ -224,6 +229,7 @@ namespace DAL
 
 
         }
+
         // sorting by descending order by the hign priority value
         public async Task<List<Ticket_Model>> SortPriorityDescending()
         {
@@ -233,6 +239,7 @@ namespace DAL
             return results;
 
         }
+
         public async Task<List<Ticket_Model>> SortPriorityDescending(string user)
         {
             var query = collection.Aggregate()
@@ -242,6 +249,5 @@ namespace DAL
             return results;
 
         }
-
     }
 }

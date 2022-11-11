@@ -35,11 +35,13 @@ namespace UI
             txtTicketNr.Visible = false;
             SetEmployeeAccess(loggedUser);            
         }
+
         private void GridViewAutoColumnSize()
         {
             dataGVTicketOverview.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGVUser.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
+
         private List<Ticket_Model> GetTickets()
         {
             if(loggedUser.Role==Role.ServiceDeskEmployee)
@@ -123,6 +125,7 @@ namespace UI
                 }
             }
         }
+
         private void EmployeeDashboard()
         {
             progressBarIncidentsPastDeadline.Maximum = 0;
@@ -164,6 +167,7 @@ namespace UI
             getAllUsers = userService.GetAllUsers();
             DisplayUsers(getAllUsers);
         }
+
         private void btnLogout_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you wish to logout?", "Logout", MessageBoxButtons.YesNo);
@@ -175,6 +179,7 @@ namespace UI
                 Close();
             }
         }
+
         //showing all the enum values in the combobox
         private void DisplayAllEnumValues()
         {
@@ -194,21 +199,17 @@ namespace UI
 
             filterTicketFuction.FillComboBox(cbFilterByPriority, cbFilterByStatus, cbFilterByType, cbFilterByDeadline);
         }
+
         private async Task SortPriorityAscending()
         {
-            //var result = ticketService.SortPriorityAscending();
-            //dataGVTicketOverview.DataSource = await result;
             if (loggedUser.Role == Role.ServiceDeskEmployee) { dataGVTicketOverview.DataSource = await ticketService.SortPriorityAscending(); }
             else if (loggedUser.Role == Role.Employee) { dataGVTicketOverview.DataSource = await ticketService.SortPriorityAscending(loggedUser.FullNameEmailPair); }
-
         }
+
         private async Task SortPriorityDescending()
         {
-            //var result = ticketService.SortPriorityDescending();
-            //dataGVTicketOverview.DataSource = await result;
             if (loggedUser.Role == Role.ServiceDeskEmployee) { dataGVTicketOverview.DataSource = await ticketService.SortPriorityDescending(); }
             else if (loggedUser.Role == Role.Employee) { dataGVTicketOverview.DataSource = await ticketService.SortPriorityDescending(loggedUser.FullNameEmailPair); }
-
         }
 
         private void comboBoxPrioritySorting_SelectedIndexChanged(object sender, EventArgs e)
@@ -222,6 +223,7 @@ namespace UI
                 SortPriorityDescending();
             }
         }
+
         private void btnFilter_Click(object sender, EventArgs e)
         {
             try
@@ -235,17 +237,11 @@ namespace UI
         }
 
         //diaplay all the tickets in the datagridview for the incident management
-
         private void DisplayTickets(List<Ticket_Model> getAllTickets)
         {
             
             dataGVTicketOverview.DataSource = getAllTickets;
             dataGVTicketOverview.Columns[IdColumn].Visible = false;
-        }
-
-        private void pnlIncidentManagemnt_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         //show information in the text and combofields when u select a row
@@ -275,6 +271,7 @@ namespace UI
             if (row.Cells[4].Value.ToString() == "Finished") { DisableUpdateBoxes(); }
             else { EnableUpdateBoxes(); }
         }
+
         private void DisableUpdateBoxes()
         {
             txtSubject.Enabled = false;
@@ -286,6 +283,7 @@ namespace UI
             btnTransferTicket.Enabled = false;
             btnCloseTicket.Enabled = false;
         }
+
         private void EnableUpdateBoxes()
         {
             txtSubject.Enabled = true;
@@ -336,6 +334,7 @@ namespace UI
             }
 
         }
+
         private List<Ticket_Model> GetUpdatedTickets()
         {
             var ticketFilter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, int.Parse(txtTicketNr.Text));
@@ -349,6 +348,7 @@ namespace UI
             return listOfUpdateResult;
 
         }
+
         // search by subject
         private void btnSearchBySubject_Click(object sender, EventArgs e)
         {
@@ -364,7 +364,6 @@ namespace UI
             }
         }
 
-
         // search by status and priority when both match and display the tickets 
         private async void btnAndSearch_Click(object sender, EventArgs e)
         {
@@ -374,8 +373,6 @@ namespace UI
                 string priority = comboBoxPriorityAnd.Text;
                 if(loggedUser.Role == Role.ServiceDeskEmployee) { dataGVTicketOverview.DataSource = await ticketService.GetFilteredTicketByStatusAndPriority(status, priority); }
                 else if (loggedUser.Role == Role.Employee) { dataGVTicketOverview.DataSource = await ticketService.GetFilteredTicketByStatusAndPriority(status, priority, loggedUser.FullNameEmailPair); }
-                //var listOfTickets = await ticketService.GetFilteredTicketByStatusAndPriority(status, priority);
-                //dataGVTicketOverview.DataSource = listOfTickets;
             }
             catch (Exception exception)
             {
@@ -427,6 +424,7 @@ namespace UI
                 MessageBox.Show("Error: " + exception.Message);
             }
         }
+
         private List<Ticket_Model> GetTicketListAfterDelete()
         {
             int ticketNr = int.Parse(txtTicketNr.Text);
@@ -436,22 +434,11 @@ namespace UI
             return listOfTickets;
 
         }
-        //private async Task GetRecentTicketsAsync()
-        //{
-        //    var query = ticketService.GetTicketCollection().Aggregate()
-        //                .Match(Builders<Ticket_Model>.Filter.Eq(u => u.User, loggedUser.FullNameEmailPair))
-        //                .Sort(new BsonDocument { { "date", -1 } });
-        //    var results = await query.ToListAsync();
-        //    dataGVTicketOverview.DataSource = results;
-
-        //}
-
 
         private void btnResetFilter_Click(object sender, EventArgs e)
         {
             try
             {
-                //GetRecentTicketsAsync();
                 cbFilterByStatus.SelectedIndex = 0;
                 cbFilterByPriority.SelectedIndex = 0;
                 cbFilterByDeadline.SelectedIndex = 0;
@@ -466,35 +453,26 @@ namespace UI
             }
         }
 
-        //filter by incident type
-        private void cbFilterByType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GetTicketByType(cbFilterByType.SelectedText);
-        }
-
-        private void GetTicketByType(string type)
-        {
-            var filter = Builders<Ticket_Model>.Filter.Regex(t => t.Type, BsonRegularExpression.Create(type));
-            var result = ticketService.GetTicketCollection().Find(filter).ToList();
-            dataGVTicketOverview.DataSource = result;
-        }
         private void RefreshTickets()
         {
             var ticketList = GetTickets();
             DisplayTickets(ticketList);
         }
+
         private void btnCloseTicket_Click(object sender, EventArgs e)
         {
             CloseTicket();
             MessageBox.Show("Ticket succesfully closed!");
 
         }
+
         private void btnTransferTicket_Click(object sender, EventArgs e)
         {
             TransferTicket transfer = new TransferTicket(GetTicketNumber(), GetTicketEmail());
             transfer.FormClosing += new FormClosingEventHandler(this.transfer_FormClosing);
             transfer.ShowDialog();
         }
+
         private void transfer_FormClosing(object sender, FormClosingEventArgs e)
         {
             RefreshTickets();
@@ -518,8 +496,10 @@ namespace UI
                 MessageBox.Show($"ERROR: {ex.Message}");
 
             }
+
             return 0;
         }
+
         private string GetTicketEmail()
         {
             try
@@ -537,8 +517,10 @@ namespace UI
                 MessageBox.Show($"ERROR: {ex.Message}");
 
             }
+
             return null;
         }
+
         private void CloseTicket()
         {
             ticketService.UpdateTicketStatus(GetTicketNumber());
@@ -572,6 +554,7 @@ namespace UI
             addUser.FormClosing += new FormClosingEventHandler(this.addUser_FormClosing);
             addUser.ShowDialog();
         }
+
         private void addUser_FormClosing(object sender, FormClosingEventArgs e)
         {
             RefreshUsers();
@@ -586,7 +569,6 @@ namespace UI
         }
 
         // displaying all the user in the data gridview
-
         private void DisplayUsers(List<User_Model> users)
         {
             const int FirstName = 1;
@@ -609,6 +591,7 @@ namespace UI
         {
             RefreshUsers();
         }
+
         private void RefreshUsers()
         {
             var users = userService.GetAllUsers();
@@ -637,10 +620,6 @@ namespace UI
                 MessageBox.Show($"Error deleting user \nERROR:{ex.Message}");
             }
         }
-
-       
-
-
 
         //------------------------//
         /*end user management*/

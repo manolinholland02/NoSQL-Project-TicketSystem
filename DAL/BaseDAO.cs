@@ -9,7 +9,7 @@ namespace DAL
         protected IMongoDatabase db;
         //Error messages we want to display
         private const string ErrorMsgIntro = "Sorry, but the program received the following error: ";
-        protected const string CollectionFailureMessage = "Sorry, there has been a problem with fetching your desired data from our database";
+        protected const string CollectionFailureMessage = "Sorry, there has been a problem with fetching the data from our database";
 
         protected BaseDAO(string dataBaseName)
         {

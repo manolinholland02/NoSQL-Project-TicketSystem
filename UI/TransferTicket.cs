@@ -33,7 +33,6 @@ namespace UI
             try
             {
                 if (cbEmployees.SelectedIndex == 0) { throw new Exception("Please select an employee!"); }
-               // string email = cbEmployees.SelectedItem.ToString().Split(' ')[3];
                string email = cbEmployees.SelectedItem.ToString();  
                 transferService.TransferTicket(email, ticketNr);
                 MessageBox.Show("Ticket succesfully transferred!");
@@ -58,7 +57,6 @@ namespace UI
                 if (email != employee.Email)
                 {
                     cbEmployees.Items.Add(employee.FullNameEmailPair);
-                    //cbEmployees.Items.Add($"{employee.FullName} @ {employee.Email}");
                 }
             }
         }

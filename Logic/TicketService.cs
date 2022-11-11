@@ -14,6 +14,7 @@ namespace Logic
         private TicketDAO dao;
         //Singleton for TicketService
         private static TicketService instance;
+
         private TicketService()
         {
             dao = TicketDAO.GetInstance();
@@ -31,24 +32,22 @@ namespace Logic
         {
             dao.AddTicket(ticket);
         }
+
         public void UpdateTicketStatus(int ticketNr)
         {
             dao.UpdateTicketStatus(ticketNr);
-        }
-
-        public int GetTicketCount()
-        {
-            return dao.GetTicketCount();
         }
 
         public List<Ticket_Model> GetAllTickets()
         {
             return dao.GetAllTickets();
         }
+
         public List<Ticket_Model> GetTicketByUser(string user)
         {
             return dao.GetTicketByUser(user);
         }
+
         public IMongoCollection<Ticket_Model> GetTicketCollection()
         {
             return dao.GetTicketCollection();
@@ -69,6 +68,7 @@ namespace Logic
         {
             return  await dao.GetFilteredTicketByStatusAndPriorityAsync(status,priority);
         }
+
         public async Task<List<Ticket_Model>> GetFilteredTicketByStatusAndPriority(string status, string priority, string user)
         {
             return await dao.GetFilteredTicketByStatusAndPriorityAsync(status, priority, user);
@@ -84,15 +84,18 @@ namespace Logic
 
             return dao.GetFilteredTicketByStatusOrPriority(status, priority);
         }
+
         public List<Ticket_Model> GetFilteredTicketByStatusOrPriority(string status, string priority, string user)
         {
 
             return dao.GetFilteredTicketByStatusOrPriority(status, priority, user);
         }
+
         public List<Ticket_Model> GetFilteredTicketByTicketNr(int ticketNr)
         {
             return dao.GetFilteredTicketByTicketNr(ticketNr);
         }
+
         public List<Ticket_Model> GetFilteredTicketByTicketNr(int ticketNr, string user)
         {
             return dao.GetFilteredTicketByTicketNr(ticketNr, user);
@@ -114,18 +117,21 @@ namespace Logic
            return await dao.SortPriorityAscending();
 
         }
+
         public async Task<List<Ticket_Model>> SortPriorityAscending(string user)
         {
 
             return await dao.SortPriorityAscending(user);
 
         }
+
         // sorting by descending order by the hign priority value
         public async Task<List<Ticket_Model>> SortPriorityDescending()
         {
             return await dao.SortPriorityDescending();
 
         }
+
         public async Task<List<Ticket_Model>> SortPriorityDescending(string user)
         {
             return await dao.SortPriorityDescending(user);

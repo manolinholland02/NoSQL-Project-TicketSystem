@@ -132,7 +132,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Databases_Model.cs" />
     <Compile Include="Deadline.cs" />
     <Compile Include="HashWithSaltResult.cs" />
     <Compile Include="Location.cs" />

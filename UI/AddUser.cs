@@ -10,7 +10,7 @@ namespace UI
     {
         UserService userService;
         HashTool tool;
-        Random rnd = new Random();
+        
         public AddUser()
         {
             InitializeComponent();
@@ -38,9 +38,6 @@ namespace UI
                 cbUser.Items.Add(i);
             }
             //Changed from datasource to foreach loops due to wanting index 0 to be default text
-
-            //cbLocation.DataSource = Enum.GetValues(typeof(Location));
-            //cbUser.DataSource = Enum.GetValues(typeof(Role));
         }
 
 
@@ -60,6 +57,7 @@ namespace UI
         {
             this.Close();
         }
+
         public void ValidateInputs()
         {
             //Check if all fields are filled
@@ -75,8 +73,8 @@ namespace UI
             { throw new Exception("Select a user location!"); }
 
             //Check if name only contains letters
-            const string patternA = @"^[a-zA-Z]+$";
-            if (!Regex.IsMatch(txtFirstName.Text, patternA) || !Regex.IsMatch(txtLastName.Text, patternA))
+            const string PatternA = @"^[a-zA-Z]+$";
+            if (!Regex.IsMatch(txtFirstName.Text, PatternA) || !Regex.IsMatch(txtLastName.Text, PatternA))
             { throw new Exception("Name can't contain symbols or numbers!"); }
 
             //Check if password matches 
@@ -84,23 +82,22 @@ namespace UI
             { throw new Exception("Passwords don't match!"); }
 
             //Pattern to check valid phone number
-            const string patternB = @"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$";
-            if (!Regex.IsMatch(txtNumber.Text, patternB)) 
+            const string PatternB = @"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$";
+            if (!Regex.IsMatch(txtNumber.Text, PatternB)) 
             { throw new Exception("Invalid phone number!"); }
 
             //Pattern to check valid email (not perfect but works)
-            const string patternC = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
-            if (!Regex.IsMatch(txtEmail.Text, patternC)) 
+            const string PatternC = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
+            if (!Regex.IsMatch(txtEmail.Text, PatternC)) 
             { throw new Exception("Invalid email!"); }
 
             //Check if email is unique
             if (!userService.CheckUniqueEmail(txtEmail.Text))
             { throw new Exception("Email is already in use!");  }
         }
+
         private void btnAddUser_Click(object sender, EventArgs e)
         {
-            //string password = GeneratePassword();
-
             try
             {
                 ValidateInputs();
@@ -118,8 +115,10 @@ namespace UI
 
         }
 
+        //Explanation on generating users
+        //This is the approach I used to randomly generate 100+ users for the database using random names and numbers.
         //
-        //Used to randomly generate 100+ users for the database using random names and numbers.
+        //Random rnd = new Random();
         //
         //private void GenerateUsers()
         //{

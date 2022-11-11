@@ -172,6 +172,5 @@ namespace UI
         {
             this.Close();
         }
-
     }
 }

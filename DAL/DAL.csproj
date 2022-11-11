@@ -130,7 +130,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDAO.cs" />
-    <Compile Include="IDataOperation.cs" />
     <Compile Include="TicketArchiveDAO.cs" />
     <Compile Include="TicketDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

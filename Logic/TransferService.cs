@@ -7,6 +7,7 @@ namespace Logic
         private TicketDAO dao;
         //Singleton for TransferService
         private static TransferService instance;
+
         private TransferService()
         {
             dao = TicketDAO.GetInstance();

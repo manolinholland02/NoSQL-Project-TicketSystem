@@ -20,6 +20,7 @@ namespace Logic
             byte[] digestBytes = hashAlgo.ComputeHash(passwordWithSaltBytes.ToArray());
             return new HashWithSaltResult(Convert.ToBase64String(saltBytes), Convert.ToBase64String(digestBytes));
         }
+
         public HashWithSaltResult Hash(string password, HashAlgorithm hashAlgo, string salt)
         {
             RNG rng = new RNG();

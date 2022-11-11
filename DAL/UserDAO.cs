@@ -39,10 +39,12 @@ namespace DAL
         {
             collection.InsertOne(user);
         }
+
         public void AddMultipleUsers(List<User_Model> users)
         {
             collection.InsertMany(users);
         }
+
         public void DeleteUser(string email)
         {
             var filter = Builders<User_Model>.Filter.Eq(e => e.Email, email);
@@ -66,6 +68,7 @@ namespace DAL
             var filter = Builders<User_Model>.Filter.Eq(r => r.Role, Role.Employee);
             return collection.Find(filter).ToList();
         }
+
         public bool CheckUniqueEmail(string email)
         {
             var filter = Builders<User_Model>.Filter.Eq(e => e.Email, email);

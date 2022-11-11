@@ -157,9 +157,7 @@
     <Compile Include="ArchiveTicket.Designer.cs">
       <DependentUpon>ArchiveTicket.cs</DependentUpon>
     </Compile>
-    <Compile Include="FilterTicket.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="FilterTicket.cs" />
     <Compile Include="ICreateEnity.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
