@@ -488,6 +488,7 @@
             this.comboBoxPrioritySorting.Name = "comboBoxPrioritySorting";
             this.comboBoxPrioritySorting.Size = new System.Drawing.Size(127, 24);
             this.comboBoxPrioritySorting.TabIndex = 30;
+            this.comboBoxPrioritySorting.SelectedIndexChanged += new System.EventHandler(this.comboBoxPrioritySorting_SelectedIndexChanged);
             // 
             // btnArchiveTickets
             // 
