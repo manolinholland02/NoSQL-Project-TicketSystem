@@ -221,7 +221,7 @@
             this.lblSubtitle2.AutoSize = true;
             this.lblSubtitle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle2.ForeColor = System.Drawing.Color.DarkGray;
-            this.lblSubtitle2.Location = new System.Drawing.Point(919, 122);
+            this.lblSubtitle2.Location = new System.Drawing.Point(905, 122);
             this.lblSubtitle2.Name = "lblSubtitle2";
             this.lblSubtitle2.Size = new System.Drawing.Size(381, 20);
             this.lblSubtitle2.TabIndex = 11;
@@ -232,7 +232,7 @@
             this.lblSubtitle1.AutoSize = true;
             this.lblSubtitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle1.ForeColor = System.Drawing.Color.DarkGray;
-            this.lblSubtitle1.Location = new System.Drawing.Point(199, 122);
+            this.lblSubtitle1.Location = new System.Drawing.Point(185, 122);
             this.lblSubtitle1.Name = "lblSubtitle1";
             this.lblSubtitle1.Size = new System.Drawing.Size(219, 20);
             this.lblSubtitle1.TabIndex = 10;
@@ -254,7 +254,7 @@
             this.lblUnresolvedIncidents.AutoSize = true;
             this.lblUnresolvedIncidents.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUnresolvedIncidents.ForeColor = System.Drawing.Color.DimGray;
-            this.lblUnresolvedIncidents.Location = new System.Drawing.Point(184, 92);
+            this.lblUnresolvedIncidents.Location = new System.Drawing.Point(170, 92);
             this.lblUnresolvedIncidents.Name = "lblUnresolvedIncidents";
             this.lblUnresolvedIncidents.Size = new System.Drawing.Size(258, 29);
             this.lblUnresolvedIncidents.TabIndex = 8;
@@ -265,8 +265,8 @@
             this.progressBarIncidentsPastDeadline.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
             this.progressBarIncidentsPastDeadline.AnimationSpeed = 500;
             this.progressBarIncidentsPastDeadline.BackColor = System.Drawing.Color.Transparent;
-            this.progressBarIncidentsPastDeadline.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.progressBarIncidentsPastDeadline.ForeColor = System.Drawing.Color.Silver;
+            this.progressBarIncidentsPastDeadline.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.progressBarIncidentsPastDeadline.ForeColor = System.Drawing.Color.Black;
             this.progressBarIncidentsPastDeadline.InnerColor = System.Drawing.Color.White;
             this.progressBarIncidentsPastDeadline.InnerMargin = 2;
             this.progressBarIncidentsPastDeadline.InnerWidth = -1;
@@ -279,7 +279,7 @@
             this.progressBarIncidentsPastDeadline.OuterWidth = 70;
             this.progressBarIncidentsPastDeadline.ProgressColor = System.Drawing.Color.Firebrick;
             this.progressBarIncidentsPastDeadline.ProgressWidth = 70;
-            this.progressBarIncidentsPastDeadline.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 36F);
+            this.progressBarIncidentsPastDeadline.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.progressBarIncidentsPastDeadline.Size = new System.Drawing.Size(403, 388);
             this.progressBarIncidentsPastDeadline.StartAngle = 270;
             this.progressBarIncidentsPastDeadline.Step = 1;
@@ -298,8 +298,8 @@
             this.progressBarUnresolvedIncidents.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
             this.progressBarUnresolvedIncidents.AnimationSpeed = 500;
             this.progressBarUnresolvedIncidents.BackColor = System.Drawing.Color.Transparent;
-            this.progressBarUnresolvedIncidents.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.progressBarUnresolvedIncidents.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.progressBarUnresolvedIncidents.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.progressBarUnresolvedIncidents.ForeColor = System.Drawing.Color.Black;
             this.progressBarUnresolvedIncidents.InnerColor = System.Drawing.Color.White;
             this.progressBarUnresolvedIncidents.InnerMargin = 2;
             this.progressBarUnresolvedIncidents.InnerWidth = -1;
@@ -312,7 +312,7 @@
             this.progressBarUnresolvedIncidents.OuterWidth = 70;
             this.progressBarUnresolvedIncidents.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.progressBarUnresolvedIncidents.ProgressWidth = 70;
-            this.progressBarUnresolvedIncidents.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 36F);
+            this.progressBarUnresolvedIncidents.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.progressBarUnresolvedIncidents.Size = new System.Drawing.Size(403, 388);
             this.progressBarUnresolvedIncidents.StartAngle = 270;
             this.progressBarUnresolvedIncidents.Step = 1;
@@ -328,15 +328,17 @@
             // 
             // btnShowList
             // 
-            this.btnShowList.BackColor = System.Drawing.SystemColors.Highlight;
-            this.btnShowList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShowList.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnShowList.BackColor = System.Drawing.Color.LightGreen;
+            this.btnShowList.FlatAppearance.BorderSize = 2;
+            this.btnShowList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnShowList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnShowList.ForeColor = System.Drawing.Color.Black;
             this.btnShowList.Location = new System.Drawing.Point(1243, 20);
             this.btnShowList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnShowList.Name = "btnShowList";
             this.btnShowList.Size = new System.Drawing.Size(172, 48);
             this.btnShowList.TabIndex = 4;
-            this.btnShowList.Text = "SHOW LIST";
+            this.btnShowList.Text = "Show List";
             this.btnShowList.UseVisualStyleBackColor = false;
             this.btnShowList.Click += new System.EventHandler(this.btnShowList_Click);
             // 
@@ -344,7 +346,7 @@
             // 
             this.lblCurrentIncidents.AutoSize = true;
             this.lblCurrentIncidents.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCurrentIncidents.Location = new System.Drawing.Point(25, 26);
+            this.lblCurrentIncidents.Location = new System.Drawing.Point(41, 17);
             this.lblCurrentIncidents.Name = "lblCurrentIncidents";
             this.lblCurrentIncidents.Size = new System.Drawing.Size(317, 42);
             this.lblCurrentIncidents.TabIndex = 3;
@@ -352,6 +354,7 @@
             // 
             // pnlUserManagement
             // 
+            this.pnlUserManagement.BackColor = System.Drawing.Color.White;
             this.pnlUserManagement.Controls.Add(this.btnDeleteUser);
             this.pnlUserManagement.Controls.Add(this.btnRefreshUser);
             this.pnlUserManagement.Controls.Add(this.dataGVUser);
@@ -365,24 +368,32 @@
             // 
             // btnDeleteUser
             // 
-            this.btnDeleteUser.Location = new System.Drawing.Point(971, 533);
+            this.btnDeleteUser.BackColor = System.Drawing.Color.Salmon;
+            this.btnDeleteUser.FlatAppearance.BorderSize = 2;
+            this.btnDeleteUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteUser.Location = new System.Drawing.Point(463, 493);
             this.btnDeleteUser.Margin = new System.Windows.Forms.Padding(4);
             this.btnDeleteUser.Name = "btnDeleteUser";
-            this.btnDeleteUser.Size = new System.Drawing.Size(119, 31);
+            this.btnDeleteUser.Size = new System.Drawing.Size(166, 51);
             this.btnDeleteUser.TabIndex = 6;
             this.btnDeleteUser.Text = "Delete";
-            this.btnDeleteUser.UseVisualStyleBackColor = true;
+            this.btnDeleteUser.UseVisualStyleBackColor = false;
             this.btnDeleteUser.Click += new System.EventHandler(this.btnDeleteUser_Click);
             // 
             // btnRefreshUser
             // 
-            this.btnRefreshUser.Location = new System.Drawing.Point(971, 57);
+            this.btnRefreshUser.BackColor = System.Drawing.Color.LightGreen;
+            this.btnRefreshUser.FlatAppearance.BorderSize = 2;
+            this.btnRefreshUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefreshUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRefreshUser.Location = new System.Drawing.Point(262, 493);
             this.btnRefreshUser.Margin = new System.Windows.Forms.Padding(4);
             this.btnRefreshUser.Name = "btnRefreshUser";
-            this.btnRefreshUser.Size = new System.Drawing.Size(123, 33);
+            this.btnRefreshUser.Size = new System.Drawing.Size(166, 51);
             this.btnRefreshUser.TabIndex = 5;
             this.btnRefreshUser.Text = "Refresh";
-            this.btnRefreshUser.UseVisualStyleBackColor = true;
+            this.btnRefreshUser.UseVisualStyleBackColor = false;
             this.btnRefreshUser.Click += new System.EventHandler(this.btnRefreshUser_Click);
             // 
             // dataGVUser
@@ -391,8 +402,9 @@
             this.dataGVUser.AllowUserToDeleteRows = false;
             this.dataGVUser.AllowUserToResizeColumns = false;
             this.dataGVUser.AllowUserToResizeRows = false;
+            this.dataGVUser.BackgroundColor = System.Drawing.Color.White;
             this.dataGVUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGVUser.Location = new System.Drawing.Point(48, 135);
+            this.dataGVUser.Location = new System.Drawing.Point(62, 117);
             this.dataGVUser.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGVUser.MultiSelect = false;
             this.dataGVUser.Name = "dataGVUser";
@@ -406,22 +418,26 @@
             // 
             // btnAddEmployee
             // 
-            this.btnAddEmployee.Location = new System.Drawing.Point(853, 533);
+            this.btnAddEmployee.BackColor = System.Drawing.Color.LightGreen;
+            this.btnAddEmployee.FlatAppearance.BorderSize = 2;
+            this.btnAddEmployee.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddEmployee.Location = new System.Drawing.Point(62, 493);
             this.btnAddEmployee.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddEmployee.Name = "btnAddEmployee";
-            this.btnAddEmployee.Size = new System.Drawing.Size(109, 33);
+            this.btnAddEmployee.Size = new System.Drawing.Size(166, 51);
             this.btnAddEmployee.TabIndex = 3;
             this.btnAddEmployee.Text = "Add Employee";
-            this.btnAddEmployee.UseVisualStyleBackColor = true;
+            this.btnAddEmployee.UseVisualStyleBackColor = false;
             this.btnAddEmployee.Click += new System.EventHandler(this.btnAddEmployee_Click);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(43, 16);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(55, 19);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(225, 29);
+            this.label5.Size = new System.Drawing.Size(340, 42);
             this.label5.TabIndex = 2;
             this.label5.Text = "User Management";
             // 
@@ -826,10 +842,10 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(28, 9);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(25, 2);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(259, 38);
+            this.label4.Size = new System.Drawing.Size(291, 42);
             this.label4.TabIndex = 9;
             this.label4.Text = "Ticket overview";
             // 

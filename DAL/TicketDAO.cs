@@ -60,10 +60,30 @@ namespace DAL
             return result;
 
         }
-        
+        public List<Ticket_Model> GetFilteredTicketBySubject(string serachText, string user)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Eq(s => s.Subject, serachText) & Builders<Ticket_Model>.Filter.Eq(u => u.User, user);
+            var result = collection.Find(filter).ToList();
+            return result;
+
+        }
+
         public async Task<List<Ticket_Model>> GetFilteredTicketByStatusAndPriorityAsync(string status,string priority)
         {
             var query = collection.Aggregate()
+                        .Match(new BsonDocument
+                                {
+                                    { "status", (int)Enum.Parse(typeof(Status),status) },
+                                    { "priority", (int)Enum.Parse(typeof(Priority),priority) }
+                                }
+                        );
+            var results = await query.ToListAsync();
+            return results;
+        }
+        public async Task<List<Ticket_Model>> GetFilteredTicketByStatusAndPriorityAsync(string status, string priority, string user)
+        {
+            var query = collection.Aggregate()
+                        .Match(Builders<Ticket_Model>.Filter.Eq(u =>u.User, user))
                         .Match(new BsonDocument
                                 {
                                     { "status", (int)Enum.Parse(typeof(Status),status) },
@@ -77,22 +97,22 @@ namespace DAL
         public async Task<List<Ticket_Model>> GetFilteredTickets(string status, string priority, string deadline, string type, BsonDocument doc)
         {
   
-            if (status != "select ticket status")
+            if (status != "Ticket status")
             {
                 doc.Add("status", (int)Enum.Parse(typeof(Status), status));
             }
 
-            if (priority != "select priority")
+            if (priority != "Priority")
             {
                 doc.Add("priority", (int)Enum.Parse(typeof(Priority), priority));
             }
 
-            if (deadline != "select deadline")
+            if (deadline != "Deadline")
             {
                 doc.Add("deadline", (int)Enum.Parse(typeof(Deadline), deadline));
             }
 
-            if (type != "select incident type")
+            if (type != "Incident type")
             {
                 doc.Add("type", (int)Enum.Parse(typeof(Model.Type), type));
             }
@@ -139,9 +159,26 @@ namespace DAL
 
             return result;
         }
+        public List<Ticket_Model> GetFilteredTicketByStatusOrPriority(string status, string priority, string user)
+        {
+
+            var filter = (Builders<Ticket_Model>.Filter.Eq(s => s.Status, Enum.Parse(typeof(Status), status)) |
+                         Builders<Ticket_Model>.Filter.Eq(p => p.Priority, Enum.Parse(typeof(Priority), priority))) &
+                         Builders<Ticket_Model>.Filter.Eq(u => u.User, user);
+
+            var result = collection.Find(filter).ToList();
+
+            return result;
+        }
         public  List<Ticket_Model> GetFilteredTicketByTicketNr(int ticketNr)
         {
             var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
+            var listOfTickets = collection.Find(filter).ToList();
+            return listOfTickets;
+        }
+        public List<Ticket_Model> GetFilteredTicketByTicketNr(int ticketNr, string user)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr) & Builders<Ticket_Model>.Filter.Eq(u => u.User, user);
             var listOfTickets = collection.Find(filter).ToList();
             return listOfTickets;
         }
@@ -155,7 +192,12 @@ namespace DAL
         {
             return collection.AsQueryable().ToList<Ticket_Model>();
         }
-
+        public List<Ticket_Model> GetTicketByUser(string user)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Eq(u => u.User, user);
+            var listOfTickets = collection.Find(filter).ToList();
+            return listOfTickets;
+        }
         public IMongoCollection<Ticket_Model> GetTicketCollection()
         {
             return collection;
@@ -171,10 +213,29 @@ namespace DAL
           
 
         }
+        public async Task<List<Ticket_Model>> SortPriorityAscending(string user)
+        {
+            var query = collection.Aggregate()
+                        .Match(Builders<Ticket_Model>.Filter.Eq(u => u.User, user))
+                        .Sort(new BsonDocument { { "priority", 1 } });
+            var results = await query.ToListAsync();
+            return results;
+
+
+        }
         // sorting by descending order by the hign priority value
         public async Task<List<Ticket_Model>> SortPriorityDescending()
         {
             var query = collection.Aggregate()
+                        .Sort(new BsonDocument { { "priority", -1 } });
+            var results = await query.ToListAsync();
+            return results;
+
+        }
+        public async Task<List<Ticket_Model>> SortPriorityDescending(string user)
+        {
+            var query = collection.Aggregate()
+                        .Match(Builders<Ticket_Model>.Filter.Eq(u => u.User,user))
                         .Sort(new BsonDocument { { "priority", -1 } });
             var results = await query.ToListAsync();
             return results;

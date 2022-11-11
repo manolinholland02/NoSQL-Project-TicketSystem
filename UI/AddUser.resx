@@ -413,8 +413,18 @@
   <data name="&gt;&gt;txtNumber.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnAddUser.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnAddUser.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 11.25pt, style=Bold</value>
+  </data>
   <data name="btnAddUser.Location" type="System.Drawing.Point, System.Drawing">
     <value>168, 341</value>
+  </data>
+  <data name="btnAddUser.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="btnAddUser.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 37</value>
@@ -423,7 +433,7 @@
     <value>11</value>
   </data>
   <data name="btnAddUser.Text" xml:space="preserve">
-    <value>Add User</value>
+    <value>Add Employee</value>
   </data>
   <data name="&gt;&gt;btnAddUser.Name" xml:space="preserve">
     <value>btnAddUser</value>
@@ -437,8 +447,17 @@
   <data name="&gt;&gt;btnAddUser.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="btnCancel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnCancel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 11.25pt, style=Bold</value>
+  </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
     <value>301, 341</value>
+  </data>
+  <data name="btnCancel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 37</value>
@@ -509,7 +528,6 @@
   <data name="lblPassword.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 9.75pt</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lblPassword.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>

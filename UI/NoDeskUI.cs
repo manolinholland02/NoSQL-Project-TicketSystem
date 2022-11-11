@@ -39,6 +39,17 @@ namespace UI
             dataGVTicketOverview.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGVUser.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
+        private List<Ticket_Model> GetTickets()
+        {
+            if(loggedUser.Role==Role.ServiceDeskEmployee)
+            {
+                return ticketService.GetAllTickets();
+            }
+            else
+            {
+                return ticketService.GetTicketByUser(loggedUser.FullNameEmailPair);
+            }
+        }
 
         private void SetEmployeeAccess(User_Model user)
         {
@@ -55,6 +66,7 @@ namespace UI
                 btnTransferTicket.Visible = false;
                 btnCloseTicket.Visible = false;
                 btnArchiveTickets.Visible = false;
+                btnLogout.Left -= 200;
                 btnIncidentManagement.Text = "Tickets";
             }
             
@@ -62,7 +74,6 @@ namespace UI
 
         private void InitDashboard()
         {
-            getAllTickets = ticketService.GetAllTickets();
             pnlIncidentManagemnt.Hide();
             pnlUserManagement.Hide();
             pnlDashboard.Show();
@@ -70,6 +81,7 @@ namespace UI
             progressBarUnresolvedIncidents.Minimum = 0;
             progressBarIncidentsPastDeadline.Minimum = 0;
 
+            getAllTickets = GetTickets();
             if (loggedUser.Role == Role.ServiceDeskEmployee)
             {
                 ServiceEmployeeDashboard();
@@ -79,7 +91,7 @@ namespace UI
                 EmployeeDashboard();
             }
             progressBarUnresolvedIncidents.Text = $"{progressBarUnresolvedIncidents.Value}/{progressBarUnresolvedIncidents.Maximum}";
-            progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}";
+            progressBarIncidentsPastDeadline.Text = $"{progressBarIncidentsPastDeadline.Value}/{progressBarIncidentsPastDeadline.Maximum}";
         }
 
         private void btnDashboard_Click(object sender, EventArgs e)
@@ -91,6 +103,7 @@ namespace UI
         {
             progressBarUnresolvedIncidents.Maximum = getAllTickets.Count;
             progressBarIncidentsPastDeadline.Maximum = getAllTickets.Count;
+
             progressBarUnresolvedIncidents.Value = 0;
             progressBarIncidentsPastDeadline.Value = 0;
 
@@ -99,7 +112,6 @@ namespace UI
                 if (ticket.Status == Status.Unfinished)
                 {
                     progressBarUnresolvedIncidents.PerformStep();
-                    //DateTime ticketMadeDate = DateTime.ParseExact(ticket.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
                     DateTime ticketMadeDate = ticket.Date;
                     int deadline = (int)ticket.Deadline;
                     int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
@@ -117,15 +129,12 @@ namespace UI
 
             foreach (Ticket_Model ticket in getAllTickets)
             {
-                if (ticket.User.Split('(', ')')[1] == loggedUser.Email)
-                {
                     progressBarUnresolvedIncidents.Maximum++;
                     progressBarIncidentsPastDeadline.Maximum++;
 
                     if (ticket.Status == Status.Unfinished)
                     {
                         progressBarUnresolvedIncidents.PerformStep();
-                        //DateTime ticketMadeDate = DateTime.ParseExact(ticket.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
                         DateTime ticketMadeDate = ticket.Date;
                         int deadline = (int)ticket.Deadline;
                         int period = int.Parse(((DateTime.Now - ticketMadeDate.Date).Days).ToString());
@@ -134,7 +143,6 @@ namespace UI
                             progressBarIncidentsPastDeadline.PerformStep();
                         }
                     }
-                }
             }
         }
 
@@ -143,7 +151,7 @@ namespace UI
             pnlDashboard.Hide();
             pnlUserManagement.Hide();
             pnlIncidentManagemnt.Show();
-            getAllTickets = ticketService.GetAllTickets();
+            getAllTickets = GetTickets();
             DisplayTickets(getAllTickets);
         }
 
@@ -185,11 +193,10 @@ namespace UI
 
 
 
-
-            FillPromptTextComboBox(cbFilterByPriority, "priority");
-            FillPromptTextComboBox(cbFilterByStatus, "ticket status");
-            FillPromptTextComboBox(cbFilterByType, "incident type");
-            FillPromptTextComboBox(cbFilterByDeadline, "deadline");
+            FillPromptTextComboBox(cbFilterByPriority, "Priority");
+            FillPromptTextComboBox(cbFilterByStatus, "Ticket status");
+            FillPromptTextComboBox(cbFilterByType, "Incident type");
+            FillPromptTextComboBox(cbFilterByDeadline, "Deadline");
 
             foreach (Enum e in Enum.GetValues(typeof(Status)))
             {
@@ -213,14 +220,18 @@ namespace UI
         }
         private async Task SortPriorityAscending()
         {
-            var result = ticketService.SortPriorityAscending();
-            dataGVTicketOverview.DataSource = await result;
+            //var result = ticketService.SortPriorityAscending();
+            //dataGVTicketOverview.DataSource = await result;
+            if (loggedUser.Role == Role.ServiceDeskEmployee) { dataGVTicketOverview.DataSource = await ticketService.SortPriorityAscending(); }
+            else if (loggedUser.Role == Role.Employee) { dataGVTicketOverview.DataSource = await ticketService.SortPriorityAscending(loggedUser.FullNameEmailPair); }
 
         }
         private async Task SortPriorityDescending()
         {
-            var result = ticketService.SortPriorityDescending();
-            dataGVTicketOverview.DataSource = await result;
+            //var result = ticketService.SortPriorityDescending();
+            //dataGVTicketOverview.DataSource = await result;
+            if (loggedUser.Role == Role.ServiceDeskEmployee) { dataGVTicketOverview.DataSource = await ticketService.SortPriorityDescending(); }
+            else if (loggedUser.Role == Role.Employee) { dataGVTicketOverview.DataSource = await ticketService.SortPriorityDescending(loggedUser.FullNameEmailPair); }
 
         }
 
@@ -373,7 +384,7 @@ namespace UI
                 .Set(v => v.Deadline, (Deadline)Enum.Parse(typeof(Deadline), cbDeadline.Text))
                 .Set(d => d.Date, dateTimePickerTicket.Value.Date);
             var update = ticketService.GetTicketCollection().UpdateOne(ticketFilter, updateTicket);
-            var listOfUpdateResult = ticketService.GetAllTickets();
+            var listOfUpdateResult = GetTickets();
             return listOfUpdateResult;
 
         }
@@ -383,7 +394,8 @@ namespace UI
             try
             {
                 string searchTxt = txtSearch.Text;
-                DisplayTickets(ticketService.GetFilteredTicketBySubject(searchTxt));
+                if(loggedUser.Role == Role.ServiceDeskEmployee) { DisplayTickets(ticketService.GetFilteredTicketBySubject(searchTxt)); }
+                else if(loggedUser.Role == Role.Employee) { DisplayTickets(ticketService.GetFilteredTicketBySubject(searchTxt, loggedUser.FullNameEmailPair)); }
             }
             catch (Exception exception)
             {
@@ -399,8 +411,10 @@ namespace UI
             {
                 string status = comboBoxStatusAnd.Text;
                 string priority = comboBoxPriorityAnd.Text;
-                var listOfTickets = await ticketService.GetFilteredTicketByStatusAndPriority(status, priority);
-                dataGVTicketOverview.DataSource = listOfTickets;
+                if(loggedUser.Role == Role.ServiceDeskEmployee) { dataGVTicketOverview.DataSource = await ticketService.GetFilteredTicketByStatusAndPriority(status, priority); }
+                else if (loggedUser.Role == Role.Employee) { dataGVTicketOverview.DataSource = await ticketService.GetFilteredTicketByStatusAndPriority(status, priority, loggedUser.FullNameEmailPair); }
+                //var listOfTickets = await ticketService.GetFilteredTicketByStatusAndPriority(status, priority);
+                //dataGVTicketOverview.DataSource = listOfTickets;
             }
             catch (Exception exception)
             {
@@ -415,7 +429,8 @@ namespace UI
             {
                 string status=comboBoxStatusOr.Text;
                 string priority=comboBoxPriorityOr.Text;
-                DisplayTickets(ticketService.GetFilteredTicketByStatusOrPriority(status,priority));
+                if (loggedUser.Role == Role.ServiceDeskEmployee) { DisplayTickets(ticketService.GetFilteredTicketByStatusOrPriority(status, priority)); }
+                else if (loggedUser.Role == Role.Employee) { DisplayTickets(ticketService.GetFilteredTicketByStatusOrPriority(status, priority, loggedUser.FullNameEmailPair)); }
             }
             catch (Exception exception)
             {
@@ -430,7 +445,8 @@ namespace UI
             try
             {
                 int ticketNr = int.Parse(textBoxTicketSearch.Text);
-                DisplayTickets(ticketService.GetFilteredTicketByTicketNr(ticketNr));
+                if (loggedUser.Role == Role.ServiceDeskEmployee) { DisplayTickets(ticketService.GetFilteredTicketByTicketNr(ticketNr)); }
+                else if (loggedUser.Role == Role.Employee) { DisplayTickets(ticketService.GetFilteredTicketByTicketNr(ticketNr, loggedUser.FullNameEmailPair)); }
             }
             catch (Exception exception)
             {
@@ -455,25 +471,29 @@ namespace UI
             int ticketNr = int.Parse(txtTicketNr.Text);
             var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
             var result = ticketService.GetTicketCollection().DeleteOne(filter);
-            var listOfTickets = ticketService.GetAllTickets();
+            var listOfTickets = GetTickets();
             return listOfTickets;
 
         }
-        private async Task GetRecentTicketsAsync()
-        {
-            var query = ticketService.GetTicketCollection().Aggregate()
-                        .Sort(new BsonDocument { { "date", -1 } });
-            var results = await query.ToListAsync();
-            dataGVTicketOverview.DataSource = results;
+        //private async Task GetRecentTicketsAsync()
+        //{
+        //    var query = ticketService.GetTicketCollection().Aggregate()
+        //                .Match(Builders<Ticket_Model>.Filter.Eq(u => u.User, loggedUser.FullNameEmailPair))
+        //                .Sort(new BsonDocument { { "date", -1 } });
+        //    var results = await query.ToListAsync();
+        //    dataGVTicketOverview.DataSource = results;
 
-        }
+        //}
 
 
         private void btnRecentTicket_Click(object sender, EventArgs e)
         {
             try
             {
-                GetRecentTicketsAsync();
+                //GetRecentTicketsAsync();
+                var tickets = GetTickets();
+                tickets.Sort((x, y) => y.Date.CompareTo(x.Date));
+                dataGVTicketOverview.DataSource = tickets;
             }
             catch (Exception exception)
             {
@@ -495,7 +515,7 @@ namespace UI
         }
         private void RefreshTickets()
         {
-            var ticketList = ticketService.GetAllTickets();
+            var ticketList = GetTickets();
             DisplayTickets(ticketList);
         }
         private void btnCloseTicket_Click(object sender, EventArgs e)
@@ -596,6 +616,8 @@ namespace UI
         {
             pnlDashboard.Hide();
             pnlIncidentManagemnt.Show();
+            dataGVTicketOverview.DataSource = GetTickets();
+            dataGVTicketOverview.Columns[0].Visible = false;
         }
 
         // displaying all the user in the data gridview
