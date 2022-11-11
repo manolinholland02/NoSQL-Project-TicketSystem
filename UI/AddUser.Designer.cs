@@ -107,16 +107,18 @@
             // 
             // btnAddUser
             // 
+            this.btnAddUser.BackColor = System.Drawing.Color.LightGreen;
             resources.ApplyResources(this.btnAddUser, "btnAddUser");
             this.btnAddUser.Name = "btnAddUser";
-            this.btnAddUser.UseVisualStyleBackColor = true;
+            this.btnAddUser.UseVisualStyleBackColor = false;
             this.btnAddUser.Click += new System.EventHandler(this.btnAddUser_Click);
             // 
             // btnCancel
             // 
+            this.btnCancel.BackColor = System.Drawing.Color.Salmon;
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // cbUser
