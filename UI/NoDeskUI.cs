@@ -178,11 +178,12 @@ namespace UI
             comboBoxStatusOr.DataSource = Enum.GetValues(typeof(Status));
             comboBoxPriorityAnd.DataSource = Enum.GetValues(typeof(Priority));
             comboBoxPriorityOr.DataSource = Enum.GetValues(typeof(Priority));
+            comboBoxPrioritySorting.DataSource = Enum.GetValues(typeof(Priority));
 
-            FillPromptTextComboBox(cbFilterByPriority, "select priority");
-            FillPromptTextComboBox(cbFilterByStatus, "select ticket status");
-            FillPromptTextComboBox(cbFilterByType, "select incident type");
-            FillPromptTextComboBox(cbFilterByDeadline, "select deadline");
+            FillPromptTextComboBox(cbFilterByPriority, "priority");
+            FillPromptTextComboBox(cbFilterByStatus, "ticket status");
+            FillPromptTextComboBox(cbFilterByType, "incident type");
+            FillPromptTextComboBox(cbFilterByDeadline, "deadline");
 
             foreach (Enum e in Enum.GetValues(typeof(Status)))
             {
@@ -620,6 +621,8 @@ namespace UI
                 MessageBox.Show($"Error deleting user \nERROR:{ex.Message}");
             }
         }
+
+
 
         //------------------------//
         /*end user management*/
