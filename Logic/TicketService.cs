@@ -74,5 +74,15 @@ namespace Logic
         {
             return dao.GetFilteredTicketByTicketNr(ticketNr);
         }
+
+        public List<Ticket_Model> GetFilteredTicketByDate(DateTime date)
+        {
+            return dao.GetFilteredTicketByDate(date);
+        }
+
+        public void DeleteDocumentsLteDate(DateTime date)
+        {
+            dao.DeleteDocumentsLteDate(date);
+        }
     }
 }

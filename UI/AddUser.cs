@@ -3,8 +3,6 @@ using System.Windows.Forms;
 using Model;
 using Logic;
 using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using System.IO;
 
 namespace UI
 {

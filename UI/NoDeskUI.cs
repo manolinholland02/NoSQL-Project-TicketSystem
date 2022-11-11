@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Logic;
 using Model;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
-using System.Globalization;
 
 namespace UI
 {
@@ -58,6 +54,7 @@ namespace UI
                 txtSubject.Visible = false;
                 btnTransferTicket.Visible = false;
                 btnCloseTicket.Visible = false;
+                btnArchiveTickets.Visible = false;
                 btnIncidentManagement.Text = "Tickets";
             }
             
@@ -534,6 +531,19 @@ namespace UI
             CheckTicketStatus();
         }
 
+        private void btnArchiveTickets_Click(object sender, EventArgs e)
+        {
+            ArchiveTicket archiveTicket = new ArchiveTicket(loggedUser);
+            archiveTicket.FormClosing += new FormClosingEventHandler(this.archiveTicket_FormClosing);
+            archiveTicket.ShowDialog();
+        }
+
+        private void archiveTicket_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            RefreshTickets();
+            CheckTicketStatus();
+        }
+
         //------------------------//
         /*end incident management*/
 
@@ -610,6 +620,7 @@ namespace UI
                 MessageBox.Show($"Error deleting user \nERROR:{ex.Message}");
             }
         }
+
         //------------------------//
         /*end user management*/
     }

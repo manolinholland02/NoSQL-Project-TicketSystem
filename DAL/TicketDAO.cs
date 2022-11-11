@@ -4,7 +4,6 @@ using Model;
 using System;
 using MongoDB.Bson;
 using System.Threading.Tasks;
-using System.Net.Sockets;
 
 namespace DAL
 {
@@ -106,14 +105,29 @@ namespace DAL
             return results;
         }
 
-        //public List<Ticket_Model> GetFilteredTicketByDate()
-        //{
-        //    var filter = Builders<Ticket_Model>.Filter.Lte(t => t.Date, "08.11.2022");
-        //    var result = collection.Find(filter).ToList();
-        //    collection.DeleteMany(filter);
-            
-        //    return result;
-        //}
+        public List<Ticket_Model> GetFilteredTicketByDate(DateTime date)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Lte(t => t.Date, date);
+            var result = collection.Find(filter).ToList();
+
+            /*if (result.Count == 0) 
+                throw new Exception("There are no records");*/
+
+            return result;
+        }
+
+        public void DeleteDocumentsLteDate(DateTime date)
+        {
+            var filter = Builders<Ticket_Model>.Filter.Lte(t => t.Date, date);
+            try
+            {
+                collection.DeleteMany(filter);
+            }
+            catch
+            {
+                throw new Exception("Ne");
+            }
+        }
 
         public List<Ticket_Model> GetFilteredTicketByStatusOrPriority(string status,string priority)
         {

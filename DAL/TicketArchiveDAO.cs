@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Model;
 using System;
-using MongoDB.Bson;
-using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -36,11 +34,12 @@ namespace DAL
             return instance;
         }
 
-        //public void AddArchive()
-        //{
-        //    TicketDAO ticketDAO = TicketDAO.GetInstance();
-        //    List<Ticket_Model> selectedTickets = ticketDAO.GetFilteredTicketByDate();
-        //    collection.InsertMany(selectedTickets);
-        //}
+        public void AddArchive(DateTime date)
+        {
+            TicketDAO ticketDAO = TicketDAO.GetInstance();
+            List<Ticket_Model> selectedTickets = ticketDAO.GetFilteredTicketByDate(date);
+            collection.InsertMany(selectedTickets);
+            ticketDAO.DeleteDocumentsLteDate(date);
+        }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using DAL;
-using Model;
-using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace Logic
 {
@@ -26,9 +21,9 @@ namespace Logic
             return instance;
         }
 
-        //public void AddArchive()
-        //{
-        //    dao.AddArchive();
-        //}
+        public void AddArchive(DateTime date)
+        {
+            dao.AddArchive(date);
+        }
     }
 }
