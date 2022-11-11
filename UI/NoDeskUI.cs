@@ -282,6 +282,9 @@ namespace UI
             dateTimePickerTicket.Enabled = false;
             btnTransferTicket.Enabled = false;
             btnCloseTicket.Enabled = false;
+            btnCloseTicket.BackColor = System.Drawing.Color.Gray;
+            btnTransferTicket.BackColor = System.Drawing.Color.Gray;
+            btnUpdateTicket.BackColor = System.Drawing.Color.Gray;
         }
 
         private void EnableUpdateBoxes()
@@ -294,6 +297,9 @@ namespace UI
             dateTimePickerTicket.Enabled = true;
             btnTransferTicket.Enabled = true;
             btnCloseTicket.Enabled = true;
+            btnCloseTicket.BackColor = System.Drawing.Color.Salmon;
+            btnTransferTicket.BackColor = System.Drawing.Color.LightGreen;
+            btnUpdateTicket.BackColor = System.Drawing.Color.LightGreen;
         }
 
         private void btnCreateIncident_Click(object sender, EventArgs e)
@@ -417,7 +423,12 @@ namespace UI
         {
             try
             {
-                DisplayTickets(GetTicketListAfterDelete());
+                DialogResult dialogResult = MessageBox.Show("Are you sure you wish to delete this ticket?", "Ticket deletion", MessageBoxButtons.YesNo);
+                if(dialogResult == DialogResult.Yes)
+                {
+                    DisplayTickets(GetTicketListAfterDelete());
+                }
+                MessageBox.Show("Ticket succesfully deleted!");
             }
             catch (Exception exception)
             {
@@ -461,8 +472,20 @@ namespace UI
 
         private void btnCloseTicket_Click(object sender, EventArgs e)
         {
-            CloseTicket();
-            MessageBox.Show("Ticket succesfully closed!");
+            try
+            {
+                DialogResult dialogResult = MessageBox.Show("Are you sure you wish to close this ticket?", "Ticket closing", MessageBoxButtons.YesNo);
+                if(dialogResult == DialogResult.Yes)
+                {
+                    CloseTicket();
+                    MessageBox.Show("Ticket succesfully closed!");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"Error closing ticket, try again. \nERROR: {ex.Message}");
+            }
 
         }
 
