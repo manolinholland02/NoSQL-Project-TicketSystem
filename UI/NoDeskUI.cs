@@ -39,6 +39,17 @@ namespace UI
             dataGVTicketOverview.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGVUser.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
+        private List<Ticket_Model> GetTickets()
+        {
+            if(loggedUser.Role==Role.ServiceDeskEmployee)
+            {
+                return ticketService.GetAllTickets();
+            }
+            else
+            {
+                return ticketService.GetTicketByUser(loggedUser.FullNameEmailPair);
+            }
+        }
 
         private void SetEmployeeAccess(User_Model user)
         {
@@ -63,7 +74,6 @@ namespace UI
 
         private void InitDashboard()
         {
-            getAllTickets = ticketService.GetAllTickets();
             pnlIncidentManagemnt.Hide();
             pnlUserManagement.Hide();
             pnlDashboard.Show();
@@ -71,6 +81,7 @@ namespace UI
             progressBarUnresolvedIncidents.Minimum = 0;
             progressBarIncidentsPastDeadline.Minimum = 0;
 
+            getAllTickets = GetTickets();
             if (loggedUser.Role == Role.ServiceDeskEmployee)
             {
                 ServiceEmployeeDashboard();
@@ -118,8 +129,6 @@ namespace UI
 
             foreach (Ticket_Model ticket in getAllTickets)
             {
-                if (ticket.User.Split('(', ')')[1] == loggedUser.Email)
-                {
                     progressBarUnresolvedIncidents.Maximum++;
                     progressBarIncidentsPastDeadline.Maximum++;
 
@@ -134,7 +143,6 @@ namespace UI
                             progressBarIncidentsPastDeadline.PerformStep();
                         }
                     }
-                }
             }
         }
 
@@ -143,7 +151,7 @@ namespace UI
             pnlDashboard.Hide();
             pnlUserManagement.Hide();
             pnlIncidentManagemnt.Show();
-            getAllTickets = ticketService.GetAllTickets();
+            getAllTickets = GetTickets();
             DisplayTickets(getAllTickets);
         }
 
@@ -372,7 +380,7 @@ namespace UI
                 .Set(v => v.Deadline, (Deadline)Enum.Parse(typeof(Deadline), cbDeadline.Text))
                 .Set(d => d.Date, dateTimePickerTicket.Value.Date);
             var update = ticketService.GetTicketCollection().UpdateOne(ticketFilter, updateTicket);
-            var listOfUpdateResult = ticketService.GetAllTickets();
+            var listOfUpdateResult = GetTickets();
             return listOfUpdateResult;
 
         }
@@ -454,7 +462,7 @@ namespace UI
             int ticketNr = int.Parse(txtTicketNr.Text);
             var filter = Builders<Ticket_Model>.Filter.Eq(t => t.TicketNumber, ticketNr);
             var result = ticketService.GetTicketCollection().DeleteOne(filter);
-            var listOfTickets = ticketService.GetAllTickets();
+            var listOfTickets = GetTickets();
             return listOfTickets;
 
         }
@@ -494,7 +502,7 @@ namespace UI
         }
         private void RefreshTickets()
         {
-            var ticketList = ticketService.GetAllTickets();
+            var ticketList = GetTickets();
             DisplayTickets(ticketList);
         }
         private void btnCloseTicket_Click(object sender, EventArgs e)

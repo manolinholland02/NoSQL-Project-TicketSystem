@@ -4,6 +4,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace Logic
@@ -43,6 +44,10 @@ namespace Logic
         public List<Ticket_Model> GetAllTickets()
         {
             return dao.GetAllTickets();
+        }
+        public List<Ticket_Model> GetTicketByUser(string user)
+        {
+            return dao.GetTicketByUser(user);
         }
         public IMongoCollection<Ticket_Model> GetTicketCollection()
         {

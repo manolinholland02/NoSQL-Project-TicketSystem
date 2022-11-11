@@ -232,7 +232,7 @@
             this.lblSubtitle1.AutoSize = true;
             this.lblSubtitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle1.ForeColor = System.Drawing.Color.DarkGray;
-            this.lblSubtitle1.Location = new System.Drawing.Point(199, 122);
+            this.lblSubtitle1.Location = new System.Drawing.Point(185, 122);
             this.lblSubtitle1.Name = "lblSubtitle1";
             this.lblSubtitle1.Size = new System.Drawing.Size(219, 20);
             this.lblSubtitle1.TabIndex = 10;
@@ -254,7 +254,7 @@
             this.lblUnresolvedIncidents.AutoSize = true;
             this.lblUnresolvedIncidents.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUnresolvedIncidents.ForeColor = System.Drawing.Color.DimGray;
-            this.lblUnresolvedIncidents.Location = new System.Drawing.Point(184, 92);
+            this.lblUnresolvedIncidents.Location = new System.Drawing.Point(170, 92);
             this.lblUnresolvedIncidents.Name = "lblUnresolvedIncidents";
             this.lblUnresolvedIncidents.Size = new System.Drawing.Size(258, 29);
             this.lblUnresolvedIncidents.TabIndex = 8;
@@ -914,9 +914,9 @@
             this.ClientSize = new System.Drawing.Size(1467, 715);
             this.ControlBox = false;
             this.Controls.Add(this.pnlMenuCOntainer);
+            this.Controls.Add(this.pnlIncidentManagemnt);
             this.Controls.Add(this.pnlDashboard);
             this.Controls.Add(this.pnlUserManagement);
-            this.Controls.Add(this.pnlIncidentManagemnt);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
