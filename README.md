@@ -1,2 +1,2 @@
-# NoSQL-Project-Group4
-Our repo for the NoSQL project in term 1
+# NoSQL-Project-TicketSystem
+C# based ticket system for service desk, made as Wondows Forms Application, using NoSQL database.
